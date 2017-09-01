@@ -160,6 +160,16 @@ set.seed(101)  # for reproducibility
 trn <- as.data.frame(mlbench::mlbench.friedman1(n = 500, sd = 1))
 tibble::glimpse(trn)
 
+# Try boosting
+library(gbm)
+set.seed(101)
+trn.gbm <- gbm(y ~ ., data = trn, distribution = "gaussian", n.trees = 10000,
+               shrinkage = 0.01, interaction.depth = 3, bag.fraction = 1,
+               train.fraction = 1, cv.folds = 5, verbose = TRUE)
+best.iter <- gbm.perf(trn.gbm, method = "cv")
+print(best.iter)
+summary(trn.gbm, n.trees = best.iter)
+vip(trn.gbm, pred.var = paste0("x.", 1:10), n.trees = best.iter)
 # # Setup for k-fold cross-validation
 # ctrl <- trainControl(method = "cv", number = 5, verboseIter = TRUE)
 # set.seed(103)
