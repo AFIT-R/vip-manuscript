@@ -74,6 +74,7 @@ The text of your abstract.  200 or fewer words.
 \newpage
 \spacingset{1.45} % DON'T change the spacing!
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \label{sec:introduction}
@@ -172,8 +173,13 @@ The partial dependence functions for these three variables are displayed in Figu
   \label{boston-rf-pdps}
   \centering
   \includegraphics[width=1.0\textwidth]{boston-rf-pdps}
-  \caption{TBD.}
+  \caption{Partial dependence of \code{cmedv} on \code{lstat} (left), \code{rm} (middle), and \code{zn} (right). The mean of the $n = 506$ response values is indicated by a dashed red line.}
 \end{figure}
+
+
+\subsection{Computational considerations}
+
+Constructing partial dependence functions using the brute force method described in Algorithm~\ref{alg:pdp} can be computationally expensive. Some solutions are discussed in \citet{pdp-greenwell-2017}. Fortunately, Algorithm~\ref{alg:pdp} is embarassingly parallel and computing single-predictor partial dependence functions for each predictor can be done rather quickly on a machine with a multi-core processor. For much larger data sets, it may be worthwhile to reduce the grid size by using specific quantiles for each predcitor. For example, the partial dependence function can be approximated by using the min and max of each predictor along with the deciles of the unique predictor values.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

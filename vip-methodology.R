@@ -73,20 +73,23 @@ p1 <- autoplot(pd1) +
   ylim(pd.range[1L], pd.range[2L]) +
   theme_light() +
   geom_hline(yintercept = mean(boston$cmedv), linetype = 2, col = set1[1L],
-             alpha = 0.5)
+             alpha = 0.5) +
+  ylab("Partial dependence")
 p2 <- autoplot(pd2) +
   ylim(pd.range[1L], pd.range[2L]) +
   theme_light() +
   geom_hline(yintercept = mean(boston$cmedv), linetype = 2, col = set1[1L],
-             alpha = 0.5)
+             alpha = 0.5) +
+  ylab("Partial dependence")
 p3 <- autoplot(pd3) +
   ylim(pd.range[1L], pd.range[2L]) +
   theme_light() +
   geom_hline(yintercept = mean(boston$cmedv), linetype = 2, col = set1[1L],
-             alpha = 0.5)
+             alpha = 0.5) +
+  ylab("Partial dependence")
 
 # Figure ?
-pdf(file = "manuscript-methodology\\boston-rf-pdps.pdf", width = 12, height = 4)
+pdf(file = "boston-rf-pdps.pdf", width = 12, height = 4)
 grid.arrange(p1, p2, p3, ncol = 3)
 dev.off()
 

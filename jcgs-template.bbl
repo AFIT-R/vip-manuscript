@@ -34,6 +34,11 @@ Goh, A. (1995).
 \newblock {\em Artificial Intelligence in Engineering\/}~{\em 9\/}(3),
   143--151.
 
+\bibitem[\protect\citeauthoryear{Greenwell}{Greenwell}{2017}]{pdp-greenwell-2017}
+Greenwell, B.~M. (2017).
+\newblock pdp: An r package for constructing partial dependence plots.
+\newblock {\em The R Journal\/}~{\em 9\/}(1), 421--436.
+
 \bibitem[\protect\citeauthoryear{Harrison and Rubinfeld}{Harrison and
   Rubinfeld}{1978}]{harrison-1978-hedonic}
 Harrison, D. and D.~L. Rubinfeld (1978).
