@@ -19,6 +19,7 @@
 \def\ref#1{\textbf{(#1)}}
 \DeclareMathOperator{\flatness}{flatness}
 \DeclareMathOperator{\imp}{imp}
+\DeclareMathOperator{\inter}{int}
 
 % DON'T change margins - should be 1 inch all around.
 \addtolength{\oddsidemargin}{-.5in}%
@@ -180,7 +181,7 @@ The partial dependence functions for these three variables are displayed in Figu
 \label{sec:new}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The PDP for \code{zn} in Figure~\ref{fig:boston-rf-pdps} is relatively flat indicating that \code{zn} does not have much influence on the predicted median home value. In other words, the values $ \bar{f}\left(x_{i}\right)$ display little variablility. One might conclude that any variable for which the PDP is "flat" is likely to be less important than those predictors whose PDP varies across a wider range of the response.
+The PDP for \code{zn} in Figure~\ref{fig:boston-rf-pdps} is relatively flat indicating that \code{zn} does not have much influence on the predicted median home value. In other words, the values $\bar{f}\left(x_{i}\right)$ display little variablility. One might conclude that any variable for which the PDP is "flat" is likely to be less important than those predictors whose PDP varies across a wider range of the response.
 
 Our notion of variable importance is based on any measure of the "flatness" of the partial dependence function. In general, we define
 \begin{equation}
@@ -203,8 +204,16 @@ To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of
 
 
 \subsection{Detecting interaction effects}
+\label{sec:interaction}
 
-The same idea can be applied to finding interactions. Essentially a strong interaction effect of $x_1$ and $x_2$ on $\mathcal{Y}$ would suggest that $\imp\left(x_1, x_2\right)$ is roughly constant when either $x_1$ or $x_2$ is held constant while the other varies. More coming soon!
+The same idea can be applied to finding interactions. Essentially a strong interaction effect of $x_1$ and $x_2$ on $\mathcal{Y}$ would suggest that $\imp\left(x_1, x_2\right)$ is roughly constant when either $x_1$ or $x_2$ is held constant while the other varies. 
+
+More coming soon!
+\begin{equation}
+\label{eqn:interaction}
+  \inter\left(x_i, x_j\right) = \left[\imp\left(x_i | x_j\right) + \imp\left(x_j | x_i\right)\right] / 2
+\end{equation}
+
 
 \subsection{Examples: a simple function of ten variables}
 
@@ -212,8 +221,29 @@ To further illustrate, we will use one of the regression problems described in F
 \begin{equation}
 \mathcal{Y} = 10 \sin\left(\pi x_1 x_2\right) + 20 \left(x_3 - 0.5\right) ^ 2 + 10 x_4 + 5 x_5 + \epsilon,
 \end{equation}
-where $\epsilon \sim \mathcal{N}\left(0, \sigma\right)$.
+where $\epsilon \sim \mathcal{N}\left(0, \sigma\right)$. We fit a neural network with one hidden layer containing eight units and a weight decay of 0.01 (these parameters were chosen using 5-fold cross-validation). The network diagram is displayed in Figure~\ref{fig:network} below.
+\begin{figure}[!htb]
+  \label{network}
+  \centering
+  \includegraphics[width=1.0\textwidth]{network}
+  \caption{Diagram of the neural network fitted to the Friedman 1 data set.}
+\end{figure}
 
+Variable importance plots are displayed in Figure~\ref{fig:network-vip}. Notice how the Garson and Olden algorithms incorrectly label some of the features not in the true model as "important".
+\begin{figure}[!htb]
+  \label{network-vip}
+  \centering
+  \includegraphics[width=1.0\textwidth]{network-vip}
+  \caption{Variable importance plots for the neural network in Figure~\ref{fig:network}. \textit{Left}: partial dependence-based algorithm. \textit{Middle}: Garson's algorithm. \textit{Right}: Olden's algorithm.}
+\end{figure}
+
+We also constructed the partial dependence functions for all pairwise interactions and computed the interaction statistic discussed in Section~\ref{sec:interaction}. For each pair $\left(x_i, x_j\right)$ we constructed the partial dependence function over a fine grid according to Algorithm~\ref{alg:pdp}. Then, we computed $\imp\left(x_i | x_j\right)$ and $\imp\left(x_j | x_i\right)$ and averaged the results. The top ten interaction statistics are displayed in Figure~\ref{fig:network-int}. There is a clear indication of an interaction effect between the predictors $x_1$ and $x_2$.
+\begin{figure}[!htb]
+  \label{network-int}
+  \centering
+  \includegraphics[width=1.0\textwidth]{network-int}
+  \caption{TBD.}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

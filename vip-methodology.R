@@ -5,6 +5,8 @@
 # Load required packages
 library(caret)
 library(dplyr)
+library(earth)
+library(gbm)
 library(ggplot2)
 library(mlbench)
 library(NeuralNetTools)
@@ -106,7 +108,7 @@ dev.off()
 
 
 ################################################################################
-#
+# Boston housing example
 ################################################################################
 
 ctrl <- trainControl(method = "cv", number = 5, verboseIter = TRUE)
@@ -160,16 +162,41 @@ set.seed(101)  # for reproducibility
 trn <- as.data.frame(mlbench::mlbench.friedman1(n = 500, sd = 1))
 tibble::glimpse(trn)
 
-# Try boosting
-library(gbm)
+
+# Multivariate adaptive regression splines -------------------------------------
+
+# Fit a MARS model
+set.seed(101)
+trn.mars <- earth(y ~ ., data = trn, degree = 3, pmethod = "exhaustive", nfold = 5)
+vip.mars <- vip(trn.mars, pred.var = paste0("x.", 1:10))
+vip.mars + theme_bw()
+evimp(trn.mars)
+#     nsubsets   gcv    rss
+# x.4       15 100.0  100.0
+# x.1       14  83.2   82.9
+# x.2       14  83.2   82.9
+# x.5       12  59.3   58.7
+# x.3       10  43.5   42.8
+
+
+# Stochastic gradient boosting -------------------------------------------------
+
+# Fit a GBM
 set.seed(101)
 trn.gbm <- gbm(y ~ ., data = trn, distribution = "gaussian", n.trees = 10000,
-               shrinkage = 0.01, interaction.depth = 3, bag.fraction = 1,
+               shrinkage = 0.1, interaction.depth = 2, bag.fraction = 1,
                train.fraction = 1, cv.folds = 5, verbose = TRUE)
 best.iter <- gbm.perf(trn.gbm, method = "cv")
 print(best.iter)
+
+# Variable importance plots
 summary(trn.gbm, n.trees = best.iter)
-vip(trn.gbm, pred.var = paste0("x.", 1:10), n.trees = best.iter)
+vip.gbm <- vip(trn.gbm, pred.var = paste0("x.", 1:10), n.trees = best.iter)
+print(vip.gbm)
+
+
+# Neural network ---------------------------------------------------------------
+
 # # Setup for k-fold cross-validation
 # ctrl <- trainControl(method = "cv", number = 5, verboseIter = TRUE)
 # set.seed(103)
@@ -242,9 +269,10 @@ res <- plyr::aaply(combns, .margins = 2, .fun = vint, .progress = "text")
 plot(rowMeans(res), type = "h")
 
 d <- data.frame(x = paste0(combns[1L, ], "*", combns[2L, ]), y = rowMeans(res))
+d <- d[order(d$y, decreasing = TRUE), ]
 
-pdf(file = "manuscript-methodology\\network-int.pdf", width = 8, height = 4)
-ggplot(d, aes(reorder(x, -y), y)) +
+pdf(file = "network-int.pdf", width = 8, height = 4)
+ggplot(d[1:10, ], aes(reorder(x, -y), y)) +
   geom_col() +
   xlab("") +
   ylab("Interaction") +
