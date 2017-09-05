@@ -179,7 +179,7 @@ The partial dependence functions for these three variables are displayed in Figu
 
 \subsection{Computational considerations}
 
-Constructing partial dependence functions using the brute force method described in Algorithm~\ref{alg:pdp} can be computationally expensive. Some solutions are discussed in \citet{pdp-greenwell-2017}. Fortunately, Algorithm~\ref{alg:pdp} is embarassingly parallel and computing single-predictor partial dependence functions for each predictor can be done rather quickly on a machine with a multi-core processor. For much larger data sets, it may be worthwhile to reduce the grid size by using specific quantiles for each predcitor. For example, the partial dependence function can be approximated by using the min and max of each predictor along with the deciles of the unique predictor values.
+Constructing partial dependence functions using the brute force method described in Algorithm~\ref{alg:pdp} can be computationally expensive. Some solutions are discussed in \citet{pdp-greenwell-2017}. Fortunately, Algorithm~\ref{alg:pdp} is embarrassingly parallel and computing single-predictor partial dependence functions for each predictor can be done rather quickly on a machine with a multi-core processor. For much larger data sets, it may be worthwhile to reduce the grid size by using specific quantiles for each predictor, rather than using all the unique observations. For example, the partial dependence function can be approximated by using the min and max of each predictor along with the deciles of the unique predictor values.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -187,7 +187,7 @@ Constructing partial dependence functions using the brute force method described
 \label{sec:new}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The PDP for \code{zn} in Figure~\ref{fig:boston-rf-pdps} is relatively flat indicating that \code{zn} does not have much influence on the predicted median home value. In other words, the values $\bar{f}\left(x_{i}\right)$ display little variablility. One might conclude that any variable for which the PDP is "flat" is likely to be less important than those predictors whose PDP varies across a wider range of the response.
+The PDP for \code{zn} in Figure~\ref{fig:boston-rf-pdps} is relatively flat indicating that \code{zn} does not have much influence on the predicted median home value. In other words, the values $\bar{f}\left(x_{i}\right)$ display little variability. One might conclude that any variable for which the PDP is "flat" is likely to be less important than those predictors whose PDP varies across a wider range of the response.
 
 Our notion of variable importance is based on any measure of the "flatness" of the partial dependence function. In general, we define
 \begin{equation}
@@ -200,7 +200,7 @@ where $\flatness$ is any measure of "flatness" of the curve. A simple and effect
 \end{equation}
 Note that our variable importance metric relies on the fitted model; hence, it is crucial to properly tune and train the model to have good performance.
 
-To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of the predicors in the random forest for the Boston housing example and compute \eqref{eqn:vi}. The results are displayed in Figure~\ref{fig:boston-rf-vip-pd}.
+To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of the predictors in the random forest for the Boston housing example and compute \eqref{eqn:vi}. The results are displayed in Figure~\ref{fig:boston-rf-vip-pd}.
 
 \begin{figure}[!htb]
   \label{boston-rf-vip-pd}
