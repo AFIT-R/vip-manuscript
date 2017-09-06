@@ -179,7 +179,7 @@ The partial dependence functions for these three variables are displayed in Figu
 
 \subsection{Computational considerations}
 
-Constructing partial dependence functions using the brute force method described in Algorithm~\ref{alg:pdp} can be computationally expensive. Some solutions are discussed in \citet{pdp-greenwell-2017}. Fortunately, Algorithm~\ref{alg:pdp} is embarrassingly parallel and computing single-predictor partial dependence functions for each predictor can be done rather quickly on a machine with a multi-core processor. For much larger data sets, it may be worthwhile to reduce the grid size by using specific quantiles for each predictor, rather than using all the unique observations. For example, the partial dependence function can be approximated by using the min and max of each predictor along with the deciles of the unique predictor values.
+Constructing partial dependence functions using the brute force method described in Algorithm~\ref{alg:pdp} can be computationally expensive. Some solutions are discussed in \citet{pdp-greenwell-2017}. Fortunately, Algorithm~\ref{alg:pdp} is embarrassingly parallel and computing partial dependence functions for each predictor can be done rather quickly on a machine with a multi-core processor. For much larger data sets, it may be worthwhile to reduce the grid size by using specific quantiles for each predictor, rather than using all the unique observations. For example, the partial dependence function can be approximated by using the min and max of each predictor along with the deciles of the unique predictor values.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -213,29 +213,26 @@ To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of
 \subsection{Detecting interaction effects}
 \label{sec:interaction}
 
-The same idea can be applied to finding interactions. Essentially a strong interaction effect of $x_1$ and $x_2$ on $\mathcal{Y}$ would suggest that $\imp\left(x_1, x_2\right)$ is roughly constant when either $x_1$ or $x_2$ is held constant while the other varies. 
+The same idea can be applied to finding interactions. Essentially a weak interaction effect of $x_1$ and $x_2$ on $\mathcal{Y}$ would suggest that $\imp\left(x_1, x_2\right)$ has little variation when either $x_1$ or $x_2$ is held constant while the other varies. 
 
-More coming soon!
-
-\begin{equation}
-\label{eqn:interaction}
-  \inter\left(x_i, x_j\right) = \left[\imp\left(x_i | x_j\right) + \imp\left(x_j | x_i\right)\right] / 2
-\end{equation}
+Let $\boldsymbol{z}_s = \left(x_i, x_j\right)$, $i \neq j$, be any two predictors in the feature space $\boldsymbol{x}$. Construct the partial dependence function $\bar{f}_s\left(x_i, x_j\right)$ and compute $\imp\left(x_i\right)$ for each unique value of $x_j$ and take the standard deviation of the resulting importance scores. The same can be done for $x_j$ and the results are averaged together. Large values (relative to each other) would be indicative of possible interaction effects. 
 
 
-\subsection{Example: Friedman's regression problem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Friedman's regression problem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 To further illustrate, we will use one of the regression problems described in Friedman (1991) and Breiman (1996). Inputs are 10 independent variables uniformly distributed on the interval $\left[0, 1\right]$; only 5 out of these 10 are actually used. Outputs are created according to the formula
 \begin{equation}
 \mathcal{Y} = 10 \sin\left(\pi x_1 x_2\right) + 20 \left(x_3 - 0.5\right) ^ 2 + 10 x_4 + 5 x_5 + \epsilon,
 \end{equation}
-where $\epsilon \sim \mathcal{N}\left(0, \sigma\right)$. We fit a neural network with one hidden layer containing eight units and a weight decay of 0.01 (these parameters were chosen using 5-fold cross-validation). The network diagram is displayed in Figure~\ref{fig:network} below.
-\begin{figure}[!htb]
-  \label{network}
-  \centering
-  \includegraphics[width=1.0\textwidth]{network}
-  \caption{Diagram of the neural network fitted to the Friedman 1 data set.}
-\end{figure}
+where $\epsilon \sim \mathcal{N}\left(0, \sigma\right)$. We fit a neural network with one hidden layer containing eight units and a weight decay of 0.01 (these parameters were chosen using 5-fold cross-validation). %The network diagram is displayed in Figure~\ref{fig:network} below.
+% \begin{figure}[!htb]
+%   \label{network}
+%   \centering
+%   \includegraphics[width=1.0\textwidth]{network}
+%   \caption{Diagram of the neural network fitted to the Friedman 1 data set.}
+% \end{figure}
 
 Variable importance plots are displayed in Figure~\ref{fig:network-vip}. Notice how the Garson and Olden algorithms incorrectly label some of the features not in the true model as "important".
 \begin{figure}[!htb]
@@ -252,6 +249,12 @@ We also constructed the partial dependence functions for all pairwise interactio
   \includegraphics[width=1.0\textwidth]{network-int}
   \caption{TBD.}
 \end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Analysis of the ? data}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

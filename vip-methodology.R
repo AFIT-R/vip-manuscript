@@ -8,6 +8,7 @@ library(dplyr)
 library(earth)
 library(gbm)
 library(ggplot2)
+library(kernlab)
 library(mlbench)
 library(NeuralNetTools)
 library(nnet)
@@ -29,7 +30,7 @@ trn3 <- as.data.frame(mlbench.friedman3(500))
 data(boston, package = "pdp")
 
 # Load concrete data
-conc <- read.csv("manuscript-methodology//Concrete_Data.csv", header = TRUE)
+conc <- read.csv("Concrete_Data.csv", header = TRUE)
 
 
 ################################################################################
@@ -337,32 +338,37 @@ plot(varImp(boston.cubist))
 # Example: concrete compressive strength
 ################################################################################
 
-# FIt a cubist model
-X <- subset(conc, select = -Concrete.compressive.strength)
-y <- conc$Concrete.compressive.strength
+# Train an SVM to the spam data
+data(spam, package = "kernlab")
+X <- subset(spam, select = -type)
+y <- spam$type
 set.seed(1141)
-conc.cubist.tune <- train(
+tune.svm <- train(
   x = X,
   y = y,
-  method = "cubist",
-  metric = "Rsquared",
+  method = "svmRadial",
+  prob.model = TRUE,
+  metric = "Accuracy",
   trControl = trainControl(method = "cv", number = 10, verboseIter = TRUE),
-  tuneGrid = expand.grid(neighbors = 0:9, committees = 1:20)
+  # tuneGrid = expand.grid(neighbors = 0:9, committees = 1:20)
+  tuneLength = 10
 )
-conc.rf.tune <- train(
-  x = X,
-  y = y,
-  method = "rf",
-  importance = TRUE,
-  metric = "Rsquared",
-  trControl = trainControl(method = "cv", number = 10, verboseIter = TRUE),
-  tuneGrid = expand.grid(mtry = 1:8)
-)
-grid.arrange(plot(conc.cubist.tune), plot(conc.rf.tune), ncol = 2)
-p1 <- vip(conc.cubist.tune, pred.var = names(X))
-p2 <- vip(conc.rf.tune, pred.var = names(X))
-grid.arrange(p1, p2, ncol = 2)
-grid.arrange(p1, p2, plot(varImp(conc.cubist.tune)), plot(varImp(conc.rf.tune)),
-             ncol = 2)
-varImpPlot(conc.rf.tune$finalModel)
+set.seed(1141)
+tune.rf <- randomForest(type ~ ., data = spam, importance = TRUE)
+# tune.rf <- train(
+#   x = X,
+#   y = y,
+#   method = "rf",
+#   importance = TRUE,
+#   metric = "Accuracy",
+#   trControl = trainControl(method = "cv", number = 10, verboseIter = TRUE),
+#   tuneGrid = expand.grid(mtry = 1:8)
+# )
+grid.arrange(plot(tune.svm), plot(tune.rf), ncol = 2)
+p <- vip(tune.svm, pred.var = names(X), progress = "text")
+grid.arrange(p, plot(varImp(tune.svm)), plot(varImp(tune.rf)), ncol = 3)
+varImpPlot(tune.rf)
+pdf(file = "spam-vip.pdf", width = 7, height = 5)
+print(p)
+dev.off()
 
