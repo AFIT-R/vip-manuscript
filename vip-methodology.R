@@ -372,3 +372,26 @@ pdf(file = "spam-vip.pdf", width = 7, height = 5)
 print(p)
 dev.off()
 
+
+################################################################################
+# Ozone data
+################################################################################
+
+# Load data from the UCI website
+url <- "https://web.stanford.edu/~hastie/ElemStatLearn/datasets/LAozone.data"
+ozone <- read.csv(url, header = TRUE)
+
+ctrl <- trainControl(method = "cv", number = 5, verboseIter = TRUE)
+set.seed(0151)
+ozone.tune <- train(x = subset(ozone, select = -ozone),
+                    y = ozone$ozone,
+                    method = "ppr",
+                    metric = "Rsquared",
+                    trControl = ctrl,
+                    tuneLength = 5)
+plot(ozone.tune)
+
+vip(ozone.tune, pred.var = names(subset(ozone, select = -ozone)))
+plot(varImp(ozone.tune))
+
+# Compare to random forest
