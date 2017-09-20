@@ -381,17 +381,31 @@ dev.off()
 url <- "https://web.stanford.edu/~hastie/ElemStatLearn/datasets/LAozone.data"
 ozone <- read.csv(url, header = TRUE)
 
-ctrl <- trainControl(method = "cv", number = 5, verboseIter = TRUE)
+# Setup for repeated k-fold cross-validation
+ctrl <- trainControl(method = "repeatedcv", number = 5, repeats = 10, 
+                     verboseIter = TRUE)
 set.seed(0151)
 ozone.tune <- train(x = subset(ozone, select = -ozone),
                     y = ozone$ozone,
                     method = "ppr",
+                    linout = TRUE,
+                    trace = FALSE,
                     metric = "Rsquared",
                     trControl = ctrl,
-                    tuneLength = 5)
-plot(ozone.tune)
-
-vip(ozone.tune, pred.var = names(subset(ozone, select = -ozone)))
-plot(varImp(ozone.tune))
+                    tuneLength = 10)
+plot(ozone.tune)  # plot tuning results
 
 # Compare to random forest
+set.seed(0156)
+ozone.rf <- randomForest(ozone ~ ., data = ozone, importance = TRUE)
+plot(ozone.rf)
+varImpPlot(ozone.rf)
+
+# Variable importance plots
+grid.arrange(
+  vip(ozone.tune, pred.var = names(subset(ozone, select = -ozone))),
+  plot(varImp(ozone.tune)),
+  vip(ozone.rf, pred.var = names(subset(ozone, select = -ozone))),
+  ncol = 3
+)
+
