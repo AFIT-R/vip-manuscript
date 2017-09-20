@@ -199,14 +199,19 @@ Our notion of variable importance is based on any measure of the "flatness" of t
 \begin{equation}
   \imp\left(x\right) = \flatness\left(\bar{f}_s\left(\boldsymbol{z}_s\right)\right),
 \end{equation}
-where $\flatness$ is any measure of "flatness" of the curve. A simple and effective measure to use is the sample standard deviation. Based on Algorithm~\ref{alg:pdp}, our importance metric for predictor $x_1$ is simply
+where $\flatness$ is any measure of "flatness" of the curve. A simple and effective measure to use is the sample standard deviation for continuous predictors and the range statistic for factors with $K$ levels. Based on Algorithm~\ref{alg:pdp}, our importance metric for predictor $x_1$ is simply
 \begin{equation}
-\label{eqn:vi}
-  \imp\left(x_1\right) = \sqrt{\frac{1}{k - 1}\sum_{i = 1}^k\left[\bar{f}_1\left(x_{1i}\right) - \frac{1}{k}\sum_{j = 1}^k\bar{f}_1\left(x_{1i}\right)\right] ^ 2}.
+\label{eqn:vi-con}
+  \imp\left(x_1\right) = \sqrt{\frac{1}{k - 1}\sum_{i = 1}^k\left[\bar{f}_1\left(x_{1i}\right) - \frac{1}{k}\sum_{i = 1}^k\bar{f}_1\left(x_{1i}\right)\right] ^ 2},
 \end{equation}
-Note that our variable importance metric relies on the fitted model; hence, it is crucial to properly tune and train the model to have good performance.
+if $x_1$ is continuous and
+\begin{equation}
+\label{eqn:vi-fac}
+  \imp\left(x_1\right) = \max_i\left(\bar{f}_1\left(x_{1i}\right)\right) - \min_i\left(\bar{f}_1\left(x_{1i}\right)\right),
+\end{equation}
+if $x_1$ is categorical. Note that our variable importance metric relies on the fitted model; hence, it is crucial to properly tune and train the model to have good performance.
 
-To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of the predictors in the random forest for the Boston housing example and compute \eqref{eqn:vi}. The results are displayed in Figure~\ref{fig:boston-rf-vip-pd}.
+To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of the predictors in the random forest for the Boston housing example and compute \eqref{eqn:vi-con}. The results are displayed in Figure~\ref{fig:boston-rf-vip-pd}.
 
 \begin{figure}[!htb]
   \label{boston-rf-vip-pd}

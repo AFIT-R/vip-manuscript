@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  20 SEP 2017 12:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  20 SEP 2017 12:52
 entering extended mode
 **./jcgs-template.tex
 (jcgs-template.tex
@@ -355,60 +355,58 @@ Overfull \hbox (30.95894pt too wide) in paragraph at lines 182--189
 es are dis-played in Fig-ure \OT1/cmr/bx/n/12 (fig:boston-
  []
 
-[7 <./boston-rf-vip.pdf>] <boston-rf-vip-pd.pdf, id=48, 505.89pt x 289.08pt>
+[7 <./boston-rf-vip.pdf>] [8 <./boston-rf-pdps.pdf>]
+<boston-rf-vip-pd.pdf, id=59, 505.89pt x 289.08pt>
 File: boston-rf-vip-pd.pdf Graphic file (type pdf)
-
-<use boston-rf-vip-pd.pdf>
-Package pdftex.def Info: boston-rf-vip-pd.pdf used on input line 214.
+ <use boston-rf-vip-pd.pdf>
+Package pdftex.def Info: boston-rf-vip-pd.pdf used on input line 219.
 (pdftex.def)             Requested size: 462.26999pt x 264.15714pt.
- [8 <./boston-rf-pdps.pdf>] [9 <./boston-rf-vip-pd.pdf>] <network-vip.pdf, id=6
-8, 867.24pt x 433.62pt>
+
+[9 <./boston-rf-vip-pd.pdf>] <network-vip.pdf, id=68, 867.24pt x 433.62pt>
 File: network-vip.pdf Graphic file (type pdf)
- <use network-vip.pdf>
-Package pdftex.def Info: network-vip.pdf used on input line 256.
+
+<use network-vip.pdf>
+Package pdftex.def Info: network-vip.pdf used on input line 261.
 (pdftex.def)             Requested size: 462.26999pt x 231.13419pt.
-
-<network-int.pdf, id=69, 578.16pt x 289.08pt>
+ <network-int.pdf, id=69, 578.16pt x 289.08pt>
 File: network-int.pdf Graphic file (type pdf)
- <use network-int.pdf>
-Package pdftex.def Info: network-int.pdf used on input line 264.
+
+<use network-int.pdf>
+Package pdftex.def Info: network-int.pdf used on input line 269.
 (pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
- [10]
-Overfull \vbox (46.93962pt too high) has occurred while \output is active []
-
-
-[11 <./network-vip.pdf> <./network-int.pdf>] (jcgs-template.bbl [12]) [13]
-(jcgs-template.aux) ) 
+ [10] [11 <./network-vip.pdf> <./network-int.pdf>]
+(jcgs-template.bbl [12]) [13] (jcgs-template.aux) ) 
 Here is how much of TeX's memory you used:
- 3778 strings out of 493323
- 55055 string characters out of 3128713
- 131244 words of memory out of 3000000
- 7252 multiletter control sequences out of 15000+200000
+ 3779 strings out of 493323
+ 55071 string characters out of 3128713
+ 131252 words of memory out of 3000000
+ 7253 multiletter control sequences out of 15000+200000
  14399 words of font info for 51 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,11n,28p,1362b,394s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/greenweb/AppData/Local/Programs/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/greenweb/AppData
-/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/
-greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi1
-2.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmmi6.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/greenweb/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/greenweb/AppData
-/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><C:/U
-sers/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmr10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmr12.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/greenweb/AppData/Local/Program
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/greenweb/AppDa
-ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users
-/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy
-8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/greenweb/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on jcgs-template.pdf (13 pages, 255841 bytes).
+<C:/Users/greenweb/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/gr
+eenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.
+pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmex10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/greenweb/AppData/Local/Programs/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/greenweb/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/gre
+enweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.
+pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cmextra/cmmib8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/greenweb/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/greenweb/AppDa
+ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/
+greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy1
+0.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmsy7.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/greenweb/AppData/Local/Programs/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/
+Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/g
+reenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12
+.pfb>
+Output written on jcgs-template.pdf (13 pages, 256475 bytes).
 PDF statistics:
  146 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
