@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  20 SEP 2017 12:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  20 SEP 2017 14:47
 entering extended mode
 **./jcgs-template.tex
 (jcgs-template.tex
@@ -362,53 +362,71 @@ File: boston-rf-vip-pd.pdf Graphic file (type pdf)
 Package pdftex.def Info: boston-rf-vip-pd.pdf used on input line 219.
 (pdftex.def)             Requested size: 462.26999pt x 264.15714pt.
 
-[9 <./boston-rf-vip-pd.pdf>] <network-vip.pdf, id=68, 867.24pt x 433.62pt>
-File: network-vip.pdf Graphic file (type pdf)
+[9 <./boston-rf-vip-pd.pdf>] <lm-pdps.pdf, id=68, 578.16pt x 289.08pt>
+File: lm-pdps.pdf Graphic file (type pdf)
 
-<use network-vip.pdf>
-Package pdftex.def Info: network-vip.pdf used on input line 261.
-(pdftex.def)             Requested size: 462.26999pt x 231.13419pt.
- <network-int.pdf, id=69, 578.16pt x 289.08pt>
-File: network-int.pdf Graphic file (type pdf)
-
-<use network-int.pdf>
-Package pdftex.def Info: network-int.pdf used on input line 269.
+<use lm-pdps.pdf>
+Package pdftex.def Info: lm-pdps.pdf used on input line 246.
 (pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
- [10] [11 <./network-vip.pdf> <./network-int.pdf>]
-(jcgs-template.bbl [12]) [13] (jcgs-template.aux) ) 
+ [10 <./lm-pdps.pdf>]
+<network-vip.pdf, id=80, 867.24pt x 433.62pt>
+File: network-vip.pdf Graphic file (type pdf)
+ <use network-vip.pdf>
+Package pdftex.def Info: network-vip.pdf used on input line 291.
+(pdftex.def)             Requested size: 462.26999pt x 231.13419pt.
+
+<network-int.pdf, id=81, 578.16pt x 289.08pt>
+File: network-int.pdf Graphic file (type pdf)
+ <use network-int.pdf>
+Package pdftex.def Info: network-int.pdf used on input line 299.
+(pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
+ [11]
+<pima-pdps.pdf, id=85, 867.24pt x 289.08pt>
+File: pima-pdps.pdf Graphic file (type pdf)
+ <use pima-pdps.pdf>
+Package pdftex.def Info: pima-pdps.pdf used on input line 311.
+(pdftex.def)             Requested size: 462.26999pt x 154.08945pt.
+
+<pima-vip.pdf, id=86, 505.89pt x 361.35pt>
+File: pima-vip.pdf Graphic file (type pdf)
+ <use pima-vip.pdf>
+Package pdftex.def Info: pima-vip.pdf used on input line 319.
+(pdftex.def)             Requested size: 462.26999pt x 330.19643pt.
+ [12 <./network-vip.pdf>] [13 <./network-int.pdf> <./pima-pdps.pdf>] (jcgs-temp
+late.bbl [14 <./pima-vip.pdf>]) [15] (jcgs-template.aux) ) 
 Here is how much of TeX's memory you used:
- 3779 strings out of 493323
- 55071 string characters out of 3128713
- 131252 words of memory out of 3000000
- 7253 multiletter control sequences out of 15000+200000
+ 3798 strings out of 493323
+ 55347 string characters out of 3128713
+ 131292 words of memory out of 3000000
+ 7269 multiletter control sequences out of 15000+200000
  14399 words of font info for 51 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,11n,28p,1362b,394s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/greenweb/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/gr
-eenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.
-pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmex10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/greenweb/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/greenweb/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/gre
-enweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.
-pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cmextra/cmmib8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/greenweb/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/greenweb/AppDa
-ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/
-greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmsy7.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/greenweb/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/
-Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/g
-reenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12
-.pfb>
-Output written on jcgs-template.pdf (13 pages, 256475 bytes).
+<C:/Users/greenweb/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/U
+sers/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmbx12.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmex10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/greenweb/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/greenweb/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Us
+ers/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mmib10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cmextra/cmmib8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/greenweb/AppData/Local
+/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/greenwe
+b/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:
+/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmsy10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmsy7.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/greenweb/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/
+Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
+/cmtt12.pfb>
+Output written on jcgs-template.pdf (15 pages, 279541 bytes).
 PDF statistics:
- 146 PDF objects out of 1000 (max. 8388607)
+ 173 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

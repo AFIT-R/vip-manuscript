@@ -286,6 +286,48 @@ dev.off()
 
 
 ################################################################################
+# Linear model
+################################################################################
+
+# Simulate data
+n <- 1000
+set.seed(101)
+x1 <- runif(N, min = 0, max = 1)
+x2 <- runif(N, min = 0, max = 1)
+d <- data.frame(x1, x2, y = 1 + 3*x1 - 5*x2 + rnorm(n, sd = 0.1))
+pairs(d)
+
+# Fit a simple linear model
+fit <- lm(Y ~ X1 + X2, data = d)
+
+# Estimated and true partial dependence plots
+pd1 <- partial(fit, pred.var = "X1")
+pd2 <- partial(fit, pred.var = "X2")
+pdf(file = "lm-pdps.pdf", width = 8, height = 4)
+grid.arrange(
+  autoplot(pd1, pdp.size = 3.2, alpha = 0.5) + 
+    geom_abline(slope = 3, intercept = -3/2, col = "red") +
+    xlab(expression(X[1])) +
+    ylab("Partial dependence") +
+    ylim(-2.5, 2.5) +
+    theme_light(), 
+  autoplot(pd2, pdp.size = 1.2, alpha = 0.5) + 
+    geom_abline(slope = -5, intercept = 5/2, col = "red") +
+    xlab(expression(X[2])) +
+    ylab("Partial dependence") +
+    ylim(-2.5, 2.5) +
+    theme_light(), 
+  ncol = 2
+)
+dev.off()
+
+
+varImp(fit)
+vi(fit, use.partial = TRUE)
+5 / 3  # absolute ratio of slopes
+
+
+################################################################################
 #
 ################################################################################
 
@@ -409,3 +451,60 @@ grid.arrange(
   ncol = 3
 )
 
+
+################################################################################
+# Pima indians diabetes data
+################################################################################
+
+# Load data
+data(pima, package = "pdp")
+pima <- na.omit(pima)
+
+# Setup for repeated k-fold cross-validation
+ctrl <- trainControl(method = "repeatedcv", number = 5, repeats = 10, 
+                     classProbs = TRUE, summaryFunction = twoClassSummary,
+                     verboseIter = TRUE)
+
+# Tune the model
+set.seed(1256)
+pima.tune <- train(
+  x = subset(pima, select = -diabetes),
+  y = pima$diabetes,
+  method = "nnet",
+  trace = FALSE,
+  maxit = 2000,
+  metric = "ROC",
+  trControl = ctrl,
+  tuneLength = 5
+)
+plot(pima.tune)  # plot tuning results
+
+# Variable importance plots
+xnames <- names(subset(pima, select = -diabetes))
+pdf(file = "pima-vip.pdf", width = 7, height = 5)
+vip(pima.tune, pred.var = xnames)
+dev.off()
+
+pd.all <- NULL
+for (i in 1:length(xnames)) {
+  pd <- partial(pima.tune, pred.var = xnames[i])
+  pd <- cbind(xnames[i], pd)
+  names(pd) <- c("Feature", "X", "Y")
+  pd.all <- rbind(pd.all, pd)
+}
+
+# Figure ?
+pdf(file = "pima-pdps.pdf", width = 12, height = 4)
+ggplot(pd.all, aes(x = X, y = Y)) +
+  geom_line() +
+  facet_grid( ~ Feature, scales = "free_x") +
+  xlab("") +
+  ylab("Partial dependence") +
+  theme_light()
+dev.off()
+
+# Compare to random forest
+set.seed(0156)
+pima.rf <- randomForest(diabetes ~ ., data = na.omit(pima), importance = TRUE)
+plot(pima.rf)
+varImpPlot(pima.rf)
