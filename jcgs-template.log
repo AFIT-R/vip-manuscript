@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  20 SEP 2017 12:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  20 SEP 2017 12:20
 entering extended mode
 **./jcgs-template.tex
 (jcgs-template.tex
@@ -321,58 +321,57 @@ Non-PDF special ignored!
 
 {C:/Users/greenweb/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] 
 [4]
-Overfull \hbox (2.16008pt too wide) detected at line 128
+Overfull \hbox (2.16008pt too wide) detected at line 134
 [][]
  []
 
 
-Overfull \hbox (14.24867pt too wide) in paragraph at lines 130--131
+Overfull \hbox (14.24867pt too wide) in paragraph at lines 136--137
 []\OT1/cmr/m/n/12 Nowadays, many su-per-vised learn-ing al-go-rithms can fit th
 e data au-to-mat-i-cally in seconds---
  []
 
 [5]
-Overfull \hbox (17.62482pt too wide) detected at line 160
+Overfull \hbox (17.62482pt too wide) detected at line 166
 [][] 
  []
 
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 166.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 174.
 <boston-rf-vip.pdf, id=33, 578.16pt x 361.35pt>
 File: boston-rf-vip.pdf Graphic file (type pdf)
  <use boston-rf-vip.pdf>
-Package pdftex.def Info: boston-rf-vip.pdf used on input line 170.
+Package pdftex.def Info: boston-rf-vip.pdf used on input line 178.
 (pdftex.def)             Requested size: 462.26999pt x 288.91498pt.
 
 [6] <boston-rf-pdps.pdf, id=38, 867.24pt x 289.08pt>
 File: boston-rf-pdps.pdf Graphic file (type pdf)
  <use boston-rf-pdps.pdf>
-Package pdftex.def Info: boston-rf-pdps.pdf used on input line 178.
+Package pdftex.def Info: boston-rf-pdps.pdf used on input line 186.
 (pdftex.def)             Requested size: 462.26999pt x 154.08945pt.
 
-Overfull \hbox (30.95894pt too wide) in paragraph at lines 174--181
+Overfull \hbox (30.95894pt too wide) in paragraph at lines 182--189
 []\OT1/cmr/m/n/12 The par-tial de-pen-dence func-tions for these three vari-abl
 es are dis-played in Fig-ure \OT1/cmr/bx/n/12 (fig:boston-
  []
 
-[7 <./boston-rf-vip.pdf>] [8 <./boston-rf-pdps.pdf>]
-<boston-rf-vip-pd.pdf, id=59, 505.89pt x 289.08pt>
+[7 <./boston-rf-vip.pdf>] <boston-rf-vip-pd.pdf, id=48, 505.89pt x 289.08pt>
 File: boston-rf-vip-pd.pdf Graphic file (type pdf)
- <use boston-rf-vip-pd.pdf>
-Package pdftex.def Info: boston-rf-vip-pd.pdf used on input line 211.
+
+<use boston-rf-vip-pd.pdf>
+Package pdftex.def Info: boston-rf-vip-pd.pdf used on input line 214.
 (pdftex.def)             Requested size: 462.26999pt x 264.15714pt.
-
-[9 <./boston-rf-vip-pd.pdf>] <network-vip.pdf, id=68, 867.24pt x 433.62pt>
+ [8 <./boston-rf-pdps.pdf>] [9 <./boston-rf-vip-pd.pdf>] <network-vip.pdf, id=6
+8, 867.24pt x 433.62pt>
 File: network-vip.pdf Graphic file (type pdf)
-
-<use network-vip.pdf>
-Package pdftex.def Info: network-vip.pdf used on input line 244.
+ <use network-vip.pdf>
+Package pdftex.def Info: network-vip.pdf used on input line 256.
 (pdftex.def)             Requested size: 462.26999pt x 231.13419pt.
- <network-int.pdf, id=69, 578.16pt x 289.08pt>
-File: network-int.pdf Graphic file (type pdf)
 
-<use network-int.pdf>
-Package pdftex.def Info: network-int.pdf used on input line 252.
+<network-int.pdf, id=69, 578.16pt x 289.08pt>
+File: network-int.pdf Graphic file (type pdf)
+ <use network-int.pdf>
+Package pdftex.def Info: network-int.pdf used on input line 264.
 (pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
  [10]
 Overfull \vbox (46.93962pt too high) has occurred while \output is active []
@@ -383,7 +382,7 @@ Overfull \vbox (46.93962pt too high) has occurred while \output is active []
 Here is how much of TeX's memory you used:
  3778 strings out of 493323
  55055 string characters out of 3128713
- 131245 words of memory out of 3000000
+ 131244 words of memory out of 3000000
  7252 multiletter control sequences out of 15000+200000
  14399 words of font info for 51 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -409,7 +408,7 @@ ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users
 msfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/greenweb/AppData/Local/Programs
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on jcgs-template.pdf (13 pages, 254894 bytes).
+Output written on jcgs-template.pdf (13 pages, 255841 bytes).
 PDF statistics:
  146 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
