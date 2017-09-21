@@ -222,13 +222,37 @@ To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Why does it work}
-\label{sec:why}
+\subsection{Linear models}
+\label{sec:linear}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+As mentioned earlier, for linear models, a natural choice for measuring the importance of each term is to use the absolute value of the corresponding coefficient divided by its estimated standard error (i.e., the $t$-statistic). This turns out to be equivalent to the partial dependence-based metric when the predcitors are independely and uniformly distributed of the same range.
+
+For example, suppose we have a linear model of the form
+\begin{equation*}
+  Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon,
+\end{equation*}
+where $\beta_i$ ($i = 1, 2$) is a constant, $X_1$ and $X_2$ are both $\mathcal{U}\left(0, 1\right)$ random variables, and $\epsilon \sim \mathcal{N}\left(0, \sigma ^ 2\right)$. Since we know the distribution of $X_1$ and $X_2$, we can easily find $f_1\left(X_1\right)$ and $f_2\left(X_2\right)$. For instance, 
+\begin{equation*}
+  f_1\left(X_1\right) = \int_0^1 E\left[Y | X_1, X_2\right] p\left(X_2\right) dX_2,
+\end{equation*}
+where $p\left(X_2\right) = 1$. Simple calculus leads to 
+\begin{equation*}
+  f_1\left(X_1\right) = \beta_0 + \beta_2 / 2 + \beta_1 X_1.
+\end{equation*}
+Similarly, we have that
+\begin{equation*}
+  f_2\left(X_2\right) = \beta_0 + \beta_1 / 2 + \beta_2 X_2.
+\end{equation*}
+Since $E\left[Y | X_1, X_2\right] = f\left(X_1, X_2\right)$ is additive, the true partial dependence functions are just simple linear regressions with their original coefficient and an adjusted intercept. Taking the variance of each gives
+\begin{equation*}
+Var\left[f_1\left(X_1\right)\right] = \beta_1 ^ 2 / 12 \quad and \quad Var\left[f_2\left(X_2\right)\right] = \beta_2 ^ 2 / 12.
+\end{equation*}
+Hence, the standard deviations are just the absolute values of the original coefficients (scaled by the same constant).
 
 To illustrate, we simulated $n = 1000$ observations from the following linear model
 \begin{equation*}
-  Y = 1 + 3 X_1 - 5 X+2 + \epsilon,
+  Y = 1 + 3 X_1 - 5 X_2 + \epsilon,
 \end{equation*}
 where $X_1$ and $X_2$ are both $\mathcal{U}\left(0, 1\right)$ random variables, and $\epsilon \sim \mathcal{N}\left(0, 0.01 ^ 2\right)$. Since we know the distribution of $X_1$ and $X_2$, we can easily find $f_1\left(X_1\right)$ and $f_2\left(X_2\right)$:
 \begin{equation*}
