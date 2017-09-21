@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  20 SEP 2017 14:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  21 SEP 2017 09:13
 entering extended mode
 **./jcgs-template.tex
 (jcgs-template.tex
@@ -368,29 +368,29 @@ File: lm-pdps.pdf Graphic file (type pdf)
 <use lm-pdps.pdf>
 Package pdftex.def Info: lm-pdps.pdf used on input line 246.
 (pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
- [10 <./lm-pdps.pdf>]
-<network-vip.pdf, id=80, 867.24pt x 433.62pt>
+ [10 <./lm-pdps.pdf>] [11]
+<network-vip.pdf, id=83, 867.24pt x 433.62pt>
 File: network-vip.pdf Graphic file (type pdf)
  <use network-vip.pdf>
-Package pdftex.def Info: network-vip.pdf used on input line 291.
+Package pdftex.def Info: network-vip.pdf used on input line 294.
 (pdftex.def)             Requested size: 462.26999pt x 231.13419pt.
 
-<network-int.pdf, id=81, 578.16pt x 289.08pt>
+<network-int.pdf, id=84, 578.16pt x 289.08pt>
 File: network-int.pdf Graphic file (type pdf)
  <use network-int.pdf>
-Package pdftex.def Info: network-int.pdf used on input line 299.
+Package pdftex.def Info: network-int.pdf used on input line 302.
 (pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
- [11]
+
 <pima-pdps.pdf, id=85, 867.24pt x 289.08pt>
 File: pima-pdps.pdf Graphic file (type pdf)
  <use pima-pdps.pdf>
-Package pdftex.def Info: pima-pdps.pdf used on input line 311.
+Package pdftex.def Info: pima-pdps.pdf used on input line 314.
 (pdftex.def)             Requested size: 462.26999pt x 154.08945pt.
 
 <pima-vip.pdf, id=86, 505.89pt x 361.35pt>
 File: pima-vip.pdf Graphic file (type pdf)
  <use pima-vip.pdf>
-Package pdftex.def Info: pima-vip.pdf used on input line 319.
+Package pdftex.def Info: pima-vip.pdf used on input line 322.
 (pdftex.def)             Requested size: 462.26999pt x 330.19643pt.
  [12 <./network-vip.pdf>] [13 <./network-int.pdf> <./pima-pdps.pdf>] (jcgs-temp
 late.bbl [14 <./pima-vip.pdf>]) [15] (jcgs-template.aux) ) 
@@ -424,7 +424,7 @@ grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/A
 ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/
 Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmtt12.pfb>
-Output written on jcgs-template.pdf (15 pages, 279541 bytes).
+Output written on jcgs-template.pdf (15 pages, 279887 bytes).
 PDF statistics:
  173 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

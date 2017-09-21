@@ -247,8 +247,11 @@ These are plotted as red lines in Figure~\ref{fig:lm-pdps}. Additionally, the bl
   \caption{Estimated and true partial dependence plots.}
 \end{figure}
 
-Clearly, $X_2$ is more influential than $X_1$. A natural way of mearing the relative influence of $X_2$ over $X_1$ on $Y$ would be to take the absolute value of the ratio of the slopes in $f_2\left(X_1\right)$ and $f_1\left(X_1\right)$, which in this case gives $5 / 3 \approx 1.67$. In other words, $X_2$ is roughly 1.67 times more influential on $Y$ than $X_1$. Using the partial-dependence-based variable importance metric, we obtain $\imp\left(X_1\right) = 1.4828203$ and $\imp\left(X_2\right) = 0.8961719$ which gives the ratio $\imp\left(X_2\right) / \imp\left(X_1\right) \approx 1.65$.
-
+Clearly, $X_2$ is more influential than $X_1$. A natural way of mearing the relative influence of $X_2$ over $X_1$ on $Y$ would be to take the absolute value of the ratio of the slopes in $f_2\left(X_2\right)$ and $f_1\left(X_1\right)$, which in this case gives $5 / 3 \approx 1.67$. In other words, $X_2$ is roughly 1.67 times more influential on $Y$ than $X_1$. Using the partial-dependence-based variable importance metric, we obtain $\imp\left(X_1\right) = 1.4828203$ and $\imp\left(X_2\right) = 0.8961719$ which gives the ratio $\imp\left(X_2\right) / \imp\left(X_1\right) \approx 1.65$. In fact, we can compute the true variance for both partial dependence functions:
+\begin{equation*}
+Var\left[f_1\left(X_1\right)\right] = 3^2 / 12 \quad and \quad Var\left[f_2\left(X_2\right)\right] = 5^2 / 12.
+\end{equation*}
+Hence, the ratio of the true standard deviations is $5 / 3 \approx 1.67$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
