@@ -21,10 +21,10 @@ set1 <- RColorBrewer::brewer.pal(9, "Set1")
 
 # Simulate data from the regression problems described in Friedman (1991) and
 # Breiman (1996)
-set.seed(3101)
-trn1 <- as.data.frame(mlbench.friedman1(500))
-trn2 <- as.data.frame(mlbench.friedman2(500))
-trn3 <- as.data.frame(mlbench.friedman3(500))
+# set.seed(3101)
+# trn1 <- as.data.frame(mlbench.friedman1(500))
+# trn2 <- as.data.frame(mlbench.friedman2(500))
+# trn3 <- as.data.frame(mlbench.friedman3(500))
 
 # Load the (corrected) Boston housing data
 data(boston, package = "pdp")
@@ -32,12 +32,9 @@ data(boston, package = "pdp")
 # Load concrete data
 conc <- read.csv("Concrete_Data.csv", header = TRUE)
 
-# Width of bars in each plot
-bar.width <- 0.5
-
 
 ################################################################################
-# Random forest analysis of the Boston housing data
+# Boston housing example: random forest
 ################################################################################
 
 # Fit a random forest to the Boston Housing data (mtry was tuned using cross-
@@ -63,7 +60,7 @@ p2 <- ggplot(imp2, aes(x = reorder(Variable, IncNodePurity), y = IncNodePurity))
   coord_flip() +
   xlab("") +
   theme_light()
-pdf(file = "manuscript-methodology\\boston-rf-vip.pdf", width = 8, height = 5)
+pdf(file = "boston-rf-vip.pdf", width = 8, height = 5)
 grid.arrange(p1, p2, ncol = 2)
 dev.off()
 
@@ -109,13 +106,13 @@ p1 <- vip(boston.rf, pred.var = names(subset(boston, select = -cmedv)), FUN = sd
 p2 <- vip(boston.rf, pred.var = names(subset(boston, select = -cmedv)), FUN = mad)
 
 # Figure ?
-pdf(file = "manuscript-methodology\\boston-rf-vip-pd.pdf", width = 7, height = 4)
+pdf(file = "boston-rf-vip-pd.pdf", width = 7, height = 4)
 print(p)
 dev.off()
 
 
 ################################################################################
-# Boston housing example
+# Boston housing example: neural network
 ################################################################################
 
 ctrl <- trainControl(method = "cv", number = 5, verboseIter = TRUE)
@@ -124,6 +121,7 @@ boston.nn.tune <- train(
   x = subset(boston, select = -cmedv),
   y = boston$cmedv,
   method = "nnet",
+  trace = FALSE,
   linout = TRUE,
   maxit = 1000,
   trControl = ctrl,
@@ -131,30 +129,20 @@ boston.nn.tune <- train(
 )
 plot(boston.nn.tune)
 
-set.seed
-X <- subset(boston, select = -cmedv)
-X$chas <- as.numeric(X$chas)
-boston.svm.tune <- train(
-  x = X,
-  y = boston$cmedv,
-  method = "svmRadialCost",
-  preProc = c("center", "scale"),
-  metric = "Rsquared",
-  trControl = ctrl,
-  tuneGrid = data.frame("C" = seq(from = 0.25, to = 100, length = 100))
-)
-plot(boston.svm.tune)
-
+# Fit a neural network with "optimal" tuning parameters
 set.seed(301)
-fit <- nnet(cmedv ~ ., data = boston, size = 15, decay = 0.1, linout = TRUE,
-            maxit = 10000)
-vip(fit, pred.var = names(subset(boston, select = -cmedv)), quantiles = TRUE, probs = 10:90/100)
-vip(fit, pred.var = names(subset(boston, select = -cmedv)), FUN = var)
-vip(fit, pred.var = names(subset(boston, select = -cmedv)), FUN = IQR)
+boston.nn <- nnet(cmedv ~ ., data = boston, size = 15, decay = 0.1, 
+                  linout = TRUE, maxit = 10000)
 
-fit <- boston.rf
+# Variable importance plots
+vip(boston.nn, pred.var = names(subset(boston, select = -cmedv)), 
+    quantiles = TRUE, probs = 10:90/100)
+vip(boston.nn, pred.var = names(subset(boston, select = -cmedv)), FUN = var)
+vip(boston.nn, pred.var = names(subset(boston, select = -cmedv)), FUN = IQR)
+
+# Variable importance plots with custom metric
 pred.var <- names(subset(boston, select = -cmedv))
-vip(fit, pred.var = pred.var, FUN = function(x) {
+vip(boston.rf, pred.var = pred.var, FUN = function(x) {
   # max(abs(x - mean(boston$cmedv)))
   sqrt(mean((x - mean(boston$cmedv)) ^ 2))
 })
@@ -211,6 +199,7 @@ print(vip.gbm)
 #   x = subset(trn, select = -y),
 #   y = trn$y,
 #   method = "nnet",
+#   trace = FALSE,
 #   linout = TRUE,
 #   maxit = 1000,
 #   trControl = ctrl,
@@ -229,7 +218,7 @@ vip(trn.nn, pred.var = paste0("x.", 1:10), FUN = var)
 vip(trn.nn, pred.var = paste0("x.", 1:10), FUN = mad)
 
 # Figure ?
-pdf(file = "manuscript-methodology\\network.pdf", width = 12, height = 6)
+pdf(file = "network.pdf", width = 12, height = 6)
 plotnet(trn.nn, circle_col = "lightgrey")
 dev.off()
 
@@ -261,7 +250,7 @@ p3 <- ggplot(trn.nn.olden, aes(x = reorder(Variable, Importance), y = Importance
   theme_light()
 
 # Figure ?
-pdf(file = "manuscript-methodology\\network-vip.pdf", width = 12, height = 6)
+pdf(file = "network-vip.pdf", width = 12, height = 6)
 grid.arrange(p1, p2, p3, ncol = 3)
 dev.off()
 
@@ -303,17 +292,17 @@ dev.off()
 # Simulate data
 n <- 1000
 set.seed(101)
-x1 <- runif(N, min = 0, max = 1)
-x2 <- runif(N, min = 0, max = 1)
+x1 <- runif(n, min = 0, max = 1)
+x2 <- runif(n, min = 0, max = 1)
 d <- data.frame(x1, x2, y = 1 + 3*x1 - 5*x2 + rnorm(n, sd = 0.1))
 pairs(d)
 
 # Fit a simple linear model
-fit <- lm(Y ~ X1 + X2, data = d)
+fit <- lm(y ~ x1 + x2, data = d)
 
 # Estimated and true partial dependence plots
-pd1 <- partial(fit, pred.var = "X1")
-pd2 <- partial(fit, pred.var = "X2")
+pd1 <- partial(fit, pred.var = "x1")
+pd2 <- partial(fit, pred.var = "x2")
 pdf(file = "lm-pdps.pdf", width = 8, height = 4)
 grid.arrange(
   autoplot(pd1, pdp.size = 3.2, alpha = 0.5) + 
@@ -336,82 +325,6 @@ dev.off()
 varImp(fit)
 vi(fit, use.partial = TRUE)
 5 / 3  # absolute ratio of slopes
-
-
-################################################################################
-# Example: concrete compressive strength
-################################################################################
-
-# Train an SVM to the spam data
-data(spam, package = "kernlab")
-X <- subset(spam, select = -type)
-y <- spam$type
-set.seed(1141)
-tune.svm <- train(
-  x = X,
-  y = y,
-  method = "svmRadial",
-  prob.model = TRUE,
-  metric = "Accuracy",
-  trControl = trainControl(method = "cv", number = 10, verboseIter = TRUE),
-  # tuneGrid = expand.grid(neighbors = 0:9, committees = 1:20)
-  tuneLength = 10
-)
-set.seed(1141)
-tune.rf <- randomForest(type ~ ., data = spam, importance = TRUE)
-# tune.rf <- train(
-#   x = X,
-#   y = y,
-#   method = "rf",
-#   importance = TRUE,
-#   metric = "Accuracy",
-#   trControl = trainControl(method = "cv", number = 10, verboseIter = TRUE),
-#   tuneGrid = expand.grid(mtry = 1:8)
-# )
-grid.arrange(plot(tune.svm), plot(tune.rf), ncol = 2)
-p <- vip(tune.svm, pred.var = names(X), progress = "text")
-grid.arrange(p, plot(varImp(tune.svm)), plot(varImp(tune.rf)), ncol = 3)
-varImpPlot(tune.rf)
-pdf(file = "spam-vip.pdf", width = 7, height = 5)
-print(p)
-dev.off()
-
-
-################################################################################
-# Ozone data
-################################################################################
-
-# Load data from the UCI website
-url <- "https://web.stanford.edu/~hastie/ElemStatLearn/datasets/LAozone.data"
-ozone <- read.csv(url, header = TRUE)
-
-# Setup for repeated k-fold cross-validation
-ctrl <- trainControl(method = "repeatedcv", number = 5, repeats = 10, 
-                     verboseIter = TRUE)
-set.seed(0151)
-ozone.tune <- train(x = subset(ozone, select = -ozone),
-                    y = ozone$ozone,
-                    method = "ppr",
-                    linout = TRUE,
-                    trace = FALSE,
-                    metric = "Rsquared",
-                    trControl = ctrl,
-                    tuneLength = 10)
-plot(ozone.tune)  # plot tuning results
-
-# Compare to random forest
-set.seed(0156)
-ozone.rf <- randomForest(ozone ~ ., data = ozone, importance = TRUE)
-plot(ozone.rf)
-varImpPlot(ozone.rf)
-
-# Variable importance plots
-grid.arrange(
-  vip(ozone.tune, pred.var = names(subset(ozone, select = -ozone))),
-  plot(varImp(ozone.tune)),
-  vip(ozone.rf, pred.var = names(subset(ozone, select = -ozone))),
-  ncol = 3
-)
 
 
 ################################################################################
