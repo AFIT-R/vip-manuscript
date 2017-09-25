@@ -32,6 +32,9 @@ data(boston, package = "pdp")
 # Load concrete data
 conc <- read.csv("Concrete_Data.csv", header = TRUE)
 
+# Width of bars in each plot
+bar.width <- 0.5
+
 
 ################################################################################
 # Random forest analysis of the Boston housing data
@@ -263,24 +266,32 @@ grid.arrange(p1, p2, p3, ncol = 3)
 dev.off()
 
 
-vint <- function(x) {
-  pd <- partial(trn.nn, pred.var = c(x[1L], x[2L]))
-  c(sd(tapply(pd$yhat, INDEX = pd[[x[1L]]], FUN = sd)),
-    sd(tapply(pd$yhat, INDEX = pd[[x[2L]]], FUN = sd)))
-}
-combns <- combn(paste0("x.", 1:10), m = 2)
-res <- plyr::aaply(combns, .margins = 2, .fun = vint, .progress = "text")
-plot(rowMeans(res), type = "h")
-
-d <- data.frame(x = paste0(combns[1L, ], "*", combns[2L, ]), y = rowMeans(res))
-d <- d[order(d$y, decreasing = TRUE), ]
+# vint <- function(x) {
+#   pd <- partial(trn.nn, pred.var = c(x[1L], x[2L]))
+#   c(sd(tapply(pd$yhat, INDEX = pd[[x[1L]]], FUN = sd)),
+#     sd(tapply(pd$yhat, INDEX = pd[[x[2L]]], FUN = sd)))
+# }
+# combns <- combn(paste0("x.", 1:10), m = 2)
+# res <- plyr::aaply(combns, .margins = 2, .fun = vint, .progress = "text")
+# plot(rowMeans(res), type = "h")
+# int <- data.frame(x = paste0(combns[1L, ], "*", combns[2L, ]), y = rowMeans(res))
+# int <- int[order(int$y, decreasing = TRUE), ]
+# save(int, file = "interaction-statistics.RData")
+load("interaction-statistics.RData")
 
 pdf(file = "network-int.pdf", width = 8, height = 4)
-ggplot(d[1:10, ], aes(reorder(x, -y), y)) +
-  geom_col() +
+labs <-  c(
+  expression(x[1]*x[2]), expression(x[1]*x[3]), expression(x[3]*x[10]), 
+  expression(x[1]*x[8]), expression(x[3]*x[8]), expression(x[4]*x[5]),
+  expression(x[3]*x[4]), expression(x[1]*x[4]), expression(x[2]*x[4]),
+  expression(x[1]*x[5])
+)
+ggplot(int[1:10, ], aes(reorder(x, -y), y)) +
+  geom_col(width = 0.75) +
   xlab("") +
   ylab("Interaction") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1)) +
+  scale_x_discrete("", labels = labs) +
   theme_light()
 dev.off()
 
@@ -325,55 +336,6 @@ dev.off()
 varImp(fit)
 vi(fit, use.partial = TRUE)
 5 / 3  # absolute ratio of slopes
-
-
-################################################################################
-#
-################################################################################
-
-
-
-set.seed(103)
-rf3 <- randomForest(y ~ ., data = trn3, ntree = 500, importance = TRUE)
-plot(rf3)
-
-set.seed(102)
-rf2 <- randomForest(y ~ ., data = trn2, ntree = 500, importance = TRUE)
-plot(rf2)
-
-
-combns <- combn(paste0("x.", 1:4), m = 2)
-res <- plyr::aaply(combns, .margins = 2, .progress = "text", .fun = function(x) {
-  pd <- partial(rf2, pred.var = c(x[1L], x[2L]))
-  c(sd(tapply(pd$yhat, INDEX = pd[[x[1L]]], FUN = sd)),
-    sd(tapply(pd$yhat, INDEX = pd[[x[2L]]], FUN = sd)))
-})
-plot(rowMeans(res), type = "h", ylim = c(0, 110))
-text(1:6, rowMeans(res), labels = paste0(combns[1L, ], "*", combns[2L, ]),
-     pos = 3)
-
-
-################################################################################
-#
-################################################################################
-
-ctrl <- trainControl(method = "cv", number = 10, verboseIter = TRUE)
-tune.grid <- expand.grid(neighbors = 0:9, committees = 1:20)
-set.seed(1001)
-boston.cubist <- train(
-  x = subset(boston, select = -cmedv),
-  y = boston$cmedv,
-  method = "cubist",
-  metric = "Rsquared",
-  trControl = ctrl,
-  tuneGrid = tune.grid
-)
-plot(boston.cubist)
-
-# Variable importance plots
-vip(boston.cubist, pred.var = names(subset(boston, select = -cmedv)),
-    progress = "text")
-plot(varImp(boston.cubist))
 
 
 ################################################################################

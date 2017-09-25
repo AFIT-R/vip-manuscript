@@ -283,6 +283,8 @@ The same idea can be applied to finding interaction effects. Essentially, a weak
 
 Let $\boldsymbol{z}_s = \left(x_i, x_j\right)$, $i \neq j$, be any two predictors in the feature space $\boldsymbol{x}$. Construct the partial dependence function $\bar{f}_s\left(x_i, x_j\right)$ and compute $\imp\left(x_i\right)$ for each unique value of $x_j$ and take the standard deviation of the resulting importance scores. The same can be done for $x_j$ and the results are averaged together. Large values (relative to each other) would be indicative of possible interaction effects. 
 
+\textbf{TODO:} How does this relate to Friedman's $H$-statistic?
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Computational considerations}
@@ -319,7 +321,7 @@ We also constructed the partial dependence functions for all pairwise interactio
 \begin{figure}[!htb]
   \label{network-int}
   \centering
-  \includegraphics[width=1.0\textwidth]{network-int}
+  \includegraphics[width=0.75\textwidth]{network-int}
   \caption{TBD.}
 \end{figure}
 
