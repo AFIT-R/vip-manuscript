@@ -205,6 +205,7 @@ p1 <- ggplot(int.h[1:10, ], aes(reorder(x, y), y)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1)) +
   # scale_x_discrete("", labels = labs) +
   theme_light() +
+  # scale_fill_viridis() +
   coord_flip()
 
 # Construct plots
