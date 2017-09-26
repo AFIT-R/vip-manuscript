@@ -23,6 +23,12 @@ Friedman, J.~H. (2001).
 \newblock Greedy function approximation: A gradient boosting machine.
 \newblock {\em The Annals of Statistics\/}~{\em 29}, 1189--1232.
 
+\bibitem[\protect\citeauthoryear{Friedman and Popescu}{Friedman and
+  Popescu}{2008}]{friedman-2008-predictive}
+Friedman, J.~H. and B.~E. Popescu (2008).
+\newblock Predictive learning via rule ensembles.
+\newblock {\em Annals of Applied Statistics\/}~{\em 2\/}(3), 916--954.
+
 \bibitem[\protect\citeauthoryear{Garson}{Garson}{1991}]{interpreting-garson-1991}
 Garson, D.~G. (1991).
 \newblock Interpreting neural-network connection weights.
@@ -52,6 +58,12 @@ Kuhn, M. and K.~Johnson (2013).
 \newblock {\em Applied Predictive Modeling}.
 \newblock SpringerLink : B{\"u}cher. Springer New York.
 
+\bibitem[\protect\citeauthoryear{Leisch and Dimitriadou}{Leisch and
+  Dimitriadou}{2012}]{mlbench-pkg}
+Leisch, F. and E.~Dimitriadou (2012).
+\newblock {\em mlbench: Machine Learning Benchmark Problems}.
+\newblock R package version 2.1-1.
+
 \bibitem[\protect\citeauthoryear{Liaw and Wiener}{Liaw and
   Wiener}{2002}]{randomForest-pkg}
 Liaw, A. and M.~Wiener (2002).
@@ -64,5 +76,10 @@ Olden, J.~D., M.~K. Joy, and R.~G. Death (2004).
 \newblock An accurate comparison of methods for quantifying variable importance
   in artificial neural networks using simulated data.
 \newblock {\em Ecological Modelling\/}~{\em 178\/}(3), 389--397.
+
+\bibitem[\protect\citeauthoryear{Ridgeway}{Ridgeway}{2017}]{gbm-pkg}
+Ridgeway, G. (2017).
+\newblock {\em gbm: Generalized Boosted Regression Models}.
+\newblock R package version 2.1.3.
 
 \end{thebibliography}

@@ -14,6 +14,9 @@
 \newcommand{\blind}{0}
 
 %
+\newcommand{\pkg}[1]{\texorpdfstring%
+{{\normalfont\fontseries{b}\selectfont #1}}%
+{#1}}
 \def\code#1{\texttt{#1}}
 \def\pkg#1{\textbf{\texttt{#1}}}
 \def\ref#1{\textbf{(#1)}}
@@ -83,9 +86,9 @@ In the era of "big data", it is becoming more of a challenge to not only build s
 \label{sec:introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Complex nonparametric models---like neural networks, random forests, and support vector machines---are more common than ever in predictive analytics, especially when dealing with large observational databases that don't adhere to the strict assumptions imposed by traditional statistical techniques (e.g., multiple linear regression which assumes linearity, homoscedasticity, and normality). Unfortunately, it can be challenging to understand the results of such models and explain them to management. Variable importance plots and partial dependence plots (PDPs) offer a simple solution. PDPs are low-dimensional graphical renderings of the prediction function $\widehat{f}\left(\boldsymbol{x}\right)$ so that the relationship between the outcome and predictors of interest can be more easily understood. These plots are especially useful in explaining the output from black box models.
+Complex supervised learning algorithms, like neural networks and support vector machines, are more common than ever in predictive analytics, especially when dealing with large observational databases that don't adhere to the strict assumptions imposed by traditional statistical techniques (e.g., multiple linear regression which typically assumes linearity, homoscedasticity, and normality). However, it can be challenging to understand the results of such complex models and explain them to management. Graphical displays such as variable importance plots (when available) and partial dependence plots (PDPs) offer a simple solution. 
 
-While PDPs can be constructed for any predictor in a fitted model, variable importance scores are more difficult to define. Some methods---like random forests and other tree-based methods---have a natural way of defining variable importance. Unfortunately, this is not the case for other popular supervised learning algorithms like support vector machines. In this paper, we offer a solution by providing a partial dependence-based variable importance metric that can be used with any supervised learning algorithm.
+PDPs are low-dimensional graphical renderings of the prediction function $\widehat{f}\left(\boldsymbol{x}\right)$ so that the relationship between the outcome and predictors of interest can be more easily understood. These plots are especially useful in explaining the output from black box models. While PDPs can be constructed for any predictor in a fitted model, variable importance scores are more difficult to define. Some methods---like random forests and other tree-based methods---have a natural way of defining variable importance. Unfortunately, this is not the case for other popular supervised learning algorithms like support vector machines. In this paper, we offer a solution by providing a partial dependence-based variable importance metric that can be used with any supervised learning algorithm.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -173,18 +176,16 @@ Algorithm~\ref{alg:pdp} can be quite computationally intensive since it involves
 
 For illustration, we will use a corrected version of the Boston housing data analyzed in \citet{harrison-1978-hedonic}; the data are available from Statlib at \url{http://lib.stat.cmu.edu/datasets/boston_corrected.txt}. Using the R package \pkg{randomForest} \citep{randomForest-pkg}, we fit a random forest with tuning parameter $m_{try} = 6$ (chosen using 5-fold cross-validation) and 1000 trees. The model fit is reasonable, with an \textit{out-of-bag} (pseudo) $R^2$ of 0.89. The variable importance scores are displayed in Figure~\ref{fig:boston-rf-vip}. Both plots indicate that the percentage of lower status of the population (\code{lstat}) and the average number of rooms per dwelling (\code{rm}) are highly associated with the median value of owner-occupied homes (\code{cmedv}). They also indicate that the proportion of residential land zoned for lots over 25,000 sq.ft (\code{zn}) has little association with \code{cmedv}.
 \begin{figure}[!htb]
-  \label{boston-rf-vip}
   \centering
   \includegraphics[width=1.0\textwidth]{boston-rf-vip}
-  \caption{Variable importance scores from a random forest fit to the (corrected) Boston housing data. \textit{Left}: OOB-based variable importance scores. \textit{Right}: Impurity-based variable importance scores.}
+  \caption{Variable importance scores from a random forest fit to the (corrected) Boston housing data. \textit{Left}: OOB-based variable importance scores. \textit{Right}: Impurity-based variable importance scores. \label{boston-rf-vip}}
 \end{figure}
 
 The partial dependence functions for these three variables are displayed in Figure~\ref{fig:boston-rf-pdps}. Notice how the PDP for \code{zn} is essentially flat. It is this notion of "flatness" which we will use to define our variable importance measure.
 \begin{figure}[!htb]
-  \label{boston-rf-pdps}
   \centering
   \includegraphics[width=1.0\textwidth]{boston-rf-pdps}
-  \caption{Partial dependence of \code{cmedv} on \code{lstat} (left), \code{rm} (middle), and \code{zn} (right). The mean of the $n = 506$ response values is indicated by a dashed red line.}
+  \caption{Partial dependence of \code{cmedv} on \code{lstat} (left), \code{rm} (middle), and \code{zn} (right). The mean of the $n = 506$ response values is indicated by a dashed red line. \label{boston-rf-pdps}}
 \end{figure}
 
 
@@ -214,10 +215,9 @@ if $x_1$ is categorical. Note that our variable importance metric relies on the 
 To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of the predictors in the random forest for the Boston housing example and compute \eqref{eqn:vi-con}. The results are displayed in Figure~\ref{fig:boston-rf-vip-pd}.
 
 \begin{figure}[!htb]
-  \label{boston-rf-vip-pd}
   \centering
   \includegraphics[width=1.0\textwidth]{boston-rf-vip-pd}
-  \caption{Partial-dependence-based variable importance scores from a random forest fit to the (corrected) Boston housing data.}
+  \caption{Partial-dependence-based variable importance scores from a random forest fit to the (corrected) Boston housing data. \label{boston-rf-vip-pd}}
 \end{figure}
 
 
@@ -261,10 +261,9 @@ where $p\left(X_2\right) = 1$. Simple calculus leads to
 These are plotted as red lines in Figure~\ref{fig:lm-pdps}. Additionally, the black lines in Figure~\ref{fig:lm-pdps} correspond to the estimated partial dependence functions using Algorithm~\ref{alg:pdp}.
 
 \begin{figure}[!htb]
-  \label{lm-pdps}
   \centering
   \includegraphics[width=1.0\textwidth]{lm-pdps}
-  \caption{Estimated and true partial dependence plots.}
+  \caption{Estimated and true partial dependence plots. \label{lm-pdps}}
 \end{figure}
 
 Clearly, $X_2$ is more influential than $X_1$. A natural way of mearing the relative influence of $X_2$ over $X_1$ on $Y$ would be to take the absolute value of the ratio of the slopes in $f_2\left(X_2\right)$ and $f_1\left(X_1\right)$, which in this case gives $5 / 3 \approx 1.67$. In other words, $X_2$ is roughly 1.67 times more influential on $Y$ than $X_1$. Using the partial-dependence-based variable importance metric, we obtain $\imp\left(X_1\right) = 1.4828203$ and $\imp\left(X_2\right) = 0.8961719$ which gives the ratio $\imp\left(X_2\right) / \imp\left(X_1\right) \approx 1.65$. In fact, we can compute the true variance for both partial dependence functions:
@@ -285,7 +284,7 @@ The same idea can be applied to finding interaction effects. Essentially, a weak
 
 Let $\boldsymbol{z}_s = \left(x_i, x_j\right)$, $i \neq j$, be any two predictors in the feature space $\boldsymbol{x}$. Construct the partial dependence function $\bar{f}_s\left(x_i, x_j\right)$ and compute $\imp\left(x_i\right)$ for each unique value of $x_j$ and take the standard deviation of the resulting importance scores. The same can be done for $x_j$ and the results are averaged together. Large values (relative to each other) would be indicative of possible interaction effects. 
 
-\textbf{TODO:} How does this relate to Friedman's $H$-statistic?
+\textbf{TODO:} How does this relate to Friedman's $H$-statistic? Do a GBM example and compare the two approaches.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -303,48 +302,61 @@ To further illustrate, we will use one of the regression problems described in F
 \begin{equation}
 \mathcal{Y} = 10 \sin\left(\pi x_1 x_2\right) + 20 \left(x_3 - 0.5\right) ^ 2 + 10 x_4 + 5 x_5 + \epsilon,
 \end{equation}
-where $\epsilon \sim \mathcal{N}\left(0, \sigma\right)$. We fit a neural network with one hidden layer containing eight units and a weight decay of 0.01 (these parameters were chosen using 5-fold cross-validation). %The network diagram is displayed in Figure~\ref{fig:network} below.
-% \begin{figure}[!htb]
-%   \label{network}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{network}
-%   \caption{Diagram of the neural network fitted to the Friedman 1 data set.}
-% \end{figure}
+where $\epsilon \sim \mathcal{N}\left(0, \sigma\right)$. We fit a neural network with one hidden layer containing eight units and a weight decay of 0.01 (these parameters were chosen using 5-fold cross-validation).
 
 Variable importance plots are displayed in Figure~\ref{fig:network-vip}. Notice how the Garson and Olden algorithms incorrectly label some of the features not in the true model as "important".
 \begin{figure}[!htb]
-  \label{network-vip}
   \centering
   \includegraphics[width=1.0\textwidth]{network-vip}
-  \caption{Variable importance plots for the neural network in Figure~\ref{fig:network}. \textit{Left}: partial dependence-based algorithm. \textit{Middle}: Garson's algorithm. \textit{Right}: Olden's algorithm.}
+  \caption{Variable importance plots for the neural network in Figure~\ref{fig:network}. \textit{Left}: partial dependence-based algorithm. \textit{Middle}: Garson's algorithm. \textit{Right}: Olden's algorithm. \label{network-vip}}
 \end{figure}
 
 We also constructed the partial dependence functions for all pairwise interactions and computed the interaction statistic discussed in Section~\ref{sec:interaction}. For each pair $\left(x_i, x_j\right)$ we constructed the partial dependence function over a fine grid according to Algorithm~\ref{alg:pdp}. Then, we computed $\imp\left(x_i | x_j\right)$ and $\imp\left(x_j | x_i\right)$ and averaged the results. The top ten interaction statistics are displayed in Figure~\ref{fig:network-int}. There is a clear indication of an interaction effect between the predictors $x_1$ and $x_2$.
 \begin{figure}[!htb]
-  \label{network-int}
   \centering
   \includegraphics[width=0.75\textwidth]{network-int}
-  \caption{TBD.}
+  \caption{TBD. \label{network-int}}
 \end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Analysis of the ? data}
+\subsubsection{Friedman's $H$-statistic}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+An alternative measure for the strength of interaction effects is known as Friedman's $H$-statistic \citep{friedman-2008-predictive}. Coincidentally, this statistic is also based on the partial dependence functions of the corresponding predictors.
+
+...
+
+To illustrate, we fit a generalized boosted regression model to the Friedman 1 data set. The parameters were chosen using 5-fold cross-validation. We used the R package \pkg{gbm} \citep{gbm-pkg} which has built-in support for computing Friedman's $H$-statistic for any combination of predictors. 
+
 \begin{figure}[!htb]
-  \label{pima-pdps}
+  \centering
+  \includegraphics[width=0.75\textwidth]{gbm-int}
+  \caption{TBD. \label{gbm-int}}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Pima indians diabetes data}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section, we analyze the diabetes test results collected by the the US National Institute of Diabetes and Digestive and Kidney Diseases from a population of women who were at least 21 years old, of Pima Indian heritage, and living near Phoenix, Arizona. The data were taken directly from the \code{PimaIndiansDiabetes2} data frame which are available in the \pkg{mlbench} package \citep{mlbench-pkg}; for a description of the data and all the variables, see \url{https://archive.ics.uci.edu/ml/datasets/pima+indians+diabetes}.
+
+We then used the \pkg{nnet} package \citep{nnet-pkg} in R to fit a neural network with seven hidden units and a weight decay of 0.01; these were chosen to maximize AUC using repeated 5-fold cross-validation with ten repeats; the cross-validated AUC was 0.77.
+
+The partial dependence functions for all the predictors are displayed in Figure~\ref{fig:pima-pdps}. The PDPs clearly indicate that plasma glucose concentration (\code{glucose}), diabetes pedigree function (\code{pedigree}), and 2-hour serum insulin (\code{insulin}) have the largest effect on the neural network's prediction for the outcome of the diabetes test result (\code{diabetes}). On the other hand, the PDPs for diastolic blodd pressure (\code{pressure}) and age (\code{age}) are relatively flat indicating they contribute less to the predictions than the other predictors. This is further illustrated in the variable importance plot displayed in Figure~\ref{pima-vip}; the importance scores were obtained using Algorithm~\ref{alg:vi}.
+
+\begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{pima-pdps}
-  \caption{Partial-dependence plots for the eight predictors in the Pima indians data.}
+  \caption{Partial-dependence plots for the eight predictors in the Pima indians data. \label{pima-pdps}}
 \end{figure}
 
 
 \begin{figure}[!htb]
-  \label{pima-vip}
   \centering
   \includegraphics[width=1.0\textwidth]{pima-vip}
-  \caption{Partial-dependence-based variable importance scores for the eight predictors in the Pima indians data.}
+  \caption{Partial-dependence-based variable importance scores for the eight predictors in the Pima indians data. \label{pima-vip}}
 \end{figure}
 
 
@@ -353,6 +365,7 @@ We also constructed the partial dependence functions for all pairwise interactio
 \label{sec:conc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+Coming soon!
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -366,11 +379,7 @@ We also constructed the partial dependence functions for all pairwise interactio
 
 \begin{description}
 
-\item[Title:] Brief description. (file type)
-
-\item[R-package for  MYNEW routine:] R-package \pkg{vip} containing code to perform the diagnostic methods described in the article. The package also contains all data sets used as examples in the article. (GNU zipped tar file)
-
-\item[HIV data set:] Data set used in the illustration of MYNEW method in Section~ 3.2. (.txt file)
+\item[R-package \pkg{vip}:] Contains function for computing variable importance scores and constructing variable importance plots for various types of fitted models in R. The package is hosted on GitHub at \url{https://github.com/AFIT-R/vip}.
 
 \end{description}
 

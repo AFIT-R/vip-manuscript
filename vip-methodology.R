@@ -149,7 +149,7 @@ vip(boston.rf, pred.var = pred.var, FUN = function(x) {
 
 
 ################################################################################
-# Friedman 1
+# Friedman 1 data set
 ################################################################################
 
 # Simulate the data
@@ -158,29 +158,14 @@ trn <- as.data.frame(mlbench::mlbench.friedman1(n = 500, sd = 1))
 tibble::glimpse(trn)
 
 
-# Multivariate adaptive regression splines -------------------------------------
 
-# Fit a MARS model
-set.seed(101)
-trn.mars <- earth(y ~ ., data = trn, degree = 3, pmethod = "exhaustive", nfold = 5)
-vip.mars <- vip(trn.mars, pred.var = paste0("x.", 1:10))
-vip.mars + theme_bw()
-evimp(trn.mars)
-#     nsubsets   gcv    rss
-# x.4       15 100.0  100.0
-# x.1       14  83.2   82.9
-# x.2       14  83.2   82.9
-# x.5       12  59.3   58.7
-# x.3       10  43.5   42.8
-
-
-# Stochastic gradient boosting -------------------------------------------------
+# Stochastic gradient boosting and Friedman's H-statistic ----------------------
 
 # Fit a GBM
-set.seed(101)
-trn.gbm <- gbm(y ~ ., data = trn, distribution = "gaussian", n.trees = 10000,
-               shrinkage = 0.1, interaction.depth = 2, bag.fraction = 1,
-               train.fraction = 1, cv.folds = 5, verbose = TRUE)
+set.seed(937)
+trn.gbm <- gbm(y ~ ., data = trn, distribution = "gaussian", n.trees = 25000,
+               shrinkage = 0.01, interaction.depth = 2, bag.fraction = 1,
+               train.fraction = 0.8, cv.folds = 5, verbose = TRUE)
 best.iter <- gbm.perf(trn.gbm, method = "cv")
 print(best.iter)
 
@@ -188,6 +173,54 @@ print(best.iter)
 summary(trn.gbm, n.trees = best.iter)
 vip.gbm <- vip(trn.gbm, pred.var = paste0("x.", 1:10), n.trees = best.iter)
 print(vip.gbm)
+
+# Friedman's H-statistic
+combns <- t(combn(paste0("x.", 1:10), m = 2))
+int.h <- numeric(nrow(combns))
+for (i in 1:nrow(combns)) {
+  print(paste("iter", i, "of", nrow(combns)))
+  int.h[i] <- interact.gbm(trn.gbm, data = trn, i.var = combns[i, ], 
+                           n.trees = best.iter)
+}
+plot(int.h)
+int.h <- data.frame(x = paste0(combns[, 1L], "*", combns[, 2L]), y = int.h)
+int.h <- int.h[order(int.h$y, decreasing = TRUE), ]
+
+# Variable importance-based interaction statistic
+vint <- function(x) {
+  pd <- partial(trn.gbm, pred.var = c(x[1L], x[2L]), n.trees = best.iter)
+  c(sd(tapply(pd$yhat, INDEX = pd[[x[1L]]], FUN = sd)),
+    sd(tapply(pd$yhat, INDEX = pd[[x[2L]]], FUN = sd)))
+}
+int.i <- plyr::aaply(combns, .margins = 1, .fun = vint, .progress = "text")
+int.i <- data.frame(x = paste0(combns[, 1L], "*", combns[, 2L]), 
+                    y = rowMeans(int.i))
+int.i <- int.i[order(int.i$y, decreasing = TRUE), ]
+
+# Construct plot
+p1 <- ggplot(int.h[1:10, ], aes(reorder(x, y), y)) +
+  geom_col(width = 0.75) +
+  xlab("") +
+  ylab("Interaction (Friedman's H-statistic)") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1)) +
+  # scale_x_discrete("", labels = labs) +
+  theme_light() +
+  coord_flip()
+
+# Construct plots
+p2 <- ggplot(int.i[1:10, ], aes(reorder(x, y), y)) +
+  geom_col(width = 0.75) +
+  xlab("") +
+  ylab("Interaction (variable importance)") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1)) +
+  # scale_x_discrete("", labels = labs) +
+  theme_light() +
+  coord_flip()
+
+# Figure ?
+pdf(file = "gbm-int.pdf", width = 7, height = 7)
+grid.arrange(p1, p2, ncol = 2)
+dev.off()
 
 
 # Neural network ---------------------------------------------------------------
@@ -268,6 +301,7 @@ dev.off()
 # save(int, file = "interaction-statistics.RData")
 load("interaction-statistics.RData")
 
+# Figure ?
 pdf(file = "network-int.pdf", width = 8, height = 4)
 labs <-  c(
   expression(x[1]*x[2]), expression(x[1]*x[3]), expression(x[3]*x[10]), 

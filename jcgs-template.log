@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  25 SEP 2017 15:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  26 SEP 2017 13:11
 entering extended mode
 **./jcgs-template.tex
 (jcgs-template.tex
@@ -225,18 +225,18 @@ Package: relsize 2003/07/04 ver 3.1
 ) (jcgs-template.aux)
 \openout1 = `jcgs-template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
 
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\supp-pdf
 .mkii"
@@ -307,50 +307,50 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 54.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 57.
 
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 54.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 57.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 54.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 57.
  [1
 Non-PDF special ignored!
 
 {C:/Users/greenweb/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] 
 [4]
-Overfull \hbox (2.16008pt too wide) detected at line 134
+Overfull \hbox (2.16008pt too wide) detected at line 137
 [][]
  []
 
 
-Overfull \hbox (14.24867pt too wide) in paragraph at lines 136--137
+Overfull \hbox (14.24867pt too wide) in paragraph at lines 139--140
 []\OT1/cmr/m/n/12 Nowadays, many su-per-vised learn-ing al-go-rithms can fit th
 e data au-to-mat-i-cally in seconds---
  []
 
 [5]
-Overfull \hbox (17.62482pt too wide) detected at line 166
+Overfull \hbox (17.62482pt too wide) detected at line 169
 [][] 
  []
 
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 174.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 177.
 <boston-rf-vip.pdf, id=33, 578.16pt x 361.35pt>
 File: boston-rf-vip.pdf Graphic file (type pdf)
  <use boston-rf-vip.pdf>
-Package pdftex.def Info: boston-rf-vip.pdf used on input line 178.
+Package pdftex.def Info: boston-rf-vip.pdf used on input line 180.
 (pdftex.def)             Requested size: 462.26999pt x 288.91498pt.
 
 [6] <boston-rf-pdps.pdf, id=38, 867.24pt x 289.08pt>
 File: boston-rf-pdps.pdf Graphic file (type pdf)
  <use boston-rf-pdps.pdf>
-Package pdftex.def Info: boston-rf-pdps.pdf used on input line 186.
+Package pdftex.def Info: boston-rf-pdps.pdf used on input line 187.
 (pdftex.def)             Requested size: 462.26999pt x 154.08945pt.
 
-Overfull \hbox (30.95894pt too wide) in paragraph at lines 182--189
+Overfull \hbox (30.95894pt too wide) in paragraph at lines 184--190
 []\OT1/cmr/m/n/12 The par-tial de-pen-dence func-tions for these three vari-abl
 es are dis-played in Fig-ure \OT1/cmr/bx/n/12 (fig:boston-
  []
@@ -366,67 +366,86 @@ Package pdftex.def Info: boston-rf-vip-pd.pdf used on input line 219.
 File: lm-pdps.pdf Graphic file (type pdf)
 
 <use lm-pdps.pdf>
-Package pdftex.def Info: lm-pdps.pdf used on input line 266.
+Package pdftex.def Info: lm-pdps.pdf used on input line 265.
 (pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
  [10] [11 <./lm-pdps.pdf>]
 <network-vip.pdf, id=83, 867.24pt x 433.62pt>
 File: network-vip.pdf Graphic file (type pdf)
  <use network-vip.pdf>
-Package pdftex.def Info: network-vip.pdf used on input line 318.
+Package pdftex.def Info: network-vip.pdf used on input line 310.
 (pdftex.def)             Requested size: 462.26999pt x 231.13419pt.
-
-<network-int.pdf, id=84, 578.16pt x 289.08pt>
+ [12]
+<network-int.pdf, id=87, 578.16pt x 289.08pt>
 File: network-int.pdf Graphic file (type pdf)
  <use network-int.pdf>
-Package pdftex.def Info: network-int.pdf used on input line 326.
+Package pdftex.def Info: network-int.pdf used on input line 317.
 (pdftex.def)             Requested size: 346.70248pt x 173.34787pt.
- [12]
-<pima-pdps.pdf, id=88, 867.24pt x 289.08pt>
-File: pima-pdps.pdf Graphic file (type pdf)
- <use pima-pdps.pdf>
-Package pdftex.def Info: pima-pdps.pdf used on input line 338.
-(pdftex.def)             Requested size: 462.26999pt x 154.08945pt.
+ [13 <./network-vip.pdf>] <gbm-int.pdf, id=97, 505.89pt x 505.89pt>
+File: gbm-int.pdf Graphic file (type pdf)
+ <use gbm-int.pdf>
+Package pdftex.def Info: gbm-int.pdf used on input line 334.
+(pdftex.def)             Requested size: 346.70248pt x 346.7101pt.
 
-<pima-vip.pdf, id=89, 505.89pt x 361.35pt>
+
+Package natbib Warning: Citation `nnet-pkg' on page 14 undefined on input line 
+345.
+
+
+Overfull \hbox (3.20772pt too wide) in paragraph at lines 347--348
+[]\OT1/cmr/m/n/12 The par-tial de-pen-dence func-tions for all the pre-dic-tors
+ are dis-played in Fig-ure \OT1/cmr/bx/n/12 (fig:pima-
+ []
+
+[14 <./network-int.pdf>] <pima-pdps.pdf, id=106, 867.24pt x 289.08pt>
+File: pima-pdps.pdf Graphic file (type pdf)
+
+<use pima-pdps.pdf>
+Package pdftex.def Info: pima-pdps.pdf used on input line 351.
+(pdftex.def)             Requested size: 462.26999pt x 154.08945pt.
+ <pima-vip.pdf, id=107, 505.89pt x 361.35pt>
 File: pima-vip.pdf Graphic file (type pdf)
- <use pima-vip.pdf>
-Package pdftex.def Info: pima-vip.pdf used on input line 346.
+
+<use pima-vip.pdf>
+Package pdftex.def Info: pima-vip.pdf used on input line 358.
 (pdftex.def)             Requested size: 462.26999pt x 330.19643pt.
- [13 <./network-vip.pdf>] (jcgs-template.bbl [14 <./network-int.pdf> <./pima-pd
-ps.pdf>] [15 <./pima-vip.pdf>]) [16] (jcgs-template.aux) ) 
+ [15 <./gbm-int.pdf>] [16 <./pima-pdps.pdf> <./pima-vip.pdf>] (jcgs-template.bb
+l [17])
+
+Package natbib Warning: There were undefined citations.
+
+[18] (jcgs-template.aux) ) 
 Here is how much of TeX's memory you used:
- 3798 strings out of 493323
- 55350 string characters out of 3128713
- 131292 words of memory out of 3000000
- 7269 multiletter control sequences out of 15000+200000
+ 3815 strings out of 493323
+ 55655 string characters out of 3128713
+ 130455 words of memory out of 3000000
+ 7285 multiletter control sequences out of 15000+200000
  14399 words of font info for 51 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,11n,28p,1362b,394s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/greenweb/Ap
-pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/U
+<C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/greenweb/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/greenweb/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/U
 sers/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmbx12.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmex10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/greenweb/AppData/Local/Pro
-grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/greenweb/Ap
-pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Us
-ers/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mmib10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cmextra/cmmib8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/greenweb/AppData/Local
-/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/greenwe
-b/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:
-/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmsy7.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/greenweb/AppData/Local/Pro
-grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/A
-ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/
+cmmi12.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmmi6.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/greenweb/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/greenweb/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb>
+<C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmr10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmr12.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/greenweb/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/greenweb/
+AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/
 Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmtt12.pfb>
-Output written on jcgs-template.pdf (16 pages, 283091 bytes).
+/cmsy8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/greenweb/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on jcgs-template.pdf (18 pages, 293199 bytes).
 PDF statistics:
- 176 PDF objects out of 1000 (max. 8388607)
+ 188 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
