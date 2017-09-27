@@ -176,7 +176,7 @@ Constructing a PDP \eqref{eqn:pdf} in practice is rather straightforward. To sim
 \end{enumerate}
 \caption{A simple algorithm for constructing the partial dependence of the response on a single predictor $x_1$. \label{alg:pdp}}
 \end{algorithm}
-Algorithm~\eqref{alg:pdp} can be quite computationally intensive since it involves $k$ passes over the training records. Fortunately, the algorithm can be performed in parallel quite easily (more on this in Section~\ref{sec:computational}). It can also be easily extended to larger subsets of two or more features as well.
+Algorithm~\eqref{alg:pdp} can be quite computationally intensive since it involves $k$ passes over the training records. Fortunately, the algorithm can be performed in parallel quite easily. It can also be easily extended to larger subsets of two or more features as well.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -312,7 +312,7 @@ Variable importance plots are displayed in Figure~\ref{fig:network-vip}. Notice 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{network-vip}
-  \caption{Variable importance plots for the neural network in Figure~\ref{fig:network}. \textit{Left}: partial dependence-based algorithm. \textit{Middle}: Garson's algorithm. \textit{Right}: Olden's algorithm. \label{fig:network-vip}}
+  \caption{Variable importance plots neural network fit to the Friedman data set. \textit{Left}: partial dependence-based algorithm. \textit{Middle}: Garson's algorithm. \textit{Right}: Olden's algorithm. \label{fig:network-vip}}
 \end{figure}
 
 We also constructed the partial dependence functions for all pairwise interactions and computed the interaction statistic discussed in Section~\ref{sec:interaction}. The top ten interaction statistics are displayed in Figure~\ref{fig:network-int}. There is a clear indication of an interaction effect between the predictors $x_1$ and $x_2$, the only interaction present in the true model.
@@ -320,7 +320,7 @@ We also constructed the partial dependence functions for all pairwise interactio
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=0.75\textwidth]{network-int}
-  \caption{TBD. \label{fig:network-int}}
+  \caption{Variable importance-based interaction statistics from the neural network fit to the Friedman data set. \label{fig:network-int}}
 \end{figure}
 
 
@@ -347,7 +347,7 @@ In this section, we analyze the diabetes test results collected by the the US Na
 
 We then used the \pkg{nnet} package \citep{venables-modern-2002} in R to fit a neural network with seven hidden units and a weight decay of 0.01; these parameters were chosen to maximize AUC using repeated 5-fold cross-validation with ten repeats; the cross-validated AUC was 0.77.
 
-The partial dependence functions for all the predictors are displayed in Figure~\ref{fig:pima-pdps}. The PDPs clearly indicate that plasma glucose concentration (\code{glucose}), diabetes pedigree function (\code{pedigree}), and 2-hour serum insulin (\code{insulin}) have the largest effect on the neural network's prediction for the outcome of the diabetes test result (\code{diabetes}). On the other hand, the PDPs for diastolic blood pressure (\code{pressure}) and age (\code{age}) are relatively flat indicating they contribute less to the predictions than the other predictors. This is further illustrated in the variable importance plot displayed in Figure~\ref{pima-vip}; the importance scores were obtained using Algorithm~\eqref{alg:vi}.
+The partial dependence functions for all the predictors are displayed in Figure~\ref{fig:pima-pdps}. The PDPs clearly indicate that plasma glucose concentration (\code{glucose}), diabetes pedigree function (\code{pedigree}), and 2-hour serum insulin (\code{insulin}) have the largest effect on the neural network's prediction for the outcome of the diabetes test result (\code{diabetes}). On the other hand, the PDPs for diastolic blood pressure (\code{pressure}) and age (\code{age}) are relatively flat indicating they contribute less to the predictions than the other predictors. This is further illustrated in the variable importance plot displayed in Figure~\ref{fig:pima-vip}; the importance scores were obtained using Algorithm~\eqref{eqn:vi-con}.
 
 \begin{figure}[!htb]
   \centering
@@ -367,10 +367,9 @@ The partial dependence functions for all the predictors are displayed in Figure~
 \label{sec:conc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\textbf{TODO:}
-\begin{itemize}
-  \item Talk about flexibility of the approach and using other more robust metrics such as the MAD/MADN estimator.
-\end{itemize}
+We have discussed a new partial dependence-based variable important metric for supervised learning. Since our algorithm is based on Friedman's idea of partial dependence functions, our variable importance metric is model-based and takes into account the effects of the other features in the model. Consequently, this also requires that the fitted models be properly tuned to achieve optimum performance. We have also discussed a simple extension of our variable importance metric that seems useful for detecting interaction effects.
+
+While this new approach to computing feature importance for any supervised learning algorithm seems very useful, more research is needed to determine where its deficiencies may lie. For example, outliers in the feature space can cause abnormally large fluctuations (outliers) in the partial dependence values $\bar{f}\left(x_{i}\right)$ $\left(i = 1, 2, \dots, k\right)$. Therefore, it may be advantageous to use more robust measures of spread to describe the variability in the estimated partial dependence function; a reasonable choice would be the median absolute deviation which has a finite sample breakdown point of $\floor{n / 2} / n$. It would also be interesting to see if our metric could be extended to rely on individual conditional expectation (ICE) curves \citep{goldstein-peeking-2015}, a refinement over Friedman's PDP.
 
 
 
