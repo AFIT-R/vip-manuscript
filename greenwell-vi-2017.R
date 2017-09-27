@@ -19,18 +19,8 @@ library(vip)
 # Colors
 set1 <- RColorBrewer::brewer.pal(9, "Set1")
 
-# Simulate data from the regression problems described in Friedman (1991) and
-# Breiman (1996)
-# set.seed(3101)
-# trn1 <- as.data.frame(mlbench.friedman1(500))
-# trn2 <- as.data.frame(mlbench.friedman2(500))
-# trn3 <- as.data.frame(mlbench.friedman3(500))
-
 # Load the (corrected) Boston housing data
 data(boston, package = "pdp")
-
-# Load concrete data
-conc <- read.csv("Concrete_Data.csv", header = TRUE)
 
 
 ################################################################################
@@ -156,7 +146,6 @@ vip(boston.rf, pred.var = pred.var, FUN = function(x) {
 set.seed(101)  # for reproducibility
 trn <- as.data.frame(mlbench::mlbench.friedman1(n = 500, sd = 1))
 tibble::glimpse(trn)
-
 
 
 # Stochastic gradient boosting and Friedman's H-statistic ----------------------

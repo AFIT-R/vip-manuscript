@@ -79,7 +79,7 @@
 
 \bigskip
 \begin{abstract}
-In the era of "big data", it is becoming more of a challenge to not only build state-of-the-art predictive models, but also gain an understanding of what's really going on in the data. For example, it is often of interest to know which, if any, of the predictors in a fitted model are "important". Fortunately, there are a few modern algorithms---like random forests and boosted decision trees---that have a natural way of ranking predictors in terms of some measure of importance or relative influence. Other algorithms---like neural networks and support vector machines---are not capable of doing so and other model-free approaches are generally used to measure each predictors importance. In this paper, we discuss a model-based approach to measuring predictor importance in any supervised learning setting.
+In the era of "big data", it is becoming more of a challenge to not only build state-of-the-art predictive models, but also gain an understanding of what's really going on in the data. For example, it is often of interest to know which, if any, of the predictors in a fitted model are relatively influential on the predicted outcome. Fortunately, there are a few modern algorithms---like random forests and boosted decision trees---that have a natural way of ranking predictors in terms of some measure of importance or relative influence. Other algorithms---like neural networks and support vector machines---are not capable of doing so and model-free approaches are generally used to measure each predictors importance. In this paper, we discuss a model-based approach to measuring predictor importance in any supervised learning setting.
 \end{abstract}
 
 \noindent%
@@ -97,7 +97,7 @@ In the era of "big data", it is becoming more of a challenge to not only build s
 
 Complex supervised learning algorithms, like neural networks and support vector machines, are more common than ever in predictive analytics, especially when dealing with large observational databases that don't adhere to the strict assumptions imposed by traditional statistical techniques (e.g., multiple linear regression which typically assumes linearity, homoscedasticity, and normality). However, it can be challenging to understand the results of such complex models and explain them to management. Graphical displays such as variable importance plots (when available) and partial dependence plots (PDPs) offer a simple solution. 
 
-PDPs are low-dimensional graphical renderings of the prediction function $\widehat{f}\left(\boldsymbol{x}\right)$ so that the relationship between the outcome and predictors of interest can be more easily understood. These plots are especially useful in explaining the output from black box models. While PDPs can be constructed for any predictor in a fitted model, variable importance scores are more difficult to define. Some methods---like random forests and other tree-based methods---have a natural way of defining variable importance. Unfortunately, this is not the case for other popular supervised learning algorithms like support vector machines. In this paper, we offer a solution by providing a partial dependence-based variable importance metric that can be used with any supervised learning algorithm.
+PDPs are low-dimensional graphical renderings of the prediction function $\widehat{f}\left(\boldsymbol{x}\right)$ so that the relationship between the outcome and predictors of interest can be more easily understood. These plots are especially useful in explaining the output from black box models. While PDPs can be constructed for any predictor in a fitted model, variable importance scores are more difficult to define. What does it mean for a feature to be important? It's influence on the predicted outcome? Some methods---like random forests and other tree-based methods---have a natural way of defining variable importance. Unfortunately, this is not the case for other popular supervised learning algorithms like support vector machines. In this paper, we consider a partial dependence-based variable importance metric that can be used with any supervised learning algorithm.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -105,29 +105,29 @@ PDPs are low-dimensional graphical renderings of the prediction function $\wideh
 \label{sec:background}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In the age of "big data", we are often confronted with the task of extracting knowledge from large databases. For this task we turn to various statistical learning algorithms which, when tuned correctly, can have state-of-the-art predictive performance. However, having a model that predicts well is only solving part of the problem. It is still necessary to extract information about the relationships uncovered by the learning algorithm. For instance, we often want to know which predictors, if any, are important by assigning some type of variable importance score to each feature. Once a set of "important" features has been identified, the next step would be to summarize the functional relationship between each feature, or subset thereof, and the outcome of interest. However, since most statistical learning algorithms are "black box" models, extracting this information is not always straightforward. Fortunately, some learning algorithms have a natural way of defining variable importance.
+In the age of "big data", we are often confronted with the task of extracting knowledge from large databases. For this task we turn to various statistical learning algorithms which, when tuned correctly, can have state-of-the-art predictive performance. However, having a model that predicts well is only solving part of the problem. It is still necessary to extract information about the relationships uncovered by the learning algorithm. For instance, we often want to know which predictors, if any, are important by assigning some type of variable importance score to each feature. Once a set of influential features has been identified, the next step would be to summarize the functional relationship between each feature, or subset thereof, and the outcome of interest. However, since most statistical learning algorithms are "black box" models, extracting this information is not always straightforward. Luckily, some learning algorithms have a natural way of defining variable importance.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Model-based approaches to variable importance}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In a binary decision tree, at each node $t$, a single predictor is used to partition the data into two homogeneous groups. The chosen predictor is the one that maximizes some measure of improvement $\widehat{i}_t$. The relative importance of predictor $x$ is just the sum of the squared improvements over all internal nodes of the tree for which $x$ was chosen as the partitioning variable; see \citet{classification-breiman-1984} for details. This idea also extends to ensembles of decision trees like boosting and random forest. In ensembles the the improvement score for each predictor is averaged across all the trees in the ensemble. Fortunately, due to the stabilizing effect of averaging, the improvement-based variable importance metric is often more reliable in large ensembles. Random forests offer an additional way to compute variable importance scores. The idea is to use the left over out-of-bag (OOB) data to construct validation-set errors for each tree. Then each predictor is randomly shuffled in the OOB data and the error is computed again. The idea is that if variable $X$ is important, then the validation error will go up when $X$ is perturbed in the OOB data. The difference in the two errors is recorded for the OOB data for each predictor then averaged across all trees in the forest.
+In a binary decision tree, at each node $t$, a single predictor is used to partition the data into two homogeneous groups. The chosen predictor is the one that maximizes some measure of improvement $\widehat{i}_t$. The relative importance of predictor $x$ is just the sum of the squared improvements over all internal nodes of the tree for which $x$ was chosen as the partitioning variable; see \citet{classification-breiman-1984} for details. This idea also extends to ensembles of decision trees, like boosting and random forest. In ensembles, the improvement score for each predictor is averaged across all the trees in the ensemble. Fortunately, due to the stabilizing effect of averaging, the improvement-based variable importance metric is often more reliable in large ensembles \citep[pg. 368]{hastie-elements-2009}. Random forests offer an additional way to compute variable importance scores. The idea is to use the left over out-of-bag (OOB) data to construct validation-set errors for each tree. Then, each predictor is randomly shuffled in the OOB data and the error is computed again. The idea is that if variable $x$ is important, then the validation error will go up when $x$ is perturbed in the OOB data. The difference in the two errors is recorded for the OOB data then averaged across all trees in the forest.
 
-In multiple linear regression, the absolute value of the $t$ statistic is commonly used as a measure of variable importance. The same idea also extends to generalized linear models and nonlinear least squares. Multivariate adaptive regression splines (MARS), which were introduced in \citet{friedman-1991-mars}, is an automatic and adaptive regression technique which can be seen as a generalization of multiple linear regression and generalized linear models. In the MARS algorithm, the contribution (or variable importance score) for each predictor is determined using a generalized cross-validation (GCV) statistic.
+In multiple linear regression, the absolute value of the $t$-statistic is commonly used as a measure of variable importance. The same idea also extends to generalized linear models and nonlinear least squares. Multivariate adaptive regression splines (MARS), which were introduced in \citet{friedman-1991-mars}, is an automatic and adaptive regression technique which can be seen as a generalization of multiple linear regression and generalized linear models. In the MARS algorithm, the contribution (or variable importance score) for each predictor is determined using a generalized cross-validation (GCV) statistic.
 
 For neural networks, two popular methods for constructing variable importance scores are the Garson algorithm \citep{interpreting-garson-1991}, later modified by \citet{back-goh-1995}, and the Olden algorithm \citep{accurate-olden-2004}. Both algorithms use the network's connection weights to form the basis of the variable importance scores. The Garson algorithm determines variable importance by identifying all weighted connections between the nodes of interest. Olden's algorithm, on the other hand, uses the product of the raw input-hidden and hidden-output connection weights between each input and output neuron and sums the product across all hidden neurons. This has been shown to outperform the Garson method in various simulations.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Filter-based appraoches to variable importance}
+\subsection{Filter-based approaches to variable importance}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Filter-based approaches, which are described in \citet[chap. 18]{applied-kuhn-2013}, do not make use of a fitted model to measure variable importance. They also do not take into account the other variables in the model.
+Filter-based approaches, which are described in \citet[chap. 18]{applied-kuhn-2013}, do not make use of the fitted model to measure variable importance. They also do not take into account the other variables in the model.
 
-For regression problems, a popular approach is to measuring the variable importance of a numeric predictor $X$ is to first fit a flexible nonparametric model between $X$ and the target $\mathcal{Y}$; for example, the locally-weighted polynomial regression (LOWESS) method of \citet{robust-cleveland-1979}. From this fit, a pseudo-$R^2$ measure can be obtained from the resulting residuals and used as a measure of variable importance. For categorical predictors, a different method based on standatd statistical tests (e.g., $t$-tests and ANOVAs) are employed; \citet[chap. 18]{applied-kuhn-2013} for details.
+For regression problems, a popular approach to measuring the variable importance of a numeric predictor $x$ is to first fit a flexible nonparametric model between $x$ and the target $Y$; for example, the locally-weighted polynomial regression (LOWESS) method of \citet{robust-cleveland-1979}. From this fit, a pseudo-$R^2$ measure can be obtained from the resulting residuals and used as a measure of variable importance. For categorical predictors, a different method based on standard statistical tests (e.g., $t$-tests and ANOVAs) are employed; see \citet[chap. 18]{applied-kuhn-2013} for details.
 
-For classification problems, an area under the ROC curve (AUC) statistic can be used to quantify predictor importance. The AUC statistic is derived by using the predictor $X$ as input to the ROC curve. If $X$ can perfectly separate the classes of $\mathcal{Y}$, then that is a good indicator that $X$ is important and this is captured in the corresponding AUC statistic. For problems with more than two classes, extensions of the ROC curve or a one-vs-all approach can be used.
+For classification problems, an area under the ROC curve (AUC) statistic can be used to quantify predictor importance. The AUC statistic is computed by using the predictor $x$ as input to the ROC curve. If $x$ can reasonably separate the classes of $Y$, then that is a clear indicator that $x$ is an important predictor (in terms of class separation) and this is captured in the corresponding AUC statistic. For problems with more than two classes, extensions of the ROC curve or a one-vs-all approach can be used.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -155,7 +155,7 @@ Let $\boldsymbol{x} = \left\{x_1, x_2, \dots, x_p\right\}$ represent the predict
   f_s\left(\boldsymbol{z}_s\right) = E_{\boldsymbol{z}_c}\left[\widehat{f}\left(\boldsymbol{z}_s, \boldsymbol{z}_c\right)\right] = \int \widehat{f}\left(\boldsymbol{z}_s, \boldsymbol{z}_c\right)p_{c}\left(\boldsymbol{z}_c\right)d\boldsymbol{z}_c,
 \end{equation}
 where $p_{c}\left(\boldsymbol{z}_c\right)$ is the marginal probability density of $\boldsymbol{z}_c$: $p_{c}\left(\boldsymbol{z}_c\right) = \int p\left(\boldsymbol{x}\right)d\boldsymbol{z}_s$.
-Equation (?) can be estimated from a set of training data by
+Equation~\eqref{eqn:avg_fun} can be estimated from a set of training data by
 \begin{equation}
 \label{eqn:pdf}
 \bar{f}_s\left(\boldsymbol{z}_s\right) = \frac{1}{n}\sum_{i = 1}^n\widehat{f}\left(\boldsymbol{z}_s,\boldsymbol{z}_{i, c}\right),
@@ -176,7 +176,7 @@ Constructing a PDP \eqref{eqn:pdf} in practice is rather straightforward. To sim
 \end{enumerate}
 \caption{A simple algorithm for constructing the partial dependence of the response on a single predictor $x_1$. \label{alg:pdp}}
 \end{algorithm}
-Algorithm~\ref{alg:pdp} can be quite computationally intensive since it involves $k$ passes over the training records. Fortunately, the algorithm can be performed in parallel quite easily (more on this in Section~\ref{sec:computational}). It can also be easily extended to larger subsets of two or more features as well.
+Algorithm~\eqref{alg:pdp} can be quite computationally intensive since it involves $k$ passes over the training records. Fortunately, the algorithm can be performed in parallel quite easily (more on this in Section~\ref{sec:computational}). It can also be easily extended to larger subsets of two or more features as well.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -187,14 +187,14 @@ For illustration, we will use a corrected version of the Boston housing data ana
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{boston-rf-vip}
-  \caption{Variable importance scores from a random forest fit to the (corrected) Boston housing data. \textit{Left}: OOB-based variable importance scores. \textit{Right}: Impurity-based variable importance scores. \label{boston-rf-vip}}
+  \caption{Variable importance scores from a random forest fit to the (corrected) Boston housing data. \textit{Left}: OOB-based variable importance scores. \textit{Right}: Impurity-based variable importance scores. \label{fig:boston-rf-vip}}
 \end{figure}
 
-The partial dependence functions for these three variables are displayed in Figure~\ref{fig:boston-rf-pdps}. Notice how the PDP for \code{zn} is essentially flat. It is this notion of "flatness" which we will use to define our variable importance measure.
+The PDPs for these three variables are displayed in Figure~\ref{fig:boston-rf-pdps}. Notice how the PDP for \code{zn} is essentially flat, compared to the PDPs for \code{lstat} and \code{rm}. It is this notion of "flatness" which we will use as a basis to define our variable importance measure.
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{boston-rf-pdps}
-  \caption{Partial dependence of \code{cmedv} on \code{lstat} (left), \code{rm} (middle), and \code{zn} (right). The mean of the $n = 506$ response values is indicated by a dashed red line. \label{boston-rf-pdps}}
+  \caption{Partial dependence of \code{cmedv} on \code{lstat} (left), \code{rm} (middle), and \code{zn} (right). The mean of the $n = 506$ median home values is indicated by a dashed red line. \label{fig:boston-rf-pdps}}
 \end{figure}
 
 
@@ -203,13 +203,13 @@ The partial dependence functions for these three variables are displayed in Figu
 \label{sec:new}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The PDP for \code{zn} in Figure~\ref{fig:boston-rf-pdps} is relatively flat indicating that \code{zn} does not have much influence on the predicted median home value. In other words, the values $\bar{f}\left(x_{i}\right)$ display little variability. One might conclude that any variable for which the PDP is "flat" is likely to be less important than those predictors whose PDP varies across a wider range of the response.
+The PDP for \code{zn} in Figure~\ref{fig:boston-rf-pdps} is relatively flat, indicating that \code{zn} does not have much influence on the predicted median home value. In other words, the partial dependence values $\bar{f}\left(x_{i}\right)$ $\left(i = 1, 2, \dots, k\right)$ display little variability. One might conclude that any variable for which the PDP is "flat" is likely to be less important than those predictors whose PDP varies across a wider range of the response.
 
 Our notion of variable importance is based on any measure of the "flatness" of the partial dependence function. In general, we define
-\begin{equation}
+\begin{equation*}
   \imp\left(x\right) = \flatness\left(\bar{f}_s\left(\boldsymbol{z}_s\right)\right),
-\end{equation}
-where $\flatness$ is any measure of "flatness" of the curve. A simple and effective measure to use is the sample standard deviation for continuous predictors and the range statistic for factors with $K$ levels. Based on Algorithm~\ref{alg:pdp}, our importance metric for predictor $x_1$ is simply
+\end{equation*}
+where $\flatness$ is any measure of "flatness" of the curve. A simple and effective measure to use is the sample standard deviation for continuous predictors and the range statistic (divided by 4) for factors with $K$ levels. Based on Algorithm~\eqref{alg:pdp}, our importance metric for predictor $x_1$ is simply
 \begin{equation}
 \label{eqn:vi-con}
   \imp\left(x_1\right) = \sqrt{\frac{1}{k - 1}\sum_{i = 1}^k\left[\bar{f}_1\left(x_{1i}\right) - \frac{1}{k}\sum_{i = 1}^k\bar{f}_1\left(x_{1i}\right)\right] ^ 2},
@@ -217,16 +217,16 @@ where $\flatness$ is any measure of "flatness" of the curve. A simple and effect
 if $x_1$ is continuous and
 \begin{equation}
 \label{eqn:vi-fac}
-  \imp\left(x_1\right) = \max_i\left(\bar{f}_1\left(x_{1i}\right)\right) - \min_i\left(\bar{f}_1\left(x_{1i}\right)\right),
+  \imp\left(x_1\right) = \left[\max_i\left(\bar{f}_1\left(x_{1i}\right)\right) - \min_i\left(\bar{f}_1\left(x_{1i}\right)\right)\right] / 4,
 \end{equation}
 if $x_1$ is categorical. Note that our variable importance metric relies on the fitted model; hence, it is crucial to properly tune and train the model to have good performance.
 
-To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of the predictors in the random forest for the Boston housing example and compute \eqref{eqn:vi-con}. The results are displayed in Figure~\ref{fig:boston-rf-vip-pd}.
+To illustrate, we apply Algorithm~\eqref{alg:pdp} to all of the predictors in the random forest for the Boston housing example and compute \eqref{eqn:vi-con}\footnote{We used Equation~\eqref{eqn:vi-fac} for \code{chas} since it is a categorical variable with two levels.}. The results are displayed in Figure~\ref{fig:boston-rf-vip-pd}. In this case, out partial dependence-based algorithm matches closely with the results from the random forest.
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{boston-rf-vip-pd}
-  \caption{Partial-dependence-based variable importance scores from a random forest fit to the (corrected) Boston housing data. \label{boston-rf-vip-pd}}
+  \caption{Partial-dependence-based variable importance scores from a random forest fit to the (corrected) Boston housing data. \label{fig:boston-rf-vip-pd}}
 \end{figure}
 
 
@@ -235,7 +235,7 @@ To illustrate, we apply the partial dependence algorithm \ref{alg:pdp} to all of
 \label{sec:linear}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-As mentioned earlier, for linear models, a natural choice for measuring the importance of each term is to use the absolute value of the corresponding coefficient divided by its estimated standard error (i.e., the absolute value of the $t$-statistic). This turns out to be equivalent to the partial dependence-based metric when the predcitors are independely and uniformly distributed of the same range.
+As mentioned earlier, for linear models, a natural choice for measuring the importance of each term is to use the absolute value of the corresponding coefficient divided by its estimated standard error (i.e., the absolute value of the $t$-statistic). This turns out to be equivalent to the partial dependence-based metric \eqref{eqn:vi-con} when the predictors are independently and uniformly distributed over the same range.
 
 For example, suppose we have a linear model of the form
 \begin{equation*}
@@ -245,7 +245,7 @@ where $\beta_i$ ($i = 1, 2$) is a constant, $X_1$ and $X_2$ are both $\mathcal{U
 \begin{equation*}
   f_1\left(X_1\right) = \int_0^1 E\left[Y | X_1, X_2\right] p\left(X_2\right) dX_2,
 \end{equation*}
-where $p\left(X_2\right) = 1$. Simple calculus leads to 
+where $p\left(X_2\right) = 1$. Simple calculus then leads to 
 \begin{equation*}
   f_1\left(X_1\right) = \beta_0 + \beta_2 / 2 + \beta_1 X_1 \quad and \quad f_2\left(X_2\right) = \beta_0 + \beta_1 / 2 + \beta_2 X_2..
 \end{equation*}
@@ -259,23 +259,19 @@ To illustrate, we simulated $n = 1000$ observations from the following linear mo
 \begin{equation*}
   Y = 1 + 3 X_1 - 5 X_2 + \epsilon,
 \end{equation*}
-where $X_1$ and $X_2$ are both $\mathcal{U}\left(0, 1\right)$ random variables, and $\epsilon \sim \mathcal{N}\left(0, 0.01 ^ 2\right)$. Since we know the distribution of $X_1$ and $X_2$, we can easily find $f_1\left(X_1\right)$ and $f_2\left(X_2\right)$:
-\begin{equation*}
-f_1\left(X_1\right) = \int_0^1\left(1 + 2 X_1 - 5 X_2\right)p\left(X_2\right)dX_2,
-\end{equation*}
-where $p\left(X_2\right) = 1$. Simple calculus leads to 
+where $X_1$ and $X_2$ are both $\mathcal{U}\left(0, 1\right)$ random variables, and $\epsilon \sim \mathcal{N}\left(0, 0.01 ^ 2\right)$. For this example, we have 
 \begin{equation*}
   f_1\left(X_1\right) = -\frac{3}{2} + 3 X_1 \quad and \quad f_2\left(X_1\right) = \frac{5}{2} - 5 X_2.
 \end{equation*}
-These are plotted as red lines in Figure~\ref{fig:lm-pdps}. Additionally, the black lines in Figure~\ref{fig:lm-pdps} correspond to the estimated partial dependence functions using Algorithm~\ref{alg:pdp}.
+These are plotted as red lines in Figure~\ref{fig:lm-pdps}. Additionally, the black lines in Figure~\ref{fig:lm-pdps} correspond to the estimated partial dependence functions using Algorithm~\eqref{alg:pdp}.
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{lm-pdps}
-  \caption{Estimated and true partial dependence plots. \label{lm-pdps}}
+  \caption{Estimated and true partial dependence plots. \label{fig:lm-pdps}}
 \end{figure}
 
-Clearly, $X_2$ is more influential than $X_1$. A natural way of mearing the relative influence of $X_2$ over $X_1$ on $Y$ would be to take the absolute value of the ratio of the slopes in $f_2\left(X_2\right)$ and $f_1\left(X_1\right)$, which in this case gives $5 / 3 \approx 1.67$. In other words, $X_2$ is roughly 1.67 times more influential on $Y$ than $X_1$. Using the partial-dependence-based variable importance metric, we obtain $\imp\left(X_1\right) = 1.4828203$ and $\imp\left(X_2\right) = 0.8961719$ which gives the ratio $\imp\left(X_2\right) / \imp\left(X_1\right) \approx 1.65$. In fact, we can compute the true variance for both partial dependence functions:
+Clearly, $X_2$ is more influential than $X_1$. Taking the absolute value of the ratio of the slopes in $f_2\left(X_2\right)$ and $f_1\left(X_1\right)$ gives $5 / 3 \approx 1.67$. In other words, $X_2$ is roughly 1.67 times more influential on $Y$ than $X_1$. Using the partial-dependence-based variable importance metric, we obtain $\imp\left(X_1\right) = 1.4828203$ and $\imp\left(X_2\right) = 0.8961719$ which gives the ratio $\imp\left(X_2\right) / \imp\left(X_1\right) \approx 1.65$. In fact, we can compute the true variance for both partial dependence functions:
 \begin{equation*}
 Var\left[f_1\left(X_1\right)\right] = 3^2 / 12 \quad and \quad Var\left[f_2\left(X_2\right)\right] = 5^2 / 12.
 \end{equation*}
@@ -289,42 +285,42 @@ Using the absolute value of the $t$-statistic becomes less useful in linear mode
 \label{sec:interaction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The same idea can be applied to finding interaction effects. Essentially, a weak interaction effect of $x_1$ and $x_2$ on $\mathcal{Y}$ would suggest that $\imp\left(x_1, x_2\right)$ has little variation when either $x_1$ or $x_2$ is held constant while the other varies. 
+The same idea can be applied to finding interaction effects. Essentially, a weak interaction effect of $x_1$ and $x_2$ on $Y$ would suggest that $\imp\left(x_1, x_2\right)$ has little variation when either $x_1$ or $x_2$ is held constant while the other varies. 
 
 Let $\boldsymbol{z}_s = \left(x_i, x_j\right)$, $i \neq j$, be any two predictors in the feature space $\boldsymbol{x}$. Construct the partial dependence function $\bar{f}_s\left(x_i, x_j\right)$ and compute $\imp\left(x_i\right)$ for each unique value of $x_j$ and take the standard deviation of the resulting importance scores. The same can be done for $x_j$ and the results are averaged together. Large values (relative to each other) would be indicative of possible interaction effects. 
-
-\textbf{TODO:} How does this relate to Friedman's $H$-statistic? Do a GBM example and compare the two approaches.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Computational considerations}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Constructing partial dependence functions using the brute force method described in Algorithm~\ref{alg:pdp} can be computationally expensive. Some solutions are discussed in \citet{pdp-greenwell-2017}. Fortunately, Algorithm~\ref{alg:pdp} is embarrassingly parallel and computing partial dependence functions for each predictor can be done rather quickly on a machine with a multi-core processor. For much larger data sets, it may be worthwhile to reduce the grid size by using specific quantiles for each predictor, rather than using all the unique observations. For example, the partial dependence function can be approximated by using the min and max of each predictor along with the deciles of the unique predictor values.
+Constructing partial dependence functions using the brute force method described in Algorithm~\eqref{alg:pdp} can be computationally expensive. Some ideas are discussed in \citet{pdp-greenwell-2017}. Most importantly, Algorithm~\eqref{alg:pdp} is embarrassingly parallel and computing partial dependence functions for each predictor can be done rather quickly on a machine with a multi-core processor. For much larger data sets, it may be worthwhile to reduce the grid size by using specific quantiles for each predictor, rather than using all the unique observations. For example, the partial dependence function can be approximated very quickly by using the min and max of each predictor along with the deciles of the unique predictor values.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Friedman's regression problem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-To further illustrate, we will use one of the regression problems described in Friedman (1991) and Breiman (1996). Inputs are 10 independent variables uniformly distributed on the interval $\left[0, 1\right]$; only 5 out of these 10 are actually used. Outputs are created according to the formula
-\begin{equation}
-\mathcal{Y} = 10 \sin\left(\pi x_1 x_2\right) + 20 \left(x_3 - 0.5\right) ^ 2 + 10 x_4 + 5 x_5 + \epsilon,
-\end{equation}
-where $\epsilon \sim \mathcal{N}\left(0, \sigma\right)$. We fit a neural network with one hidden layer containing eight units and a weight decay of 0.01 (these parameters were chosen using 5-fold cross-validation).
+To further illustrate, we will use one of the regression problems described in Friedman (1991) and Breiman (1996). The feature space consists of ten independent $\mathcal{U}\left(0, 1\right)$ random variables; however, only five out of these ten are actually used. The response is related to the features according to the formula
+\begin{equation*}
+Y = 10 \sin\left(\pi x_1 x_2\right) + 20 \left(x_3 - 0.5\right) ^ 2 + 10 x_4 + 5 x_5 + \epsilon,
+\end{equation*}
+where $\epsilon \sim \mathcal{N}\left(0, \sigma\right)$. Using the R package \pkg{nnet} \citep{venables-modern-2002}, we fit a neural network with one hidden layer containing eight units and a weight decay of 0.01 (these parameters were chosen using 5-fold cross-validation).
 
-Variable importance plots are displayed in Figure~\ref{fig:network-vip}. Notice how the Garson and Olden algorithms incorrectly label some of the features not in the true model as "important".
+Variable importance plots are displayed in Figure~\ref{fig:network-vip}. Notice how the Garson and Olden algorithms incorrectly label some of the features not in the true model as "important". For example, the Garson algorithm incorrectly labels $x_8$ (which is included in the true model) as more important than $x_5$ (which is in the true model). Our method, on the other hand, clearly labels all five of the predictors in the true model as being, by far, the most important in the fitted neural network.
+
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{network-vip}
-  \caption{Variable importance plots for the neural network in Figure~\ref{fig:network}. \textit{Left}: partial dependence-based algorithm. \textit{Middle}: Garson's algorithm. \textit{Right}: Olden's algorithm. \label{network-vip}}
+  \caption{Variable importance plots for the neural network in Figure~\ref{fig:network}. \textit{Left}: partial dependence-based algorithm. \textit{Middle}: Garson's algorithm. \textit{Right}: Olden's algorithm. \label{fig:network-vip}}
 \end{figure}
 
-We also constructed the partial dependence functions for all pairwise interactions and computed the interaction statistic discussed in Section~\ref{sec:interaction}. For each pair $\left(x_i, x_j\right)$ we constructed the partial dependence function over a fine grid according to Algorithm~\ref{alg:pdp}. Then, we computed $\imp\left(x_i | x_j\right)$ and $\imp\left(x_j | x_i\right)$ and averaged the results. The top ten interaction statistics are displayed in Figure~\ref{fig:network-int}. There is a clear indication of an interaction effect between the predictors $x_1$ and $x_2$.
+We also constructed the partial dependence functions for all pairwise interactions and computed the interaction statistic discussed in Section~\ref{sec:interaction}. The top ten interaction statistics are displayed in Figure~\ref{fig:network-int}. There is a clear indication of an interaction effect between the predictors $x_1$ and $x_2$, the only interaction present in the true model.
+
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=0.75\textwidth]{network-int}
-  \caption{TBD. \label{network-int}}
+  \caption{TBD. \label{fig:network-int}}
 \end{figure}
 
 
@@ -332,40 +328,37 @@ We also constructed the partial dependence functions for all pairwise interactio
 \subsubsection{Friedman's $H$-statistic}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-An alternative measure for the strength of interaction effects is known as Friedman's $H$-statistic \citep{friedman-2008-predictive}. Coincidentally, this statistic is also based on the partial dependence functions of the corresponding predictors.
+An alternative measure for the strength of interaction effects is known as Friedman's $H$-statistic \citep{friedman-2008-predictive}. Coincidentally, this statistic is also based on the partial dependence functions of the corresponding predictors, but uses a different approach.
 
-...
-
-To illustrate, we fit a generalized boosted regression model to the Friedman 1 data set. The parameters were chosen using 5-fold cross-validation. We used the R package \pkg{gbm} \citep{gbm-pkg} which has built-in support for computing Friedman's $H$-statistic for any combination of predictors. 
+For comparison, we fit a generalized boosted regression model (GBM) to the Friedman data set from the previous section. The parameters were chosen using 5-fold cross-validation. We used the R package \pkg{gbm} \citep{gbm-pkg} which has built-in support for computing Friedman's $H$-statistic for any combination of predictors. The results are displayed in Figure~\ref{fig:gbm-int}. To our surprise, the $H$-statistic did not seem to catch the true interaction between $x_1$ and $x_2$. Instead, the $H$-statistic ranked the pairs $\left(x_8, x_9\right)$ and $\left(x_7, x_10\right)$ as having the strongest interaction effects, but these predictors do not even appear in the true model. Our variable importance-based interaction statistic, on the other hand, clearly suggests that the pair $\left(x_1, x_2\right)$ has having the strongest interaction effect.
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=0.75\textwidth]{gbm-int}
-  \caption{TBD. \label{gbm-int}}
+  \caption{Interaction statistics for the GBM model fit to the Friedman data set. \textit{Left}: Friedman's $H$-statistic. \textit{Right}: Our variable importance-based interaction statistic. \label{fig:gbm-int}}
 \end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Pima indians diabetes data}
+\section{The Pima Indians diabetes data}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this section, we analyze the diabetes test results collected by the the US National Institute of Diabetes and Digestive and Kidney Diseases from a population of women who were at least 21 years old, of Pima Indian heritage, and living near Phoenix, Arizona. The data were taken directly from the \code{PimaIndiansDiabetes2} data frame which are available in the \pkg{mlbench} package \citep{mlbench-pkg}; for a description of the data and all the variables, see \url{https://archive.ics.uci.edu/ml/datasets/pima+indians+diabetes}.
 
-We then used the \pkg{nnet} package \citep{nnet-pkg} in R to fit a neural network with seven hidden units and a weight decay of 0.01; these were chosen to maximize AUC using repeated 5-fold cross-validation with ten repeats; the cross-validated AUC was 0.77.
+We then used the \pkg{nnet} package \citep{venables-modern-2002} in R to fit a neural network with seven hidden units and a weight decay of 0.01; these parameters were chosen to maximize AUC using repeated 5-fold cross-validation with ten repeats; the cross-validated AUC was 0.77.
 
-The partial dependence functions for all the predictors are displayed in Figure~\ref{fig:pima-pdps}. The PDPs clearly indicate that plasma glucose concentration (\code{glucose}), diabetes pedigree function (\code{pedigree}), and 2-hour serum insulin (\code{insulin}) have the largest effect on the neural network's prediction for the outcome of the diabetes test result (\code{diabetes}). On the other hand, the PDPs for diastolic blodd pressure (\code{pressure}) and age (\code{age}) are relatively flat indicating they contribute less to the predictions than the other predictors. This is further illustrated in the variable importance plot displayed in Figure~\ref{pima-vip}; the importance scores were obtained using Algorithm~\ref{alg:vi}.
+The partial dependence functions for all the predictors are displayed in Figure~\ref{fig:pima-pdps}. The PDPs clearly indicate that plasma glucose concentration (\code{glucose}), diabetes pedigree function (\code{pedigree}), and 2-hour serum insulin (\code{insulin}) have the largest effect on the neural network's prediction for the outcome of the diabetes test result (\code{diabetes}). On the other hand, the PDPs for diastolic blood pressure (\code{pressure}) and age (\code{age}) are relatively flat indicating they contribute less to the predictions than the other predictors. This is further illustrated in the variable importance plot displayed in Figure~\ref{pima-vip}; the importance scores were obtained using Algorithm~\eqref{alg:vi}.
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{pima-pdps}
-  \caption{Partial-dependence plots for the eight predictors in the Pima indians data. \label{pima-pdps}}
+  \caption{Partial-dependence plots for the eight predictors in the Pima Indians data set. \label{fig:pima-pdps}}
 \end{figure}
-
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{pima-vip}
-  \caption{Partial-dependence-based variable importance scores for the eight predictors in the Pima indians data. \label{pima-vip}}
+  \caption{Partial-dependence-based variable importance scores for the eight predictors in the Pima Indians data set. \label{fig:pima-vip}}
 \end{figure}
 
 
@@ -374,7 +367,11 @@ The partial dependence functions for all the predictors are displayed in Figure~
 \label{sec:conc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Coming soon!
+\textbf{TODO:}
+\begin{itemize}
+  \item Talk about flexibility of the approach and using other more robust metrics such as the MAD/MADN estimator.
+\end{itemize}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -390,16 +387,16 @@ Coming soon!
 
 \item[R-package \pkg{vip}:] Contains function for computing variable importance scores and constructing variable importance plots for various types of fitted models in R. The package is hosted on GitHub at \url{https://github.com/AFIT-R/vip}.
 
+\item{greenwell-vi-2017.R} R script containing the R code to reproduce all of the results and graphics in this paper.
+
 \end{description}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{BibTeX}
+% Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-We hope you've chosen to use BibTeX!\ If you have, please feel free to use the package natbib with any bibliography style you're comfortable with. The .bst file Chicago was used here, and agsm.bst has been included here for your convenience.
 
 \bibliographystyle{Chicago}
 
-\bibliography{vip-methodology}
+\bibliography{greenwell-vi-2017}
 \end{document}
