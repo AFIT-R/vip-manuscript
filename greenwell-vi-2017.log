@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  27 SEP 2017 13:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  28 SEP 2017 13:45
 entering extended mode
 **./greenwell-vi-2017.tex
 (greenwell-vi-2017.tex
@@ -492,63 +492,60 @@ File: network-int.pdf Graphic file (type pdf)
 Package pdftex.def Info: network-int.pdf used on input line 322.
 (pdftex.def)             Requested size: 346.70248pt x 173.34787pt.
  [13 <./network-vip.pdf> <./network-int.pdf>]
+<interaction-simulation.pdf, id=271, 867.24pt x 578.16pt>
+File: interaction-simulation.pdf Graphic file (type pdf)
+
+<use interaction-simulation.pdf>
+Package pdftex.def Info: interaction-simulation.pdf used on input line 338.
+(pdftex.def)             Requested size: 462.26999pt x 308.17891pt.
+
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 328.
+(hyperref)                than one, level fixed on input line 344.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 328.
+(hyperref)                removing `math shift' on input line 344.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 328.
+(hyperref)                removing `math shift' on input line 344.
 
-<gbm-int.pdf, id=274, 505.89pt x 505.89pt>
+<gbm-int.pdf, id=277, 505.89pt x 505.89pt>
 File: gbm-int.pdf Graphic file (type pdf)
  <use gbm-int.pdf>
-Package pdftex.def Info: gbm-int.pdf used on input line 337.
+Package pdftex.def Info: gbm-int.pdf used on input line 353.
 (pdftex.def)             Requested size: 346.70248pt x 346.7101pt.
- [14]
-<pima-pdps.pdf, id=293, 867.24pt x 289.08pt>
+ [14] [15 <./interaction-simulation.pdf>] <pima-pdps.pdf, id=306, 867.24pt x 28
+9.08pt>
 File: pima-pdps.pdf Graphic file (type pdf)
- <use pima-pdps.pdf>
-Package pdftex.def Info: pima-pdps.pdf used on input line 354.
+
+<use pima-pdps.pdf>
+Package pdftex.def Info: pima-pdps.pdf used on input line 370.
 (pdftex.def)             Requested size: 462.26999pt x 154.08945pt.
-
-<pima-vip.pdf, id=294, 505.89pt x 361.35pt>
+ <pima-vip.pdf, id=307, 505.89pt x 361.35pt>
 File: pima-vip.pdf Graphic file (type pdf)
- <use pima-vip.pdf>
-Package pdftex.def Info: pima-vip.pdf used on input line 360.
-(pdftex.def)             Requested size: 462.26999pt x 330.19643pt.
- [15 <./gbm-int.pdf>] [16 <./pima-pdps.pdf> <./pima-vip.pdf>]
-! Undefined control sequence.
-<recently read> \floor 
-                       
-l.372 ... finite sample breakdown point of $\floor
-                                                  {n / 2} / n$. It would als...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
 
-(greenwell-vi-2017.bbl [17] [18])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 401.
- [19]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 401.
+<use pima-vip.pdf>
+Package pdftex.def Info: pima-vip.pdf used on input line 376.
+(pdftex.def)             Requested size: 462.26999pt x 330.19643pt.
+ [16 <./gbm-int.pdf>] [17 <./pima-pdps.pdf> <./pima-vip.pdf>] (greenwell-vi-201
+7.bbl [18] [19])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 417.
+ [20]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 417.
  (greenwell-vi-2017.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 401.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 401.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 417.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 417.
 Package rerunfilecheck Info: File `greenwell-vi-2017.out' has not changed.
 (rerunfilecheck)             Checksum: D422C68075E1215E52B9EC5CF4386069;984.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 401.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 417.
  ) 
 Here is how much of TeX's memory you used:
- 7421 strings out of 493323
- 111120 string characters out of 3128713
- 213708 words of memory out of 3000000
- 10791 multiletter control sequences out of 15000+200000
+ 7428 strings out of 493323
+ 111308 string characters out of 3128713
+ 213871 words of memory out of 3000000
+ 10795 multiletter control sequences out of 15000+200000
  14567 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,11n,31p,1384b,456s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -575,9 +572,9 @@ ts/cm/cmti10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
 e1/public/amsfonts/cm/cmti12.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKT
 eX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/greenweb/AppData/Loc
 al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on greenwell-vi-2017.pdf (19 pages, 342063 bytes).
+Output written on greenwell-vi-2017.pdf (20 pages, 421253 bytes).
 PDF statistics:
- 415 PDF objects out of 1000 (max. 8388607)
- 74 named destinations out of 1000 (max. 500000)
- 158 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 429 PDF objects out of 1000 (max. 8388607)
+ 76 named destinations out of 1000 (max. 500000)
+ 163 words of extra memory for PDF output out of 10000 (max. 10000000)
 

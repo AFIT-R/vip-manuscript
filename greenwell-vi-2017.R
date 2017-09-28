@@ -342,7 +342,7 @@ dev.off()
 # })
 # 
 # # Figure ?
-# pdf(file = "sim-int.pdf", width = 12, height = 8)
+# pdf(file = "interaction-simulation.pdf", width = 12, height = 8)
 # grid.arrange(p1, p2, nrow = 2)
 # dev.off()
 # ------------------------------------------------------------------------------
