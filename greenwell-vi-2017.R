@@ -268,106 +268,6 @@ pdf(file = "network-vip.pdf", width = 12, height = 6)
 grid.arrange(p1, p2, p3, ncol = 3)
 dev.off()
 
-#
-pd.12 <- partial(trn.nn, pred.var = c("x.1", "x.2"), grid.resolution = 100, 
-                 progress = "text")
-p1 <- plotPartial(pd.12, levelplot = TRUE)
-x <- y <- seq(from = 0, to = 1, length = 100)
-xy <- expand.grid(x, y)
-z <- apply(xy, MARGIN = 1, FUN = function(x) 10 * sin(pi * x[1L] * x[2L]) + 55/6)
-res <- as.data.frame(cbind(xy, z))
-names(res) <- c("x.1", "x.2", "yhat")
-p2 <- levelplot(yhat ~ x.1 * x.2, data = res, col.regions = viridis::viridis)
-grid.arrange(p1, p2, ncol = 2)
-set.seed(1130)
-approxVar <- function(x1 = 0.5, n = 100000) {
-  # x1 <- runif(n, min = 0, max = 1)
-  x2 <- runif(n, min = 0, max = 1)
-  sd(10 * sin(pi * x1 * x2) + 55/6)
-}
-x <- seq(from = 0, to = 1, length = 100)
-y <- sapply(x, approxVar)
-p3 <- xyplot(SD ~ x.1, data = data.frame(x.1 = x, SD = y), type = "l")
-grid.arrange(p2, p3, ncol = 2)
-
-#
-pd.14 <- partial(trn.nn, pred.var = c("x.1", "x.4"), grid.resolution = 100, 
-                 progress = "text")
-p1 <- plotPartial(pd.14, levelplot = TRUE)
-x <- y <- seq(from = 0, to = 1, length = 100)
-xy <- expand.grid(x, y)
-z <- apply(xy, MARGIN = 1, FUN = function(x) {
-  5 * (pi * x[1L] * (12 * x[2L] + 5) - 12 * cos(pi * x[1L]) + 12) / (6 * pi * x[1L])
-})
-res <- as.data.frame(cbind(xy, z))
-names(res) <- c("x.1", "x.4", "yhat")
-p2 <- levelplot(yhat ~ x.1 * x.4, data = res, col.regions = viridis::viridis)
-grid.arrange(p1, p2, ncol = 2)
-set.seed(1152)
-approxVar <- function(x1 = 0.5, n = 100000) {
-  # x1 <- runif(n, min = 0, max = 1)
-  x2 <- runif(n, min = 0, max = 1)
-  sd(5 * (pi * x1 * (12 * x2 + 5) - 12 * cos(pi * x1) + 12) / (6 * pi * x1))
-}
-x <- seq(from = 0, to = 1, length = 100)
-y <- sapply(x, approxVar)
-p3 <- xyplot(SD ~ x.1, data = data.frame(x.1 = x, SD = y), type = "l",
-             ylim = c(min(y, na.rm = TRUE) - 1, max(y, na.rm = TRUE) + 1))
-grid.arrange(p2, p3, ncol = 2)
-
-
-simSD <- function(pred.var, pd.fun) {
-  x <- y <- seq(from = 0, to = 1, length = 100)
-  xy <- expand.grid(x, y)
-  z <- apply(xy, MARGIN = 1, FUN = function(x) {
-    pd.fun(x[1L], x[2L])
-  })
-  res <- as.data.frame(cbind(xy, z))
-  names(res) <- c(pred.var, "yhat")
-  form <- as.formula(paste("yhat ~", paste(paste(pred.var, collapse = "*"))))
-  p1 <- levelplot(form, data = res, col.regions = viridis::viridis,
-                  xlab = expression(x[1]), ylab = expression(x[2]))
-  approxVar.x <- function(x = 0.5, n = 100000) {
-    y <- runif(n, min = 0, max = 1)
-    sd(pd.fun(x, y))
-  }
-  approxVar.y <- function(y = 0.5, n = 100000) {
-    x <- runif(n, min = 0, max = 1)
-    sd(pd.fun(x, y))
-  }
-  x <- seq(from = 0, to = 1, length = 100)
-  y1 <- sapply(x, approxVar.x)
-  y2 <- sapply(x, approxVar.y)
-  p2 <- xyplot(SD ~ x, data = data.frame(x = x, SD = y1), type = "l",
-               lwd = 1, col = "black",
-               ylim = c(min(y1, na.rm = TRUE) - 1, max(y1, na.rm = TRUE) + 1),
-               xlab = expression(x[1]), 
-               ylab = expression(imp ~ (x[2]*" | "*x[1])))
-  p3 <- xyplot(SD ~ x, data = data.frame(x = x, SD = y2), type = "l",
-               lwd = 1, col = "black",
-               ylim = c(min(y2, na.rm = TRUE) - 1, max(y2, na.rm = TRUE) + 1),
-               xlab = expression(x[2]), 
-               ylab = expression(imp ~ (x[1]*" | "*x[2])))
-  grid.arrange(p1, p2, p3, ncol = 3)
-}
-
-pd.fun.14 <- function(x1, x2) {
-  5 * (pi * x1 * (12 * x2 + 5) - 12 * cos(pi * x1) + 12) / (6 * pi * x1)
-}
-
-pd.fun.12 <- function(x1, x2) {
-  10 * sin(pi * x1 * x2) + 55 / 6
-}
-
-p1 <- simSD(c("x.1", "x.2"), pd.fun = pd.fun.12)
-p2 <- simSD(c("x.1", "x.4"), pd.fun = pd.fun.14)
-grid.arrange(p1, p2, nrow = 2)
-
-# pd2 <- pd
-# pd2[["x.2"]] <- equal.count(pd2[["x.2"]], number = 10, overlap = 0)
-# xyplot(yhat ~ x.1 | x.2, data = pd2, type = "p")
-
-
 # vint <- function(x) {
 #   pd <- partial(trn.nn, pred.var = c(x[1L], x[2L]))
 #   c(sd(tapply(pd$yhat, INDEX = pd[[x[1L]]], FUN = sd)),
@@ -397,6 +297,56 @@ ggplot(int[1:10, ], aes(reorder(x, -y), y)) +
   scale_x_discrete("", labels = labs) +
   theme_light()
 dev.off()
+
+
+# Simulation -------------------------------------------------------------------
+# simSD <- function(pred.var, pd.fun) {
+#   x <- y <- seq(from = 0, to = 1, length = 100)
+#   xy <- expand.grid(x, y)
+#   z <- apply(xy, MARGIN = 1, FUN = function(x) {
+#     pd.fun(x[1L], x[2L])
+#   })
+#   res <- as.data.frame(cbind(xy, z))
+#   names(res) <- c(pred.var, "yhat")
+#   form <- as.formula(paste("yhat ~", paste(paste(pred.var, collapse = "*"))))
+#   p1 <- levelplot(form, data = res, col.regions = viridis::viridis,
+#                   xlab = expression(x[1]), ylab = expression(x[4]))
+#   approxVar.x <- function(x = 0.5, n = 100000) {
+#     y <- runif(n, min = 0, max = 1)
+#     sd(pd.fun(x, y))
+#   }
+#   approxVar.y <- function(y = 0.5, n = 100000) {
+#     x <- runif(n, min = 0, max = 1)
+#     sd(pd.fun(x, y))
+#   }
+#   x <- seq(from = 0, to = 1, length = 100)
+#   y1 <- sapply(x, approxVar.x)
+#   y2 <- sapply(x, approxVar.y)
+#   p2 <- xyplot(SD ~ x, data = data.frame(x = x, SD = y1), type = "l",
+#                lwd = 1, col = "black",
+#                ylim = c(min(y1, na.rm = TRUE) - 1, max(y1, na.rm = TRUE) + 1),
+#                xlab = expression(x[1]), 
+#                ylab = expression(imp ~ (x[4]*" | "*x[1])))
+#   p3 <- xyplot(SD ~ x, data = data.frame(x = x, SD = y2), type = "l",
+#                lwd = 1, col = "black",
+#                ylim = c(min(y2, na.rm = TRUE) - 1, max(y2, na.rm = TRUE) + 1),
+#                xlab = expression(x[4]), 
+#                ylab = expression(imp ~ (x[1]*" | "*x[4])))
+#   grid.arrange(p1, p2, p3, ncol = 3)
+# }
+# p1 <- simSD(c("x.1", "x.2"), pd.fun = function(x1, x2) {
+#   5 * (pi * x1 * (12 * x2 + 5) - 12 * cos(pi * x1) + 12) / (6 * pi * x1)
+# })
+# p2 <- simSD(c("x.1", "x.4"), pd.fun = function(x1, x2) {
+#   10 * sin(pi * x1 * x2) + 55 / 6
+# })
+# 
+# # Figure ?
+# pdf(file = "sim-int.pdf", width = 12, height = 8)
+# grid.arrange(p1, p2, nrow = 2)
+# dev.off()
+# ------------------------------------------------------------------------------
+
 
 
 ################################################################################
