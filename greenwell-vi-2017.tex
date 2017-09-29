@@ -26,9 +26,12 @@
 \newcommand{\pkg}[1]{\texorpdfstring%
 {{\normalfont\fontseries{b}\selectfont #1}}%
 {#1}}
+\newcommand{\file}[1]{{`\normalfont\textsf{#1}'}}
+
 \def\code#1{\texttt{#1}}
 \def\pkg#1{\textbf{\texttt{#1}}}
 \def\ref#1{\textbf{(#1)}}
+
 \DeclareMathOperator{\flatness}{flatness}
 \DeclareMathOperator{\imp}{imp}
 \DeclareMathOperator{\inter}{int}
@@ -56,13 +59,13 @@
   \title{\bf A General Model-Based Variable Importance Metric for Supervised Learning}
   \author{Brandon M. Greenwell\thanks{
     The authors gratefully acknowledge \textit{please remember to list all relevant funding sources in the unblinded version}}\hspace{.2cm}\\
-    Department of XXX, University of XXX\\
+    Illumination Works           \\
     and \\
     Andrew J. McCarthy \\
-    Department of YYY, University of WWW \\
+    The Perduco Group \\
     and \\
     Bradley C. Boehmke \\
-    Department of ZZZ, University of WWW }
+    Department of Operational Sciences, Air Force Institute of Technology}
   \maketitle
 } \fi
 
@@ -408,7 +411,7 @@ While this new approach to computing feature importance for any supervised learn
 
 \item[R-package \pkg{vip}:] Contains function for computing variable importance scores and constructing variable importance plots for various types of fitted models in R. The package is hosted on GitHub at \url{https://github.com/AFIT-R/vip}.
 
-\item{greenwell-vi-2017.R} R script containing the R code to reproduce all of the results and graphics in this paper.
+\item{\file{greenwell-vi-2017.R}} R script containing the R code to reproduce all of the results and figures in this paper.
 
 \end{description}
 
