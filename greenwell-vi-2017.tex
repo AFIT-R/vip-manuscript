@@ -56,7 +56,7 @@
 
 \if0\blind
 {
-  \title{\bf A General Model-Based Variable Importance Metric for Supervised Learning}
+  \title{\bf A Model-Based Variable Importance Metric for Supervised Learning}
   \author{Brandon M. Greenwell\thanks{
     The authors gratefully acknowledge \textit{please remember to list all relevant funding sources in the unblinded version}}\hspace{.2cm}\\
     Illumination Works           \\
@@ -82,11 +82,11 @@
 
 \bigskip
 \begin{abstract}
-In the era of "big data", it is becoming more of a challenge to not only build state-of-the-art predictive models, but also gain an understanding of what's really going on in the data. For example, it is often of interest to know which, if any, of the predictors in a fitted model are relatively influential on the predicted outcome. Fortunately, there are a few modern algorithms---like random forests and boosted decision trees---that have a natural way of ranking predictors in terms of some measure of importance or relative influence. Other algorithms---like neural networks and support vector machines---are not capable of doing so and model-free approaches are generally used to measure each predictor's importance. In this paper, we discuss a model-based approach to measuring predictor importance in any supervised learning setting.
+In the era of "big data", it is becoming more of a challenge to not only build state-of-the-art predictive models, but also gain an understanding of what's really going on in the data. For example, it is often of interest to know which, if any, of the predictors in a fitted model are relatively influential on the predicted outcome. Fortunately, there are a few modern algorithms---like random forests and boosted decision trees---that have a natural way of ranking predictors in terms of some measure of importance or relative influence. Other algorithms---like neural networks and support vector machines---are not capable of doing so and model-free approaches are generally used to measure each predictor's importance. In this paper, we discuss a model-based approach to measuring predictor importance in any supervised learning setting. The R code to reproduce all of the figures in this paper is available in the supplementary materials.
 \end{abstract}
 
 \noindent%
-{\it Keywords:}  3 to 6 keywords, that do not appear in the title
+{\it Keywords:} Relative influence, Interaction, Partial dependence function, Partial dependence plot, PDP
 \vfill
 
 \newpage
@@ -198,7 +198,7 @@ Constructing a PDP \eqref{eqn:pdf} in practice is rather straightforward. To sim
     \BlankLine
   \caption{A simple algorithm for constructing the partial dependence of the response on a single predictor $x_1$. \label{alg:pdp}}
 \end{algorithm}
-Algorithm~\eqref{alg:pdp} can be quite computationally intensive since it involves $k$ passes over the training records, but fortunately, is easily parallelizable. In addition, Algorithm~\eqref{alg:pdp} can be extended to larger subsets of two or more features.
+Algorithm~\eqref{alg:pdp} can be quite computationally intensive since it involves $k$ passes over the training records, but fortunately, is easily parallelizable. In addition, Algorithm~\eqref{alg:pdp} can be extended to larger subsets of two or more features, but visualizing more than three predictors at a time is difficult and probably not very useful.
 
 While PDPs are an invaluable tool in understanding the relationships uncovered by complex nonparametric models, they can be misleading in the presence of substantial interaction effects \citep{goldstein-peeking-2015}. To overcome this issue \citeauthor{goldstein-peeking-2015} developed the concept of individual conditional expectation (ICE) plots. ICE plots display the estimated relationship between the response and a predictor of interest for each observation; In other words, skipping step 1 (c) in Algorithm~\eqref{alg:pdp}. Consequently, the PDP for a predictor of interest can be obtained by averaging the corresponding ICE curves across all observations. In Section~\ref{sec:interaction}, we show how to use partial dependence functions to evaluate the strength of potential interactions effects.
 
