@@ -187,12 +187,7 @@ Constructing a PDP \eqref{eqn:pdf} in practice is rather straightforward. To sim
 \end{algorithm}
 Algorithm~\eqref{alg:pdp} can be quite computationally intensive since it involves $k$ passes over the training records, but fortunately, is easily parallelizable. In addition, Algorithm~\eqref{alg:pdp} can be extended to larger subsets of two or more features.
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Individual conditional expectation (ICE) curves}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Coming soon!
+While PDPs are an invaluable tool in understanding the relationships uncovered by complex nonparametric models, they can be misleading in the presence of substantial interaction effects \citep{goldstein-peeking-2015}. To overcome this issue \citeauthor{goldstein-peeking-2015} developed the concept of individual conditional expectation (ICE) plots. ICE plots display the estimated relationship between the response and a predictor of interest for each observation; another words, skipping step 1 (c) in Algorithm~\eqref{alg:pdp}. Consequently, the PDP for a predictor of interest can be obtained by averaging the corresponding ICE curves across all observations. In Section~\ref{sec:interaction}, we show how to use partial dependence functions to evaluate the strength of potential interactions effects.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
