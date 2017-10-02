@@ -173,17 +173,30 @@ where $\boldsymbol{z}_{i, c}$ $\left(i = 1, 2, \dots, n\right)$ are the values o
 
 Constructing a PDP \eqref{eqn:pdf} in practice is rather straightforward. To simplify, let $\boldsymbol{z}_s = x_1$ be the predictor variable of interest with unique values $\left\{x_{11}, x_{12}, \dots, x_{1k}\right\}$. The partial dependence of the response on $x_1$ can be constructed as follows:
 
+% \begin{algorithm}
+% \begin{enumerate}
+%   \item For $i \in \left\{1, 2, \dots, k\right\}$:
+%   \begin{enumerate}
+%     \item Copy the training data and replace the original values of $x_1$ with the constant $x_{1i}$.
+%     \item Compute the vector of predicted values from the modified copy of the training data.
+%     \item Compute the average prediction to obtain $\bar{f}_1\left(x_{1i}\right)$.
+%   \end{enumerate}
+%   \item Plot the pairs $\left\{x_{1i}, \bar{f}_1\left(x_{1i}\right)\right\}$ for $i = 1, 2, \dotsc, k$.
+% \end{enumerate}
+% \caption{A simple algorithm for constructing the partial dependence of the response on a single predictor $x_1$. \label{alg:pdp}}
+% \end{algorithm}
 \begin{algorithm}
-\begin{enumerate}
-  \item For $i \in \left\{1, 2, \dots, k\right\}$:
-  \begin{enumerate}
-    \item Copy the training data and replace the original values of $x_1$ with the constant $x_{1i}$.
-    \item Compute the vector of predicted values from the modified copy of the training data.
-    \item Compute the average prediction to obtain $\bar{f}_1\left(x_{1i}\right)$.
-  \end{enumerate}
-  \item Plot the pairs $\left\{x_{1i}, \bar{f}_1\left(x_{1i}\right)\right\}$ for $i = 1, 2, \dotsc, k$.
-\end{enumerate}
-\caption{A simple algorithm for constructing the partial dependence of the response on a single predictor $x_1$. \label{alg:pdp}}
+  \For{$i \in \left\{1, 2, \dots, k\right\}$}{
+    \BlankLine
+    (1) copy the training data and replace the original values of $x_1$ with the constant $x_{1i}$;
+    \BlankLine
+    (2) compute the vector of predicted values from the modified copy of the training data;
+    \BlankLine
+    (3) compute the average prediction to obtain $\bar{f}_1\left(x_{1i}\right)$.\BlankLine}
+    \BlankLine
+    Plot the pairs $\left\{x_{1i}, \bar{f}_1\left(x_{1i}\right)\right\}$ for $i = 1, 2, \dotsc, k$.
+    \BlankLine
+  \caption{A simple algorithm for constructing the partial dependence of the response on a single predictor $x_1$. \label{alg:pdp}}
 \end{algorithm}
 Algorithm~\eqref{alg:pdp} can be quite computationally intensive since it involves $k$ passes over the training records, but fortunately, is easily parallelizable. In addition, Algorithm~\eqref{alg:pdp} can be extended to larger subsets of two or more features.
 
