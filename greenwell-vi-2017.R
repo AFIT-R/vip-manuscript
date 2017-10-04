@@ -447,3 +447,56 @@ set.seed(0156)
 pima.rf <- randomForest(diabetes ~ ., data = na.omit(pima), importance = TRUE)
 plot(pima.rf)
 varImpPlot(pima.rf)
+
+
+################################################################################
+# Example from ICE curve paper
+################################################################################
+
+set.seed(101)
+n <- 1000
+x1 <- runif(n, min = -1, max = 1)
+x2 <- runif(n, min = -1, max = 1)
+x3 <- runif(n, min = -1, max = 1)
+y <- 0.2 * x1 - 5 * x2 + 10 * ifelse(x3 >= 0, x2, 0) + rnorm(n, sd = 0.1)
+plot(x2, y)
+d <- data.frame(x1, x2, x3, y)
+
+library(gbm)
+set.seed(102)
+fit <- gbm(y ~ ., data = d, distribution = "gaussian", n.trees = 10000, 
+           interaction.depth = 3, cv.folds = 5, shrinkage = 0.1,
+           bag.fraction = 1, train.fraction = 1, verbose = TRUE)
+best.iter <- gbm.perf(fit, method = "cv")
+print(best.iter)
+
+library(pdp)
+pd.2 <- partial(fit, pred.var = "x2", n.trees = best.iter)
+plotPartial(pd.2, ylim = c(-6, 6))
+
+partial(fit, pred.var = "x2", n.trees = best.iter, ice = TRUE, plot = TRUE,
+        progress = "text")
+
+partial(fit, pred.var = c("x2", "x3"), plot = TRUE, n.trees = best.iter)
+
+pd.23 <- partial(fit, pred.var = c("x2", "x3"), n.trees = best.iter)
+plotPartial(pd.23, levelplot = FALSE, scales = list(arrows = FALSE),
+            drape = TRUE, colorkey = TRUE,
+            screen = list(z = -20, x = -60))
+
+vint <- function(x) {
+  pd <- partial(fit, pred.var = c(x[1L], x[2L]), n.trees = best.iter)
+  c(sd(tapply(pd$yhat, INDEX = pd[[x[1L]]], FUN = sd)),
+    sd(tapply(pd$yhat, INDEX = pd[[x[2L]]], FUN = sd)))
+}
+combns <- t(combn(paste0("x", 1:3), m = 2))
+int.i <- plyr::aaply(combns, .margins = 1, .fun = vint, .progress = "text")
+int.i <- data.frame(x = paste0(combns[, 1L], "*", combns[, 2L]), 
+                    y = rowMeans(int.i))
+int.i <- int.i[order(int.i$y, decreasing = TRUE), ]
+dotchart(int.i$y, labels = int.i$x, pch = 19)
+
+# Using GBM
+interact.gbm(fit, data = d, i.var = c("x1", "x2"), n.trees = best.iter)
+interact.gbm(fit, data = d, i.var = c("x1", "x3"), n.trees = best.iter)
+interact.gbm(fit, data = d, i.var = c("x2", "x3"), n.trees = best.iter)
