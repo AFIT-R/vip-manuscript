@@ -162,9 +162,10 @@ for (i in 1:nrow(combns)) {
   int.h[i] <- interact.gbm(trn.gbm, data = trn, i.var = combns[i, ], 
                            n.trees = best.iter)
 }
-plot(int.h)
 int.h <- data.frame(x = paste0(combns[, 1L], "*", combns[, 2L]), y = int.h)
+dotchart(int.h$y, labels = int.h$x)
 int.h <- int.h[order(int.h$y, decreasing = TRUE), ]
+dotchart(int.h$y, labels = int.h$x)
 
 # Variable importance-based interaction statistic
 vint <- function(x) {
