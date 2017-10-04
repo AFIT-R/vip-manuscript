@@ -206,7 +206,7 @@ For illustration, we will use a corrected version of the Boston housing data ana
   \caption{Variable importance scores from a random forest fit to the (corrected) Boston housing data. \textit{Left}: OOB-based variable importance scores. \textit{Right}: Impurity-based variable importance scores. \label{fig:boston-rf-vip}}
 \end{figure}
 
-The PDPs for these three variables are displayed in Figure~\ref{fig:boston-rf-pdps}. Notice how the PDP for \code{zn} is essentially flat, compared to the PDPs for \code{lstat} and \code{rm}. It is this notion of "flatness" which we will use as a basis to define our variable importance measure.
+The PDPs for these three variables are displayed in Figure~\ref{fig:boston-rf-pdps}. These plots indicate that both \code{lstat} and \code{rm} have a strong nonlinear relationship with the predicted outcome. For instance, it seems that \code{rm} has relatively little effect on the predicted outcome until \code{rm} $\ge 5.5$, after which \code{rm} appears to have a monotonically increasing relationship with the predicted outcome. Notice how the PDP for \code{zn} is essentially flat, compared to the PDPs for \code{lstat} and \code{rm}. It is this notion of "flatness" which we will use as a basis to define our variable importance measure.
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=1.0\textwidth]{boston-rf-pdps}

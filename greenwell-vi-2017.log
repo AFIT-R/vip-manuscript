@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  4 OCT 2017 11:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  4 OCT 2017 13:32
 entering extended mode
 **./greenwell-vi-2017.tex
 (greenwell-vi-2017.tex
@@ -461,44 +461,44 @@ Overfull \hbox (15.30562pt too wide) in paragraph at lines 218--218
 []\OT1/cmr/bx/n/17.28 A par-tial dependence-based vari-able im-por-tance mea-
  []
 
-[8 <./boston-rf-vip.pdf> <./boston-rf-pdps.pdf>]
-<boston-rf-vip-pd.pdf, id=197, 505.89pt x 289.08pt>
+[8 <./boston-rf-vip.pdf>] <boston-rf-vip-pd.pdf, id=189, 505.89pt x 289.08pt>
 File: boston-rf-vip-pd.pdf Graphic file (type pdf)
- <use boston-rf-vip-pd.pdf>
+
+<use boston-rf-vip-pd.pdf>
 Package pdftex.def Info: boston-rf-vip-pd.pdf used on input line 243.
 (pdftex.def)             Requested size: 462.26999pt x 264.15714pt.
-
-[9] [10 <./boston-rf-vip-pd.pdf>] <lm-pdps.pdf, id=217, 578.16pt x 289.08pt>
+ [9 <./boston-rf-pdps.pdf>] [10 <./boston-rf-vip-pd.pdf>] <lm-pdps.pdf, id=217,
+ 578.16pt x 289.08pt>
 File: lm-pdps.pdf Graphic file (type pdf)
-
-<use lm-pdps.pdf>
+ <use lm-pdps.pdf>
 Package pdftex.def Info: lm-pdps.pdf used on input line 285.
 (pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
- [11 <./lm-pdps.pdf>]
+ [11]
 Overfull \hbox (60.9661pt too wide) in paragraph at lines 303--304
 \OT1/cmr/m/n/12 stan-dard de-vi-a-tion of the joint par-tial de-pen-dence val-u
 es $[] []$ $[]$.
  []
 
-[12] <network-vip.pdf, id=240, 867.24pt x 433.62pt>
+[12 <./lm-pdps.pdf>] <network-vip.pdf, id=240, 867.24pt x 433.62pt>
 File: network-vip.pdf Graphic file (type pdf)
- <use network-vip.pdf>
+
+<use network-vip.pdf>
 Package pdftex.def Info: network-vip.pdf used on input line 322.
 (pdftex.def)             Requested size: 462.26999pt x 231.13419pt.
-
-<network-int.pdf, id=243, 578.16pt x 289.08pt>
+ <network-int.pdf, id=243, 578.16pt x 289.08pt>
 File: network-int.pdf Graphic file (type pdf)
- <use network-int.pdf>
+
+<use network-int.pdf>
 Package pdftex.def Info: network-int.pdf used on input line 330.
 (pdftex.def)             Requested size: 346.70248pt x 173.34787pt.
- [13 <./network-vip.pdf>] <interaction-simulation.pdf, id=259, 867.24pt x 578.1
-6pt>
+ [13]
+<interaction-simulation.pdf, id=254, 867.24pt x 578.16pt>
 File: interaction-simulation.pdf Graphic file (type pdf)
 
 <use interaction-simulation.pdf>
 Package pdftex.def Info: interaction-simulation.pdf used on input line 346.
 (pdftex.def)             Requested size: 462.26999pt x 308.17891pt.
-
+ [14 <./network-vip.pdf> <./network-int.pdf>]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 352.
@@ -511,20 +511,20 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 352.
 
-[14 <./network-int.pdf>] <gbm-int.pdf, id=276, 505.89pt x 505.89pt>
+[15 <./interaction-simulation.pdf>] <gbm-int.pdf, id=288, 505.89pt x 505.89pt>
 File: gbm-int.pdf Graphic file (type pdf)
 
 <use gbm-int.pdf>
 Package pdftex.def Info: gbm-int.pdf used on input line 361.
 (pdftex.def)             Requested size: 346.70248pt x 346.7101pt.
- [15 <./interaction-simulation.pdf>] [16 <./gbm-int.pdf>]
-<pima-pdps.pdf, id=308, 867.24pt x 289.08pt>
+ [16 <./gbm-int.pdf>]
+<pima-pdps.pdf, id=306, 867.24pt x 289.08pt>
 File: pima-pdps.pdf Graphic file (type pdf)
  <use pima-pdps.pdf>
 Package pdftex.def Info: pima-pdps.pdf used on input line 378.
 (pdftex.def)             Requested size: 462.26999pt x 154.08945pt.
 
-<pima-vip.pdf, id=309, 505.89pt x 361.35pt>
+<pima-vip.pdf, id=307, 505.89pt x 361.35pt>
 File: pima-vip.pdf Graphic file (type pdf)
  <use pima-vip.pdf>
 Package pdftex.def Info: pima-vip.pdf used on input line 384.
@@ -544,7 +544,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 424.
 Here is how much of TeX's memory you used:
  7419 strings out of 493323
  111213 string characters out of 3128713
- 212843 words of memory out of 3000000
+ 212844 words of memory out of 3000000
  10794 multiletter control sequences out of 15000+200000
  14706 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -572,7 +572,7 @@ onts/cm/cmsy8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
 pe1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiK
 TeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/greenweb/AppData/Lo
 cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on greenwell-vi-2017.pdf (20 pages, 424450 bytes).
+Output written on greenwell-vi-2017.pdf (20 pages, 424956 bytes).
 PDF statistics:
  423 PDF objects out of 1000 (max. 8388607)
  68 named destinations out of 1000 (max. 500000)
