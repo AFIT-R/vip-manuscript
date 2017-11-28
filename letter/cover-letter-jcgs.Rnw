@@ -1,0 +1,31 @@
+\documentclass{letter}
+\usepackage{hyperref}
+\signature{Brandon Greenwell}
+\address{
+  Illumination Works \\ 
+  2689 Commons Blvd \\ 
+  Suite 120 \\ 
+  Beavercreek, OH 45431
+}
+
+\begin{document}
+
+\begin{letter}{To Whom It May Concern}
+
+\opening{Dear Sir or Madam,}
+
+I am writing to you on behalf of the authors of the attached article which we are submitting to the \textit{Journal of Modern Applied Statistical Methods} describing extensions of the statistical calibration problem to \textit{grouped data} (e.g., longitudinal and repeated measures data).
+
+The attached article describes how to extend the classical Wald-based and inversion intervals used in regression with independent errors to the case of linear mixed-effects models. A Monte Carlo study is used to demonstrate the effects of sample size (both the number of subjects and the number of observations per subject) on the advertised coverage probability. These methods still fail to capture the variability of the estimated variance components in a mixed model. To that end, we provide a parametric bootstrap algorthim that takes this additional variability into account. These methods are then demonstrated using a real data analysis example using the statistical software R.
+
+\ldots
+
+Thank you for your time and consideration.
+
+I look forward to your reply.
+
+\closing{Kind regards,}
+
+
+\end{letter}
+\end{document}

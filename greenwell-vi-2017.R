@@ -2,101 +2,98 @@
 # Setup
 ################################################################################
 
+# Install required packages
+# pkgs <- c("caret", "devtools", "dplyr", "gbm", "NeuralNetTools", "nnet", "pdp", 
+          # "randomForest")
+# install.packages(pkgs)
+# devtools::install_github("AFIT-R/vip")
+
 # Load required packages
-library(caret)         # for model tuning/training (also loads ggplot2)
-library(gbm)           # for fitting generalized boosted regression models
-library(nnet)          # for fitting neural networks
-library(pdp)           # for constructing partial dependence plots
-library(randomForest)  # for fitting random forests
-library(vip)           # for constructing variable importance plots
+library(caret)           # for model tuning/training (also loads ggplot2)
+library(dplyr)           # for data manipulation
+library(gbm)             # for fitting generalized boosted regression models
+library(NeuralNetTools)  # for Garson and Olden's algorithms
+library(nnet)            # for fitting neural networks
+library(pdp)             # for constructing partial dependence plots
+library(randomForest)    # for fitting random forests
+library(vip)             # for constructing variable importance plots
 
 # Load data sets
-data(boston, package = "pdp")
-data(pima, package = "pdp")
+# data(boston, package = "pdp")
+# data(pima, package = "pdp")
+ames <- read.csv("ames.csv", header = TRUE)[, -1L]  # rm ID column
+
+# Colors
+set1 <- RColorBrewer::brewer.pal(9, "Set1")
 
 
 ################################################################################
-# Boston housing data
+# Section 2.4: Ames housing data
 ################################################################################
 
-# Fit a random forest to the Boston Housing data (mtry was tuned using cross-
-# validation)
-set.seed(101)
-boston.rf <- randomForest(cmedv ~ ., data = boston, mtry = 6, ntree = 1000,
-                          importance = TRUE)
+# Fit a generalized boosted regression model
+set.seed(1138)
+ames.gbm <- gbm(log(SalePrice) ~ ., data = ames,
+                distribution = "gaussian",
+                n.trees = 5000,
+                interaction.depth = 6,
+                shrinkage = 0.01,
+                bag.fraction = 1,
+                train.fraction = 1,
+                cv.folds = 5,
+                verbose = TRUE)
 
-# Random forest-based partial dependence plots using ggplot2
-imp1 <- importance(boston.rf, type = 1) %>%
-  as.data.frame() %>%
-  tibble::rownames_to_column("Variable")
-imp2 <- importance(boston.rf, type = 2) %>%
-  as.data.frame() %>%
-  tibble::rownames_to_column("Variable")
-p1 <- ggplot(imp1, aes(x = reorder(Variable, `%IncMSE`), y = `%IncMSE`)) +
-  geom_col() +
-  coord_flip() +
-  xlab("") +
-  theme_light()
-p2 <- ggplot(imp2, aes(x = reorder(Variable, IncNodePurity), y = IncNodePurity)) +
-  geom_col() +
-  coord_flip() +
-  xlab("") +
-  theme_light()
+# Compute "optimal" number of iterations based on CV results
+best.iter <- gbm.perf(ames.gbm, method = "cv")
+print(best.iter)
+
+# Plot relative influence of each predictor
+summary(ames.gbm, n.trees = best.iter)
 
 # Figure 1
-# pdf(file = "boston-rf-vip.pdf", width = 8, height = 5)
-grid.arrange(p1, p2, ncol = 2)
-# dev.off()
-
-# Partial dependence plots for lstat, rm, and zn
-pd1 <- partial(boston.rf, pred.var = "lstat")
-pd2 <- partial(boston.rf, pred.var = "rm")
-pd3 <- partial(boston.rf, pred.var = "zn")
-pd.range <- range(c(pd1$yhat, pd2$yhat, pd3$yhat))
-p1 <- autoplot(pd1) +
-  ylim(pd.range[1L], pd.range[2L]) +
-  theme_light() +
-  geom_hline(yintercept = mean(boston$cmedv), linetype = 2, col = set1[1L],
-             alpha = 0.5) +
-  ylab("Partial dependence")
-p2 <- autoplot(pd2) +
-  ylim(pd.range[1L], pd.range[2L]) +
-  theme_light() +
-  geom_hline(yintercept = mean(boston$cmedv), linetype = 2, col = set1[1L],
-             alpha = 0.5) +
-  ylab("Partial dependence")
-p3 <- autoplot(pd3) +
-  ylim(pd.range[1L], pd.range[2L]) +
-  theme_light() +
-  geom_hline(yintercept = mean(boston$cmedv), linetype = 2, col = set1[1L],
-             alpha = 0.5) +
-  ylab("Partial dependence")
-
-# Figure 2
-# pdf(file = "boston-rf-pdps.pdf", width = 12, height = 4)
-grid.arrange(p1, p2, p3, ncol = 3)
-# dev.off()
-
-
-################################################################################
-# A partial dependence-based variable importance measure
-################################################################################
-
-# Partial dependence-based variable importance scores
-boston.rf.vi <- vi(boston.rf, pred.var = names(subset(boston, select = -cmedv)))
-p <- ggplot(boston.rf.vi, aes(x = reorder(Variable, -Importance), y = Importance)) +
-  geom_col() +
-  xlab("") +
-  theme_light()
-
-# Figure 3
-pdf(file = "boston-rf-vip-pd.pdf", width = 7, height = 4)
-print(p)
+# pred.var <- as.character(vi(ames.gbm)[1L:20L, ]$Variable)
+pdf(file = "ames-gbm-vip.pdf", width = 7, height = 5)
+# vip(ames.gbm, pred.var = pred.var, n.trees = best.iter)
+vip(ames.gbm, n.trees = best.iter)
 dev.off()
 
+# Partial depence plots
+ames.ri <- vi(ames.gbm, partial = FALSE, n.trees = best.iter)
+ames.vi <- vi(ames.gbm, partial = TRUE, keep.partial = TRUE, 
+              n.trees = best.iter)
+ames.pd <- attr(ames.vi, "partial")[as.character(ames.ri$Variable[1L:16L])]
+ames.pd <- plyr::ldply(ames.pd, .id = "x.name", .fun = function(x) {
+  names(x)[1L] <- "x.value"
+  x
+})
+p <- ggplot(ames.pd, aes(x = x.value, y = yhat)) +
+  geom_line() +
+  # geom_point(size = 0.5) +
+  # geom_smooth(se = FALSE, linetype = "dashed") +
+  geom_hline(yintercept = mean(log(ames$SalePrice)), linetype = "dashed") +
+  facet_wrap( ~ x.name, scales = "free_x") +
+  theme_light() +
+  xlab("") +
+  ylab("Partial dependence")
+p
+
 
 ################################################################################
-# Linear model
+# Section 3: A partial dependence-based variable importance measure
+################################################################################
+
+# # Partial dependence-based variable importance scores
+# boston.rf.vi <- vi(boston.rf, pred.var = names(subset(boston, select = -cmedv)))
+# p <- vip(ames.gbm, partial = TRUE, n.trees = best.iter)
+
+# Figure 3
+# pdf(file = "ames-gbm-vip-pd.pdf", width = 7, height = 4)
+p
+# dev.off()
+
+
+################################################################################
+# Section 3.1: Linear models
 ################################################################################
 
 # Simulate data
@@ -135,7 +132,7 @@ dev.off()
 
 
 ################################################################################
-# Friedman's regression problem
+# Section 4: Friedman's regression problem
 ################################################################################
 
 # Simulate the data
@@ -164,13 +161,8 @@ set.seed(103)
 trn.nn <- nnet(y ~ ., data = trn, size = 8, linout = TRUE, decay = 0.01,
                maxit = 1000, trace = FALSE)
 
-vip(trn.nn, pred.var = paste0("x.", 1:10), FUN = var)
-vip(trn.nn, pred.var = paste0("x.", 1:10), FUN = mad)
-
-# Figure ?
-pdf(file = "network.pdf", width = 12, height = 6)
-plotnet(trn.nn, circle_col = "lightgrey")
-dev.off()
+# vip(trn.nn, pred.var = paste0("x.", 1:10), FUN = var)
+# vip(trn.nn, pred.var = paste0("x.", 1:10), FUN = mad)
 
 # VIP: partial dependence algorithm
 p1 <- vip(trn.nn, use.partial = TRUE, pred.var = paste0("x.", 1:10)) +
@@ -200,9 +192,9 @@ p3 <- ggplot(trn.nn.olden, aes(x = reorder(Variable, Importance), y = Importance
   theme_light()
 
 # Figure 5
-pdf(file = "network-vip.pdf", width = 12, height = 6)
+# pdf(file = "network-vip.pdf", width = 12, height = 6)
 grid.arrange(p1, p2, p3, ncol = 3)
-dev.off()
+# dev.off()
 
 # vint <- function(x) {
 #   pd <- partial(trn.nn, pred.var = c(x[1L], x[2L]))
@@ -218,8 +210,8 @@ dev.off()
 load("interaction-statistics.RData")
 
 # Figure 6
-pdf(file = "network-int.pdf", width = 8, height = 4)
-labs <-  c(
+# pdf(file = "network-int.pdf", width = 8, height = 4)
+labs <- c(
   expression(x[1]*x[2]), expression(x[1]*x[3]), expression(x[3]*x[10]), 
   expression(x[1]*x[8]), expression(x[3]*x[8]), expression(x[4]*x[5]),
   expression(x[3]*x[4]), expression(x[1]*x[4]), expression(x[2]*x[4]),
@@ -232,12 +224,7 @@ ggplot(int[1:10, ], aes(reorder(x, -y), y)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1)) +
   scale_x_discrete("", labels = labs) +
   theme_light()
-dev.off()
-
-
-################################################################################
-# Friedman's H-statistic
-################################################################################
+# dev.off()
 
 # Simulation -------------------------------------------------------------------
 # simSD <- function(pred.var, pd.fun) {
@@ -287,6 +274,11 @@ dev.off()
 # dev.off()
 # ------------------------------------------------------------------------------
 
+
+################################################################################
+# Section 4.1: Friedman's H-statistic
+################################################################################
+
 # Fit a GBM
 set.seed(937)
 trn.gbm <- gbm(y ~ ., data = trn, distribution = "gaussian", n.trees = 25000,
@@ -311,7 +303,7 @@ for (i in 1:nrow(combns)) {
 int.h <- data.frame(x = paste0(combns[, 1L], "*", combns[, 2L]), y = int.h)
 dotchart(int.h$y, labels = int.h$x)
 int.h <- int.h[order(int.h$y, decreasing = TRUE), ]
-dotchart(int.h$y, labels = int.h$x)
+# dotchart(int.h$y, labels = int.h$x)
 
 # Variable importance-based interaction statistic
 vint <- function(x) {
@@ -346,13 +338,13 @@ p2 <- ggplot(int.i[1:10, ], aes(reorder(x, y), y)) +
   coord_flip()
 
 # Figure 8
-pdf(file = "gbm-int.pdf", width = 7, height = 7)
+# pdf(file = "gbm-int.pdf", width = 7, height = 7)
 grid.arrange(p1, p2, ncol = 2)
-dev.off()
+# dev.off()
 
 
 ################################################################################
-# The Pima Indians diabetes data
+# Section 5: The Pima Indians diabetes data
 ################################################################################
 
 # Load data
@@ -399,9 +391,9 @@ dev.off()
 
 # Figure 10
 xnames <- names(subset(pima, select = -diabetes))
-pdf(file = "pima-vip.pdf", width = 7, height = 5)
+# pdf(file = "pima-vip.pdf", width = 7, height = 5)
 vip(pima.tune, pred.var = xnames)
-dev.off()
+# dev.off()
 
 
 

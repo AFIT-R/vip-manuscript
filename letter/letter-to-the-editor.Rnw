@@ -1,0 +1,35 @@
+\documentclass{letter}
+\usepackage{hyperref}
+\signature{Brandon Greenwell}
+\address{
+  Illumination Works \\ 
+  2689 Commons Blvd \\ 
+  Suite 120 \\ 
+  Beavercreek, OH 45431
+}
+
+\begin{document}
+
+\begin{letter}{Editor-in-Chief}
+
+\opening{Dear Sir or Madam,}
+
+I am writing to you on behalf of the authors of the attached article which we are submitting to \textit{The R Journal} describing a new add-on package called \textbf{\texttt{sure}}. The package, which is now listed on CRAN, implements a brand new and novel procedure for constructing residuals and diagnostic plots in ordinal regression models (and beyond). The package, along with the attached article submission, are the result of joint work with the Air Force Institute of Technology's Data Science Lab and Professor Dungang Liu, one of the authors of the original paper that was just published in \textit{The Journal of the American Statistical Association} (JASA).
+
+The attached article describes in great detail the new surrogate methodology (e.g., the properties of the surrogate residuals, using jittering to obtain a surrogate response, etc.) and its implementation in the \textbf{\texttt{sure}} package, along with fitting ordinal regression models in R and other packages that can be used for constructing residuals and diagnostic plots.
+
+\ldots
+
+That said, if it is decided that this submission is appropriate for \textit{The R Journal}, we kindly and respectfully recommend that you not ask the group of Li and Shepherd (cited in the attached paper) to be reviewers, because of competing interest. As reviewers for the JASA paper, they had a quite negative and biased view of the surrogate approach and some key statements in their review were wrong. As a result, Dr. Liu had to take additional efforts to correct them, making the review process much longer.
+ 
+If you have trouble soliciting reviewers for the paper, we can provide a list of potential reviewers who would provide a thorough and unbiased review of the article.
+
+Thank you for your time and consideration.
+
+I look forward to your reply.
+
+\closing{Kind regards,}
+
+
+\end{letter}
+\end{document}
