@@ -149,7 +149,7 @@ For classification problems, an area under the ROC curve (AUC) statistic can be 
 \end{aligned}
 \end{equation}
 
-However, classical regression and model building is rather ill-suited for more contemporary data sets, like the Ames housing data \citep{ames-cock-2011} which has a total of 79 predictors. Fortunately, using modern computing power, many supervised learning algorithms can fit such data sets in seconds, producing powerful, highly accurate models. The downfall of many of these machine learning algorithms, however, is decreased interpretability. Unlike prediction formulas such as Equation~\eqref{eqn:boston}, many machine learning algorithms are left attempting to convey some relative measure of variable importance which provide insight, but cannot match the simplicity of Equation~\eqref{eqn:boston} and others like it.
+However, classical regression and model building is rather ill-suited for more contemporary data sets, like the Ames housing data \citep{ames-cock-2011}---which has a total of 79 predictors (and many more that can be created through feature engineering). Fortunately, using modern computing power, many supervised learning algorithms can fit such data sets in seconds, producing powerful, highly accurate models. The downfall of many of these machine learning algorithms, however, is decreased interpretability. Unlike prediction formulas such as Equation~\eqref{eqn:boston}, many machine learning algorithms are left attempting to convey some relative measure of variable importance which provide insight, but cannot match the simplicity of Equation~\eqref{eqn:boston} and others like it.
 
 Quantifying the importance of each predictor is a crucial task in any supervised learning problem, but to gain even more insight, we can construct partial dependence plots (PDPs); see \citet{friedman-2001-greedy} for details. PDPs are particularly effective at helping to explain the output from "black box" models, such as random forests and support vector machines. Not only do PDPs visually convey the relationship between low cardinality subsets of the feature set (usually 1-3) and the response (while accounting for the average effect of the other predictors in the model), they can also be used to rank and score the predictors in terms of their relative influence on the predicted outcome, as will be demonstrated in this paper. 
 
@@ -191,21 +191,25 @@ While PDPs are an invaluable tool in understanding the relationships uncovered b
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Boston housing data}
+\subsection{The Ames housing dataset}
+\label{sec:ames}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-For illustration, we will use a corrected version of the Boston housing data analyzed in \citet{harrison-1978-hedonic}; the data are available from Statlib at \url{http://lib.stat.cmu.edu/datasets/boston_corrected.txt}. Using the R package \pkg{randomForest} \citep{randomForest-pkg}, we fit a random forest with tuning parameter $m_{try} = 6$ (chosen using 5-fold cross-validation) and 1000 trees. The model fit is reasonable, with an \textit{out-of-bag} (pseudo) $R^2$ of 0.89. The random forest-based variable importance scores are displayed in Figure~\ref{fig:boston-rf-vip}. Both plots indicate that the percentage of lower status of the population (\code{lstat}) and the average number of rooms per dwelling (\code{rm}) are highly associated with the median value of owner-occupied homes (\code{cmedv}). They also indicate that the proportion of residential land zoned for lots over 25,000 sq.ft (\code{zn}) has little association with \code{cmedv}.
+For illustration, we will use the Ames housing dataset \citep{ames-cock-2011}---a modernized and expanded version of the often cited Boston Housing dataset \citep{harrison-1978-hedonic}.
+
+
+For illustration, we will use a corrected version of the Boston housing data analyzed in \citet{harrison-1978-hedonic}; the data are available from Statlib at \url{http://lib.stat.cmu.edu/datasets/boston_corrected.txt}. Using the R package \pkg{randomForest} \citep{randomForest-pkg}, we fit a random forest with tuning parameter $m_{try} = 6$ (chosen using 5-fold cross-validation) and 1000 trees. The model fit is reasonable, with an \textit{out-of-bag} (pseudo) $R^2$ of 0.89. The random forest-based variable importance scores are displayed in Figure~\ref{fig:ames-gbm-vip}. Both plots indicate that the percentage of lower status of the population (\code{lstat}) and the average number of rooms per dwelling (\code{rm}) are highly associated with the median value of owner-occupied homes (\code{cmedv}). They also indicate that the proportion of residential land zoned for lots over 25,000 sq.ft (\code{zn}) has little association with \code{cmedv}.
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=1.0\textwidth]{boston-rf-vip}
-  \caption{Variable importance scores from a random forest fit to the (corrected) Boston housing data. \textit{Left}: OOB-based variable importance scores. \textit{Right}: Impurity-based variable importance scores. \label{fig:boston-rf-vip}}
+  \includegraphics[width=1.0\textwidth]{ames-gbm-vip}
+  \caption{Variable importance scores from a random forest fit to the (corrected) Boston housing data. \textit{Left}: OOB-based variable importance scores. \textit{Right}: Impurity-based variable importance scores. \label{fig:ames-gbm-vip}}
 \end{figure}
 
-The PDPs for these three variables are displayed in Figure~\ref{fig:boston-rf-pdps}. These plots indicate that both \code{lstat} and \code{rm} have a strong nonlinear relationship with the predicted outcome. For instance, it seems that \code{rm} has relatively little effect on the predicted outcome until \code{rm} $\ge 5.5$, after which \code{rm} appears to have a monotonically increasing relationship with the predicted outcome. Notice how the PDP for \code{zn} is essentially flat, compared to the PDPs for \code{lstat} and \code{rm}. It is this notion of "flatness" which we will use as a basis to define our variable importance measure.
+The PDPs for these three variables are displayed in Figure~\ref{fig:ames-gbm-pdps}. These plots indicate that both \code{lstat} and \code{rm} have a strong nonlinear relationship with the predicted outcome. For instance, it seems that \code{rm} has relatively little effect on the predicted outcome until \code{rm} $\ge 5.5$, after which \code{rm} appears to have a monotonically increasing relationship with the predicted outcome. Notice how the PDP for \code{zn} is essentially flat, compared to the PDPs for \code{lstat} and \code{rm}. It is this notion of "flatness" which we will use as a basis to define our variable importance measure.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=1.0\textwidth]{boston-rf-pdps}
-  \caption{Partial dependence of \code{cmedv} on \code{lstat} (left), \code{rm} (middle), and \code{zn} (right). The mean of the $n = 506$ median home values is indicated by a dashed red line. \label{fig:boston-rf-pdps}}
+  \includegraphics[width=1.0\textwidth]{ames-gbm-pdps}
+  \caption{Partial dependence of \code{cmedv} on \code{lstat} (left), \code{rm} (middle), and \code{zn} (right). The mean of the $n = 506$ median home values is indicated by a dashed red line. \label{fig:ames-gbm-pdps}}
 \end{figure}
 
 
@@ -214,7 +218,7 @@ The PDPs for these three variables are displayed in Figure~\ref{fig:boston-rf-pd
 \label{sec:new}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The PDP for \code{zn} in Figure~\ref{fig:boston-rf-pdps} is relatively flat (i.e., near-zero slope), indicating that \code{zn} does not have much influence on the predicted median home value. In other words, the partial dependence values $\bar{f}_i\left(x_{ij}\right)$ $\left(j = 1, 2, \dots, k_i\right)$ display little variability. One might conclude that any variable for which the PDP is "flat" is likely to be less important than those predictors whose PDP varies across a wider range of the response.
+The PDP for \code{zn} in Figure~\ref{fig:ames-gbm-pdps} is relatively flat (i.e., near-zero slope), indicating that \code{zn} does not have much influence on the predicted median home value. In other words, the partial dependence values $\bar{f}_i\left(x_{ij}\right)$ $\left(j = 1, 2, \dots, k_i\right)$ display little variability. One might conclude that any variable for which the PDP is "flat" is likely to be less important than those predictors whose PDP varies across a wider range of the response.
 
 Our notion of variable importance is based on any measure of the "flatness" of the partial dependence function. In general, we define
 \begin{equation*}
@@ -231,12 +235,12 @@ where $\flatness$ is any measure of "flatness" of the curve. A simple and effect
 \end{equation}
 Note that our variable importance metric relies on the fitted model; hence, it is crucial to properly tune and train the model to have good performance.
 
-To illustrate, we applied Algorithm~\ref{alg:pdp} to all of the predictors in the random forest for the Boston housing example and compute \eqref{eqn:vi}. The results are displayed in Figure~\ref{fig:boston-rf-vip-pd}. In this case, our partial dependence-based algorithm matches closely with the results from the random forest. In particular, Figure~\ref{fig:boston-rf-vip-pd} shows that \code{rm} and \code{lstat} are, by far, the most important variables in predicting median home value, while the predictors \code{zn}, \code{rad}, \code{lat}, and \code{b} seem to be the least important.
+To illustrate, we applied Algorithm~\ref{alg:pdp} to all of the predictors in the GBM for the Ames housing example and computed \eqref{eqn:vi}. The results are displayed in Figure~\ref{fig:ames-gbm-vip-pd}. In this case, our partial dependence-based algorithm matches closely with the results from the random forest. In particular, Figure~\ref{fig:ames-gbm-vip-pd} shows that \code{rm} and \code{lstat} are, by far, the most important variables in predicting median home value, while the predictors \code{zn}, \code{rad}, \code{lat}, and \code{b} seem to be the least important.
 
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=1.0\textwidth]{boston-rf-vip-pd}
-  \caption{Partial-dependence-based variable importance scores from a random forest fit to the (corrected) Boston housing data. \label{fig:boston-rf-vip-pd}}
+  \includegraphics[width=1.0\textwidth]{ames-gbm-vip-pd}
+  \caption{Partial-dependence-based variable importance scores from a GBM fit to the Ames housing data. \label{fig:ames-gbm-vip-pd}}
 \end{figure}
 
 
@@ -359,25 +363,20 @@ For comparison, we fit a generalized boosted regression model (GBM) to the Fried
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Pima Indians diabetes data}
+\section{A stacked ensemble for the Ames housing dataset}
+\label{sec:ensemble}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this section, we analyze the diabetes test results collected by the the US National Institute of Diabetes and Digestive and Kidney Diseases from a population of women who were at least 21 years old, of Pima Indian heritage, and living near Phoenix, Arizona. The data were taken directly from the \code{PimaIndiansDiabetes2} data frame which are available in the \pkg{mlbench} package \citep{mlbench-pkg}; for a description of the data and all the variables, see \url{https://archive.ics.uci.edu/ml/datasets/pima+indians+diabetes}.
+In the Ames housing example, we used a GBM to iilustrate the idea of using the partial dependence function to quantify the importance of each predictor on the predicted outcome (in this case, the \code{LogSalePrice}). While the GBM model acheived good a cross-validated $R^2$ of $90.06$\%, better predictive performance can often be aceived by creating an \textit{ensemble} of learning algorithms. While GBMs are themselves ensembles, we can use a method called \textit{stacking} to combine the GBM with other  cutting edge learning algorithms to form a \textit{super learner} \citep{stacked-wolpert-1992}. Such stacked ensembles tend to outperform any of the individual base learners (e.g., a single random forest or GBM) and have been shown to represent an asymptotically optimal system for learning \citep{super-laan-2003}.
 
-We then used the \pkg{nnet} package \citep{venables-modern-2002} in R to fit a neural network with seven hidden units and a weight decay of 0.01; these parameters were chosen to maximize AUC using repeated 5-fold cross-validation with ten repeats; the cross-validated AUC was 0.77.
+For the Ames dataset, we trained and tuned a GBM and random forest using 10-fold cross-validation. The cross-validated predicted values from each of these models were combined to form a new $n \times 2$ matrix, where $n = 1460$ is the number of training records. This matrix, together with the original \code{LogSalePrice} vector, formed the ``level-one'' data. Next, we trained a \textit{metalearning} algorithm---in this case a simple generalized linear model (GLM)---on the level-one data. Two generate new predictions, first generate predictions from the random forest and GBM learners, then feed those into the GLM metalearner to generate the ensemble prediction. 
 
-The partial dependence functions for all the predictors are displayed in Figure~\ref{fig:pima-pdps}. The PDPs clearly indicate that plasma glucose concentration (\code{glucose}), diabetes pedigree function (\code{pedigree}), and 2-hour serum insulin (\code{insulin}) have the largest effect on the neural network's prediction for the outcome of the diabetes test result (\code{diabetes}). On the other hand, the PDPs for diastolic blood pressure (\code{pressure}) and age (\code{age}) are relatively flat indicating they contribute less to the predictions than the other features. This is further illustrated in the variable importance plot displayed in Figure~\ref{fig:pima-vip}; the importance scores were obtained using Algorithm~\eqref{eqn:vi}.
-
-\begin{figure}[!htb]
-  \centering
-  \includegraphics[width=1.0\textwidth]{pima-pdps}
-  \caption{Partial-dependence plots for the eight predictors in the Pima Indians data set. \label{fig:pima-pdps}}
-\end{figure}
+Even though the base learners in this example have the built-in capability to compute variable importance scores, there is no way of constructing them from the super learner. However, since we can generate predictions from the super learner, we can easily concstruct partial dependence functions for each predictor and use Equation~\eqref{eqn:vi}. The left and middle plots in Figure~\ref{fig:ames-ensemble-vip} display the top 15 variable importance scores from the individual base learners. The right plot displays the top 15 variable importance scores constructed using Equation~\eqref{eqn:vi} for the combined super learner. All models seem to agree on the top three predictors of \code{LogSalePrice}; namely, \code{OverallQual}, \code{Neighborhood}, and \code{GrLivArea}. 
 
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=1.0\textwidth]{pima-vip}
-  \caption{Partial-dependence-based variable importance scores for the eight predictors in the Pima Indians data set. \label{fig:pima-vip}}
+  \includegraphics[width=1.0\textwidth]{ames-ensemble-vip}
+  \caption{Variable importance plots for the Ames dataset. \textit{Left}: Random forest. \textit{Middle}: GBM. \textit{Right}: Stacked ensemble (i.e., super learner). \label{fig:ames-ensemble-vip}}
 \end{figure}
 
 
@@ -386,7 +385,7 @@ The partial dependence functions for all the predictors are displayed in Figure~
 \label{sec:conc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We have discussed a new partial dependence-based variable important measure for supervised learning. Since our algorithm is based on Friedman's idea of partial dependence functions, our variable importance metric is model-based and takes into account the effects of the other features in the model. Consequently, this also requires that the fitted models be properly tuned to achieve optimum performance. We have also discussed a simple extension of our variable importance metric that seems useful for detecting interaction effects.
+We have discussed a new partial dependence-based variable important measure for supervised learning. Since our algorithm is based on Friedman's idea of partial dependence functions, it is model-based and takes into account the effects of the other features in the model. Consequently, this also requires that the fitted models be properly tuned to achieve optimum performance. We have also discussed a simple extension of our variable importance metric that seems useful for detecting interaction effects.
 
 While this new approach to appears to have high utility, more research is needed to determine where its deficiencies may lie. For example, outliers in the feature space can cause abnormally large fluctuations in the partial dependence values $\bar{f}\left(x_{i}\right)$ $\left(i = 1, 2, \dots, k\right)$. Therefore, it may be advantageous to use more robust measures of spread to describe the variability in the estimated partial dependence values; a reasonable choice would be the median absolute deviation which has a finite sample breakdown point of $\left\lfloor{n / 2}\right\rfloor / n$. As mentioned in \citet{pdp-greenwell-2017}, it is also possible to replace the mean in step (3) of Algorithm~\ref{alg:pdp} with a more robust estimate such as the median or trimmed mean. It would also be interesting to see if our metric could be extended to rely on individual conditional expectation (ICE) curves \citep{goldstein-peeking-2015}, a refinement over Friedman's PDP.
 

@@ -11,7 +11,8 @@
 # Load required packages
 library(caret)           # for model tuning/training (also loads ggplot2)
 library(dplyr)           # for data manipulation
-library(gbm)             # for fitting generalized boosted regression models
+library(ggplot2)         # for fancier plots
+library(h2o)
 library(NeuralNetTools)  # for Garson and Olden's algorithms
 library(nnet)            # for fitting neural networks
 library(pdp)             # for constructing partial dependence plots
@@ -19,9 +20,11 @@ library(randomForest)    # for fitting random forests
 library(vip)             # for constructing variable importance plots
 
 # Load data sets
-# data(boston, package = "pdp")
-# data(pima, package = "pdp")
 ames <- read.csv("ames.csv", header = TRUE)[, -1L]  # rm ID column
+
+# Log transform sale price
+ames$LogSalePrice <- log(ames$SalePrice)
+ames$SalePrice <- NULL
 
 # Colors
 set1 <- RColorBrewer::brewer.pal(9, "Set1")
@@ -31,51 +34,54 @@ set1 <- RColorBrewer::brewer.pal(9, "Set1")
 # Section 2.4: Ames housing data
 ################################################################################
 
-# Fit a generalized boosted regression model
-set.seed(1138)
-ames.gbm <- gbm(log(SalePrice) ~ ., data = ames,
-                distribution = "gaussian",
-                n.trees = 5000,
-                interaction.depth = 6,
-                shrinkage = 0.01,
-                bag.fraction = 1,
-                train.fraction = 1,
-                cv.folds = 5,
-                verbose = TRUE)
+# Initialize and connect to H2O
+h2o.init(nthreads = -1)
 
-# Compute "optimal" number of iterations based on CV results
-best.iter <- gbm.perf(ames.gbm, method = "cv")
-print(best.iter)
+# Variable names
+x <- names(subset(ames, select = -LogSalePrice))
+y <- "LogSalePrice"
+trn <- as.h2o(ames)
 
-# Plot relative influence of each predictor
-summary(ames.gbm, n.trees = best.iter)
+# Load the fitted GBM model
+ames_gbm <- h2o.loadModel("ames_gbm")
+
+# Extract variable importance scores
+vi_ames_gbm <- h2o.varimp(ames_gbm)
+vi_ames_gbm <- vi_ames_gbm[vi_ames_gbm$relative_importance > 0, ]
 
 # Figure 1
-# pred.var <- as.character(vi(ames.gbm)[1L:20L, ]$Variable)
+ames_gbm_top_15 <- vi_ames_gbm$variable[1L:15L]
 pdf(file = "ames-gbm-vip.pdf", width = 7, height = 5)
-# vip(ames.gbm, pred.var = pred.var, n.trees = best.iter)
-vip(ames.gbm, n.trees = best.iter)
+vip(ames_gbm, pred.var = ames_gbm_top_15, horizontal = TRUE) +
+  theme_light()
 dev.off()
 
-# Partial depence plots
-ames.ri <- vi(ames.gbm, partial = FALSE, n.trees = best.iter)
-ames.vi <- vi(ames.gbm, partial = TRUE, keep.partial = TRUE, 
-              n.trees = best.iter)
-ames.pd <- attr(ames.vi, "partial")[as.character(ames.ri$Variable[1L:16L])]
-ames.pd <- plyr::ldply(ames.pd, .id = "x.name", .fun = function(x) {
-  names(x)[1L] <- "x.value"
-  x
+# Compute partial dependence for top/bottom three predictors
+vars <- c(head(vi_ames_gbm$variable, 3), tail(vi_ames_gbm$variable, 3))
+pd_list <- h2o.partialPlot(ames_gbm, data = trn, cols = vars, nbins = 25, 
+                           plot = FALSE, plot_stddev = FALSE)
+names(pd_list) <- vars
+rng <- range(unlist(lapply(pd_list, FUN = function(x) range(x[[2L]]))))
+ref_line <- mean(ames$LogSalePrice)
+pd_plots <- plyr::llply(pd_list, .fun = function(x) {
+  x[[3L]] <- NULL
+  x[[1L]] <- as.numeric(as.factor(x[[1L]]))
+  onames <- names(x)
+  names(x) <- c("xvar", "yvar")
+  p <- ggplot(x, aes(xvar, yvar)) +
+    geom_hline(yintercept = ref_line, color = set1[1L], linetype = "dashed") +
+    geom_line() +
+    ylim(rng) +
+    xlab(onames[1L]) +
+    ylab("Partial dependence") +
+    theme_light()
+  p
 })
-p <- ggplot(ames.pd, aes(x = x.value, y = yhat)) +
-  geom_line() +
-  # geom_point(size = 0.5) +
-  # geom_smooth(se = FALSE, linetype = "dashed") +
-  geom_hline(yintercept = mean(log(ames$SalePrice)), linetype = "dashed") +
-  facet_wrap( ~ x.name, scales = "free_x") +
-  theme_light() +
-  xlab("") +
-  ylab("Partial dependence")
-p
+
+# Figure 2
+pdf(file = "ames-gbm-pdps.pdf", width = 7, height = 5)
+gridExtra::grid.arrange(grobs = pd_plots, ncol = 3)
+dev.off()
 
 
 ################################################################################
@@ -90,6 +96,23 @@ p
 # pdf(file = "ames-gbm-vip-pd.pdf", width = 7, height = 4)
 p
 # dev.off()
+
+# Compute partial dependence variable importance scores
+imp <- vi(ames_gbm, partial = TRUE, data = trn, nbins = 25)
+imp15 <- imp[1L:15L, ]
+
+# Variable importance plot
+p <- ggplot(imp15, aes(x = reorder(Variable, Importance), y = Importance)) +
+  geom_col() +
+  xlab("") +
+  ylab("Importance") +
+  coord_flip() +
+  theme_light()
+
+# Figure 3
+pdf(file = "ames-gbm-vip-pd.pdf", width = 7, height = 5)
+p
+dev.off()
 
 
 ################################################################################
@@ -344,56 +367,98 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 ################################################################################
-# Section 5: The Pima Indians diabetes data
+# Section 5: Stacked ensembles
 ################################################################################
 
-# Load data
-data(pima, package = "pdp")
-pima <- na.omit(pima)
+# Load the Ames variable importance scores
+vi_ames_all <- read.csv("vi_ames_all.csv", header = TRUE)
 
-# Setup for repeated k-fold cross-validation
-ctrl <- trainControl(method = "repeatedcv", number = 5, repeats = 10, 
-                     classProbs = TRUE, summaryFunction = twoClassSummary,
-                     verboseIter = TRUE)
+# Extract the top 15 from each model for plotting
+vi_ames_rf <- vi_ames_all[vi_ames_all$model == "rf", ][1L:15L, ]
+vi_ames_gbm <- vi_ames_all[vi_ames_all$model == "gbm", ][1L:15L, ]
+vi_ames_ensemble <- vi_ames_all[vi_ames_all$model == "ensemble", ][1L:15L, ]
 
-# Tune the model
-set.seed(1256)
-pima.tune <- train(
-  x = subset(pima, select = -diabetes),
-  y = pima$diabetes,
-  method = "nnet",
-  trace = FALSE,
-  maxit = 2000,
-  metric = "ROC",
-  trControl = ctrl,
-  tuneLength = 5
-)
-plot(pima.tune)  # plot tuning results
+# Rescale variable importance scores
+vi_ames_rf$importance <- vi_ames_rf$importance / max(vi_ames_rf$importance)
+vi_ames_gbm$importance <- vi_ames_gbm$importance / max(vi_ames_gbm$importance)
+vi_ames_ensemble$importance <- vi_ames_ensemble$importance / max(vi_ames_ensemble$importance)
 
-# Compute partial dependence for each predictor
-pd.all <- NULL
-for (i in 1:length(xnames)) {
-  pd <- partial(pima.tune, pred.var = xnames[i])
-  pd <- cbind(xnames[i], pd)
-  names(pd) <- c("Feature", "X", "Y")
-  pd.all <- rbind(pd.all, pd)
-}
+# Plot the top 15 predcitors from each model
+p1 <- ggplot(vi_ames_rf, aes(x = reorder(variable, importance), y = importance)) +
+  geom_col() +
+  coord_flip() +
+  theme_light() +
+  xlab("") +
+  ylab("Scaled importance") +
+  ggtitle("Random forest")
+p2 <- ggplot(vi_ames_gbm, aes(x = reorder(variable, importance), y = importance)) +
+  geom_col() +
+  coord_flip() +
+  theme_light() +
+  xlab("") +
+  ylab("Scaled importance") +
+  ggtitle("GBM")
+p3 <- ggplot(vi_ames_ensemble, aes(x = reorder(variable, importance), y = importance)) +
+  geom_col() +
+  coord_flip() +
+  theme_light() +
+  xlab("") +
+  ylab("Scaled importance") +
+  ggtitle("Stacked ensemble")
 
 # Figure 9
-pdf(file = "pima-pdps.pdf", width = 12, height = 4)
-ggplot(pd.all, aes(x = X, y = Y)) +
-  geom_line() +
-  facet_grid( ~ Feature, scales = "free_x") +
-  xlab("") +
-  ylab("Partial dependence") +
-  theme_light()
+pdf(file = "ames-ensemble-vip.pdf", width = 14, height = 7)
+gridExtra::grid.arrange(p1, p2, p3, ncol = 3)
 dev.off()
 
-# Figure 10
-xnames <- names(subset(pima, select = -diabetes))
-# pdf(file = "pima-vip.pdf", width = 7, height = 5)
-vip(pima.tune, pred.var = xnames)
+
+# # Load data
+# data(pima, package = "pdp")
+# pima <- na.omit(pima)
+# 
+# # Setup for repeated k-fold cross-validation
+# ctrl <- trainControl(method = "repeatedcv", number = 5, repeats = 10, 
+#                      classProbs = TRUE, summaryFunction = twoClassSummary,
+#                      verboseIter = TRUE)
+# 
+# # Tune the model
+# set.seed(1256)
+# pima.tune <- train(
+#   x = subset(pima, select = -diabetes),
+#   y = pima$diabetes,
+#   method = "nnet",
+#   trace = FALSE,
+#   maxit = 2000,
+#   metric = "ROC",
+#   trControl = ctrl,
+#   tuneLength = 5
+# )
+# plot(pima.tune)  # plot tuning results
+# 
+# # Compute partial dependence for each predictor
+# pd.all <- NULL
+# for (i in 1:length(xnames)) {
+#   pd <- partial(pima.tune, pred.var = xnames[i])
+#   pd <- cbind(xnames[i], pd)
+#   names(pd) <- c("Feature", "X", "Y")
+#   pd.all <- rbind(pd.all, pd)
+# }
+# 
+# # Figure 9
+# pdf(file = "pima-pdps.pdf", width = 12, height = 4)
+# ggplot(pd.all, aes(x = X, y = Y)) +
+#   geom_line() +
+#   facet_grid( ~ Feature, scales = "free_x") +
+#   xlab("") +
+#   ylab("Partial dependence") +
+#   theme_light()
 # dev.off()
+# 
+# # Figure 10
+# xnames <- names(subset(pima, select = -diabetes))
+# # pdf(file = "pima-vip.pdf", width = 7, height = 5)
+# vip(pima.tune, pred.var = xnames)
+# # dev.off()
 
 
 

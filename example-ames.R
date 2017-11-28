@@ -18,7 +18,6 @@ library(gbm)
 library(ggplot2)
 library(h2o)
 library(vip)
-library(xgboost)
 
 # Load the data set
 ames <- read.csv("ames.csv", header = TRUE)[, -1L]
@@ -59,24 +58,28 @@ print(best.iter)
 # Plot relative influence of each predictor
 summary(ames.gbm, n.trees = best.iter)
 
-so# Plot variable importance scores
+# Plot variable importance scores
 p1 <- vip(ames.gbm)
 p2 <- vip(ames.gbm, partial = TRUE, n.trees = best.iter)
 grid.arrange(p1, p2, ncol = 2)
 
+vi.gbm <- vi(ames.gbm)
+vi.gbm <- vi.gbm[vi.gbm$Importance > 0, ]
+
 # Partial depence plots
 ames.vi <- vi(ames.gbm, partial = TRUE, keep.partial = TRUE, 
               n.trees = best.iter)
-ames.pd <- attr(ames.vi, "partial")[ames.vi$Variable[1L:16L]]
+vars <- as.character(vi.gbm$Variable[c(1L:3L, (nrow(vi.gbm) - 2):nrow(vi.gbm))])
+ames.pd <- attr(ames.vi, "partial")[vars]
 ames.pd <- plyr::ldply(ames.pd, .id = "x.name", .fun = function(x) {
   names(x)[1L] <- "x.value"
   x
 })
 p <- ggplot(ames.pd, aes(x = x.value, y = yhat)) +
   geom_line() +
-  # geom_point(size = 0.5) +
+  # geom_point(size = 1.5) +
   # geom_smooth(se = FALSE, linetype = "dashed") +
-  geom_hline(yintercept = mean(log(ames2$SalePrice)), linetype = "dashed") +
+  geom_hline(yintercept = mean(ames$LogSalePrice), linetype = "dashed") +
   facet_wrap( ~ x.name, scales = "free_x") +
   theme_light() +
   xlab("") +
@@ -85,7 +88,7 @@ p
 
 
 ################################################################################
-# Stacked
+# Stacked ensemble: super learner
 ################################################################################
 
 # Initialize and connect to H2O
@@ -98,95 +101,93 @@ seed <- 2101
 x <- names(subset(ames, select = -LogSalePrice))
 y <- "LogSalePrice"
 trn <- as.h2o(ames)
-# trn <- trn[, -1L]  # ??
 
-# Fit a random forest model
-RFd <- h2o.randomForest(
-  x, y, 
-  training_frame = trn, 
-  model_id = "RF_defaults", 
-  nfolds = 10,
-  fold_assignment = "Modulo", 
-  keep_cross_validation_predictions = TRUE,
-  ntrees = 1000,
-  stopping_rounds = 5,
-  stopping_metric = "RMSE",
-  stopping_tolerance = 0.001,
-  seed = seed
+# # Fit a random forest model
+# ames_rf <- h2o.randomForest(
+#   x = x, 
+#   y = y, 
+#   training_frame = trn, 
+#   model_id = "ames_rf", 
+#   nfolds = 10,
+#   fold_assignment = "Modulo", 
+#   keep_cross_validation_predictions = TRUE,
+#   ntrees = 1000,
+#   stopping_rounds = 5,
+#   stopping_metric = "RMSE",
+#   stopping_tolerance = 0.001,
+#   seed = seed
+# )
+# 
+# # Fit a GBM
+# ames_gbm <- h2o.gbm(
+#   x = x, 
+#   y = y, 
+#   training_frame = trn, 
+#   model_id = "ames_gbm", 
+#   nfolds = 10,
+#   fold_assignment = "Modulo", 
+#   keep_cross_validation_predictions = TRUE,
+#   ntrees = 10000,
+#   max_depth = 5,
+#   learn_rate = 0.01,
+#   stopping_rounds = 5,
+#   stopping_metric = "RMSE",
+#   stopping_tolerance = 0.001,
+#   seed = seed
+# )
+# 
+# # Train a stacked ensemble using the RF and GBMabove
+# ames_ensemble <- h2o.stackedEnsemble(
+#   x = x,
+#   y = y,
+#   training_frame = trn,
+#   model_id = "ames_ensemble",
+#   base_models = list(ames_rf, ames_gbm)
+# )
+
+# # Save the models
+# h2o.saveModel(object = ames_rf, path = getwd(), force = TRUE)
+# h2o.saveModel(object = ames_gbm, path = getwd(), force = TRUE)
+# h2o.saveModel(object = ames_ensemble, path = getwd(), force = TRUE)
+
+# Vector containing the paths to the saved models (for loading)
+model_paths <- c(
+  "C:\\Users\\greenweb\\Desktop\\devel\\vip-manuscript\\ames_rf",
+  "C:\\Users\\greenweb\\Desktop\\devel\\vip-manuscript\\ames_gbm",
+  "C:\\Users\\greenweb\\Desktop\\devel\\vip-manuscript\\ames_ensemble"
 )
 
-# Fit a GBM
-GBMd <- h2o.gbm(
-  x, y, 
-  training_frame = trn, 
-  model_id = "GBM_defaults", 
-  nfolds = 10,
-  fold_assignment = "Modulo", 
-  keep_cross_validation_predictions = TRUE,
-  ntrees = 10000,
-  max_depth = 5,
-  learn_rate = 0.01,
-  stopping_rounds = 5,
-  stopping_metric = "RMSE",
-  stopping_tolerance = 0.001,
-  seed = seed
-)
+# Load the models
+ames_rf <- h2o.loadModel(model_paths[1L])
+ames_gbm <- h2o.loadModel(model_paths[2L])
+ames_ensemble <- h2o.loadModel(model_paths[3L])
 
-# Extract variable importance
-vi.RFd <- as.data.frame(h2o.varimp(RFd))[, -(3L:4L)]
-vi.GBMd <- as.data.frame(h2o.varimp(GBMd))[, -(3L:4L)]
-vi.RFd$model <- "RFd"
-vi.GBMd$model <- "GBMd"
-vi.all <- rbind(vi.RFd, vi.GBMd)
-names(vi.RFd) <- c("variable", "importance", "model")
-names(vi.GBMd) <- c("variable", "importance", "model")
-
-# Train a stacked ensemble using the RF and GBMabove
-ensemble <- h2o.stackedEnsemble(
-  x = x,
-  y = y,
-  training_frame = trn,
-  base_models = list(RFd, GBMd)
-)
+# Extract variable importance scores from base models
+vi_ames_rf <- as.data.frame(h2o.varimp(ames_rf))[, -(3L:4L)]
+vi_ames_gbm <- as.data.frame(h2o.varimp(ames_gbm))[, -(3L:4L)]
+vi_ames_rf$model <- "rf"
+vi_ames_gbm$model <- "gbm"
+names(vi_ames_rf) <- c("variable", "importance", "model")
+names(vi_ames_gbm) <- c("variable", "importance", "model")
+vi_ames_all <- rbind(vi_ames_rf, vi_ames_gbm)
 
 # Compute partial dependence values and variable importance scores
-pds <- h2o.partialPlot(ensemble, data = trn, nbins = 25, plot = FALSE, 
-                       plot_stddev = FALSE)
-vi <- unlist(lapply(pds, FUN = function(x) {
+pd_ames_ensemble <- h2o.partialPlot(ames_ensemble, data = trn, nbins = 25, 
+                                    plot = FALSE, plot_stddev = FALSE)
+vi_ames_ensemble <- unlist(lapply(pd_ames_ensemble, FUN = function(x) {
   sd(x[["mean_response"]])
 }))
-names(vi) <- x
-vi <- sort(vi, decreasing = TRUE)
-vi.ensemble <- data.frame(variable = names(vi), importance = vi, 
-                          model = "ensemble")
-vi.all <- rbind(vi.all, vi.ensemble)
-
-library(ggplot2)
-p1 <- ggplot(head(vi.RFd, n = 10), 
-             aes(x = reorder(variable, importance), y = importance)) +
-  geom_col() +
-  coord_flip() +
-  theme_light() +
-  xlab("") +
-  ylab("Importance")
-p2 <- ggplot(head(vi.GBMd, n = 10), 
-             aes(x = reorder(variable, importance), y = importance)) +
-  geom_col() +
-  coord_flip() +
-  theme_light() +
-  xlab("") +
-  ylab("Importance")
-p3 <- ggplot(head(vi.ensemble, n = 10), 
-             aes(x = reorder(variable, importance), y = importance)) +
-  geom_col() +
-  coord_flip() +
-  theme_light() +
-  xlab("") +
-  ylab("Importance")
-gridExtra::grid.arrange(p1, p2, p3, ncol = 3)
+names(vi_ames_ensemble) <- x
+vi_ames_ensemble <- sort(vi_ames_ensemble, decreasing = TRUE)
+vi_ames_ensemble <- data.frame(
+  variable = names(vi_ames_ensemble), 
+  importance = vi_ames_ensemble, 
+  model = "ensemble"
+)
+vi_ames_all <- rbind(vi_ames_all, vi_ames_ensemble)
 
 # Save the results
-write.csv(vi.all, file = "ames_vi_all.csv", row.names = FALSE)
+write.csv(vi_ames_all, file = "vi_ames_all.csv", row.names = FALSE)
 
 # GLMd <- h2o.glm(x, y, trn, model_id = "GLM_defaults", nfolds = 10,
 #                 fold_assignment = "Modulo", 
