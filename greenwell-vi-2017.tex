@@ -329,7 +329,7 @@ We also constructed the partial dependence functions for all pairwise interactio
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=0.75\textwidth]{network-int}
-  \caption{Variable importance-based interaction statistics from the NN fit to the Friedman regression data. \label{fig:network-int}}
+  \caption{Variable importance-based interaction statistics from the NN fit to the Friedman regression data set. \label{fig:network-int}}
 \end{figure}
 
 In fact, since we know the distributions of the predictors in the true model, we can work out the true partial dependence functions. For example, for the pairs $\left(x_1, x_2\right)$ and $\left(x_1, x_4\right)$, we have
@@ -419,13 +419,15 @@ Since predictions can be obtained from the automated stacked ensemble, we can ea
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Conclusion}
+\section{Discussion}
 \label{sec:conc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We have discussed a new partial dependence-based variable important measure for supervised learning. Since our algorithm is based on Friedman's idea of partial dependence functions, it is model-based and takes into account the effects of the other features in the model. Consequently, this also requires that the fitted models be properly tuned to achieve optimum performance. We have also discussed a simple extension of our variable importance metric that seems useful for detecting interaction effects.
 
 While this new approach to appears to have high utility, more research is needed to determine where its deficiencies may lie. For example, outliers in the feature space can cause abnormally large fluctuations in the partial dependence values $\bar{f}\left(x_{i}\right)$ $\left(i = 1, 2, \dots, k\right)$. Therefore, it may be advantageous to use more robust measures of spread to describe the variability in the estimated partial dependence values; a reasonable choice would be the median absolute deviation which has a finite sample breakdown point of $\left\lfloor{n / 2}\right\rfloor / n$. As mentioned in \citet{pdp-greenwell-2017}, it is also possible to replace the mean in step (3) of Algorithm~\ref{alg:pdp} with a more robust estimate such as the median or trimmed mean. It would also be interesting to see if our metric could be extended to rely on individual conditional expectation (ICE) curves \citep{goldstein-peeking-2015}, a refinement over Friedman's PDP.
+
+All the examples in this article were produced using R version 3.4.0 \citep{R}; a software environment for statistical computing. With the exception of Figure~\ref{fig:interaction-simulation}, all graphics were produced using the R package \pkg{ggplot2} \citep{pkg-ggplot2}; Figure~\ref{fig:interaction-simulation} was produced using the R package \pkg{lattice} \citep{pkg-lattice}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
