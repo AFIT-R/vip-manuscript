@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  5 DEC 2017 13:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  5 DEC 2017 14:33
 entering extended mode
 **./greenwell-vi-2017.tex
 (greenwell-vi-2017.tex
@@ -546,7 +546,7 @@ File: ames-ensemble-vip.pdf Graphic file (type pdf)
 Package pdftex.def Info: ames-ensemble-vip.pdf used on input line 380.
 (pdftex.def)             Requested size: 462.26999pt x 231.13748pt.
  [19 <./ames-ensemble-vip.pdf>] [20]
-<aml_pdps.pdf, id=365, 1084.05pt x 216.81pt>
+<aml_pdps.pdf, id=367, 1084.05pt x 216.81pt>
 File: aml_pdps.pdf Graphic file (type pdf)
  <use aml_pdps.pdf>
 Package pdftex.def Info: aml_pdps.pdf used on input line 400.
@@ -563,10 +563,10 @@ Package rerunfilecheck Info: File `greenwell-vi-2017.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 456.
  ) 
 Here is how much of TeX's memory you used:
- 7571 strings out of 493323
- 113522 string characters out of 3128713
- 215630 words of memory out of 3000000
- 10925 multiletter control sequences out of 15000+200000
+ 7575 strings out of 493323
+ 113587 string characters out of 3128713
+ 215658 words of memory out of 3000000
+ 10928 multiletter control sequences out of 15000+200000
  14706 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,13n,31p,1867b,465s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -595,9 +595,9 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/Loca
 l/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/green
 web/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb
 >
-Output written on greenwell-vi-2017.pdf (24 pages, 449965 bytes).
+Output written on greenwell-vi-2017.pdf (24 pages, 450467 bytes).
 PDF statistics:
- 478 PDF objects out of 1000 (max. 8388607)
- 81 named destinations out of 1000 (max. 500000)
+ 480 PDF objects out of 1000 (max. 8388607)
+ 82 named destinations out of 1000 (max. 500000)
  163 words of extra memory for PDF output out of 10000 (max. 10000000)
 
