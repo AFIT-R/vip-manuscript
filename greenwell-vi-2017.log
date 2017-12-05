@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  30 NOV 2017 11:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  5 DEC 2017 13:43
 entering extended mode
 **./greenwell-vi-2017.tex
 (greenwell-vi-2017.tex
@@ -88,6 +88,27 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
 LaTeX Info: Redefining \[ on input line 2817.
 LaTeX Info: Redefining \] on input line 2818.
 )
+("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\booktabs\bookta
+bs.sty"
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen112
+\lightrulewidth=\dimen113
+\cmidrulewidth=\dimen114
+\belowrulesep=\dimen115
+\belowbottomsep=\dimen116
+\aboverulesep=\dimen117
+\abovetopsep=\dimen118
+\cmidrulesep=\dimen119
+\cmidrulekern=\dimen120
+\defaultaddspace=\dimen121
+\@cmidla=\count99
+\@cmidlb=\count100
+\@aboverulesep=\dimen122
+\@belowrulesep=\dimen123
+\@thisruleclass=\count101
+\@lastruleclass=\count102
+\@thisrulewidth=\dimen124
+)
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphi
 cx.sty"
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
@@ -123,29 +144,29 @@ Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 mds.sty"
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count99
+\Gread@gobject=\count103
 ))
-\Gin@req@height=\dimen112
-\Gin@req@width=\dimen113
+\Gin@req@height=\dimen125
+\Gin@req@width=\dimen126
 )
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psfrag\psfrag.s
 ty"
 Package: psfrag 1998/04/11 v3.04 PSfrag (MCG)
-\pfg@pcount=\count100
-\pfg@scount=\count101
+\pfg@pcount=\count104
+\pfg@scount=\count105
 \pfg@temp=\write3
 )
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\epsf\epsf.sty"
 This is `epsf.tex' v2.7.4 <14 February 2011>
 \epsffilein=\read1
-\epsfframemargin=\dimen114
-\epsfframethickness=\dimen115
-\epsfrsize=\dimen116
-\epsftmp=\dimen117
-\epsftsize=\dimen118
-\epsfxsize=\dimen119
-\epsfysize=\dimen120
-\pspoints=\dimen121
+\epsfframemargin=\dimen127
+\epsfframethickness=\dimen128
+\epsfrsize=\dimen129
+\epsftmp=\dimen130
+\epsftsize=\dimen131
+\epsfxsize=\dimen132
+\epsfysize=\dimen133
+\pspoints=\dimen134
 )
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\enumerate
 .sty"
@@ -158,7 +179,7 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip46
 \bibsep=\skip47
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count102
+\c@NAT@ctr=\count106
 ) ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -166,7 +187,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\algorithm2e\alg
 orithm2e.sty"
 Package: algorithm2e 2017/07/18 v5.2 algorithms environments
-\c@AlgoLine=\count103
+\c@AlgoLine=\count107
 
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ifthen.sty
 "
@@ -177,7 +198,7 @@ Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ifoddpage\ifodd
 page.sty"
 Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
-\c@checkoddpage=\count104
+\c@checkoddpage=\count108
 )
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\xspace.st
 y"
@@ -195,12 +216,12 @@ Package: relsize 2003/07/04 ver 3.1
 \skiplength=\skip54
 \algomargin=\skip55
 \skipalgocfslide=\skip56
-\algowidth=\dimen122
-\inoutsize=\dimen123
-\inoutindent=\dimen124
-\interspacetitleruled=\dimen125
-\interspacealgoruled=\dimen126
-\interspacetitleboxruled=\dimen127
+\algowidth=\dimen135
+\inoutsize=\dimen136
+\inoutindent=\dimen137
+\interspacetitleruled=\dimen138
+\interspacealgoruled=\dimen139
+\interspacetitleboxruled=\dimen140
 \algocf@ruledwidth=\skip57
 \algocf@inoutbox=\box28
 \algocf@inputbox=\box29
@@ -217,16 +238,16 @@ Package: relsize 2003/07/04 ver 3.1
 \algoheightrule=\skip64
 \algotitleheightruledefault=\skip65
 \algotitleheightrule=\skip66
-\c@algocfline=\count105
-\c@algocfproc=\count106
-\c@algocf=\count107
+\c@algocfline=\count109
+\c@algocfproc=\count110
+\c@algocf=\count111
 \algocf@algoframe=\box34
 \algocf@algobox=\box35
 )
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\float\float.sty
 "
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count108
+\c@float@type=\count112
 \float@exts=\toks21
 \float@box=\box36
 \@float@everytoks=\toks22
@@ -294,15 +315,15 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 ons.sty"
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
-\@linkdim=\dimen128
-\Hy@linkcounter=\count109
-\Hy@pagecounter=\count110
+\@linkdim=\dimen141
+\Hy@linkcounter=\count113
+\Hy@pagecounter=\count114
 
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc
 .def"
 File: pd1enc.def 2017/03/14 v6.85a Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count111
+\Hy@SavedSpaceFactor=\count115
 
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\hyperr
 ef.cfg"
@@ -315,12 +336,12 @@ Package hyperref Info: Plain pages OFF on input line 4513.
 Package hyperref Info: Backreferencing OFF on input line 4518.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4751.
-\c@Hy@tempcnt=\count112
+\c@Hy@tempcnt=\count116
 LaTeX Info: Redefining \url on input line 5104.
-\XeTeXLinkMargin=\dimen129
-\Fld@menulength=\count113
-\Field@Width=\dimen130
-\Fld@charsize=\dimen131
+\XeTeXLinkMargin=\dimen142
+\Fld@menulength=\count117
+\Field@Width=\dimen143
+\Fld@charsize=\dimen144
 Package hyperref Info: Hyper figures OFF on input line 6358.
 Package hyperref Info: Link nesting OFF on input line 6363.
 Package hyperref Info: Hyper index ON on input line 6366.
@@ -330,9 +351,9 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6383.
 Package hyperref Info: PDF/A mode OFF on input line 6388.
 LaTeX Info: Redefining \ref on input line 6428.
 LaTeX Info: Redefining \pageref on input line 6432.
-\Hy@abspage=\count114
-\c@Item=\count115
-\c@Hfootnote=\count116
+\Hy@abspage=\count118
+\c@Item=\count119
+\c@Hfootnote=\count120
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
@@ -341,8 +362,8 @@ Package hyperref Message: Driver (autodetected): hpdftex.
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hpdfte
 x.def"
 File: hpdftex.def 2017/03/14 v6.85a Hyperref driver for pdfTeX
-\Fld@listcount=\count117
-\c@bookmark@seq@number=\count118
+\Fld@listcount=\count121
+\c@bookmark@seq@number=\count122
 
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\rerunf
 ilecheck.sty"
@@ -352,38 +373,38 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip67
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 20.
+Package hyperref Info: Option `colorlinks' set `true' on input line 21.
  (greenwell-vi-2017.aux)
 \openout1 = `greenwell-vi-2017.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
 
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\supp-pdf
 .mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count119
-\scratchdimen=\dimen132
+\scratchcounter=\count123
+\scratchdimen=\dimen145
 \scratchbox=\box38
-\nofMPsegments=\count120
-\nofMParguments=\count121
+\nofMPsegments=\count124
+\nofMParguments=\count125
 \everyMPshowfont=\toks23
-\MPscratchCnt=\count122
-\MPscratchDim=\dimen133
-\MPnumerator=\count123
-\makeMPintoPDFobject=\count124
+\MPscratchCnt=\count126
+\MPscratchDim=\dimen146
+\MPnumerator=\count127
+\makeMPintoPDFobject=\count128
 \everyMPtoPDFconversion=\toks24
 )
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\epstop
@@ -413,7 +434,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
 )
-Package hyperref Info: Link coloring ON on input line 48.
+Package hyperref Info: Link coloring ON on input line 49.
 
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\namere
 f.sty"
@@ -423,128 +444,132 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 itlestring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count125
+\c@section@level=\count129
 )
-LaTeX Info: Redefining \ref on input line 48.
-LaTeX Info: Redefining \pageref on input line 48.
-LaTeX Info: Redefining \nameref on input line 48.
+LaTeX Info: Redefining \ref on input line 49.
+LaTeX Info: Redefining \pageref on input line 49.
+LaTeX Info: Redefining \nameref on input line 49.
  (greenwell-vi-2017.out) (greenwell-vi-2017.out)
 \@outlinefile=\write4
 \openout4 = `greenwell-vi-2017.out'.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 71.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 72.
 
 ("C:\Users\greenweb\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 71.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 72.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 71.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 72.
  [1
 Non-PDF special ignored!
 
 {C:/Users/greenweb/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] 
 [4]
-Overfull \hbox (2.16008pt too wide) detected at line 152
+Overfull \hbox (2.16008pt too wide) detected at line 153
 [][][]
  []
 
 [5] [6] [7]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 200.
- <ames-gbm-vip.pdf, id=172, 505.89pt x 361.35pt>
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 201.
+ <ames-gbm-vip.pdf, id=178, 505.89pt x 361.35pt>
 File: ames-gbm-vip.pdf Graphic file (type pdf)
 
 <use ames-gbm-vip.pdf>
-Package pdftex.def Info: ames-gbm-vip.pdf used on input line 203.
+Package pdftex.def Info: ames-gbm-vip.pdf used on input line 205.
 (pdftex.def)             Requested size: 462.26999pt x 330.19643pt.
- <ames-gbm-pdps.pdf, id=174, 505.89pt x 361.35pt>
+ [8] <ames-gbm-pdps.pdf, id=192, 505.89pt x 361.35pt>
 File: ames-gbm-pdps.pdf Graphic file (type pdf)
 
 <use ames-gbm-pdps.pdf>
-Package pdftex.def Info: ames-gbm-pdps.pdf used on input line 210.
+Package pdftex.def Info: ames-gbm-pdps.pdf used on input line 213.
 (pdftex.def)             Requested size: 462.26999pt x 330.19643pt.
- [8]
-Overfull \vbox (163.733pt too high) has occurred while \output is active []
 
-
-[9 <./ames-gbm-vip.pdf> <./ames-gbm-pdps.pdf>]
-Overfull \hbox (15.30562pt too wide) in paragraph at lines 216--216
+Overfull \hbox (15.30562pt too wide) in paragraph at lines 219--219
 []\OT1/cmr/bx/n/17.28 A par-tial dependence-based vari-able im-por-tance mea-
  []
 
-<ames-gbm-vip-pd.pdf, id=206, 505.89pt x 361.35pt>
+[9 <./ames-gbm-vip.pdf>] [10 <./ames-gbm-pdps.pdf>]
+<ames-gbm-vip-pd.pdf, id=218, 505.89pt x 361.35pt>
 File: ames-gbm-vip-pd.pdf Graphic file (type pdf)
  <use ames-gbm-vip-pd.pdf>
-Package pdftex.def Info: ames-gbm-vip-pd.pdf used on input line 241.
+Package pdftex.def Info: ames-gbm-vip-pd.pdf used on input line 244.
 (pdftex.def)             Requested size: 462.26999pt x 330.19643pt.
 
-[10] [11 <./ames-gbm-vip-pd.pdf>] <lm-pdps.pdf, id=226, 578.16pt x 289.08pt>
+[11] [12 <./ames-gbm-vip-pd.pdf>] <lm-pdps.pdf, id=240, 578.16pt x 289.08pt>
 File: lm-pdps.pdf Graphic file (type pdf)
 
 <use lm-pdps.pdf>
-Package pdftex.def Info: lm-pdps.pdf used on input line 283.
+Package pdftex.def Info: lm-pdps.pdf used on input line 286.
 (pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
- [12] [13 <./lm-pdps.pdf>]
-<network-vip.pdf, id=250, 867.24pt x 433.62pt>
+ [13 <./lm-pdps.pdf>]
+<network-vip.pdf, id=259, 867.24pt x 433.62pt>
 File: network-vip.pdf Graphic file (type pdf)
  <use network-vip.pdf>
-Package pdftex.def Info: network-vip.pdf used on input line 320.
+Package pdftex.def Info: network-vip.pdf used on input line 323.
 (pdftex.def)             Requested size: 462.26999pt x 231.13419pt.
- [14 <./network-vip.pdf>] <network-int.pdf, id=264, 578.16pt x 289.08pt>
+ [14]
+<network-int.pdf, id=269, 578.16pt x 289.08pt>
 File: network-int.pdf Graphic file (type pdf)
-
-<use network-int.pdf>
-Package pdftex.def Info: network-int.pdf used on input line 328.
+ <use network-int.pdf>
+Package pdftex.def Info: network-int.pdf used on input line 331.
 (pdftex.def)             Requested size: 346.70248pt x 173.34787pt.
-
-<interaction-simulation.pdf, id=267, 867.24pt x 578.16pt>
+ [15 <./network-vip.pdf>] <interaction-simulation.pdf, id=282, 867.24pt x 578.1
+6pt>
 File: interaction-simulation.pdf Graphic file (type pdf)
 
 <use interaction-simulation.pdf>
-Package pdftex.def Info: interaction-simulation.pdf used on input line 344.
+Package pdftex.def Info: interaction-simulation.pdf used on input line 347.
 (pdftex.def)             Requested size: 462.26999pt x 308.17891pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 350.
+(hyperref)                removing `math shift' on input line 353.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 350.
+(hyperref)                removing `math shift' on input line 353.
 
-[15 <./network-int.pdf>] [16 <./interaction-simulation.pdf>]
-<gbm-int.pdf, id=297, 505.89pt x 505.89pt>
+[16 <./network-int.pdf>] <gbm-int.pdf, id=301, 505.89pt x 505.89pt>
 File: gbm-int.pdf Graphic file (type pdf)
- <use gbm-int.pdf>
-Package pdftex.def Info: gbm-int.pdf used on input line 359.
+
+<use gbm-int.pdf>
+Package pdftex.def Info: gbm-int.pdf used on input line 362.
 (pdftex.def)             Requested size: 346.70248pt x 346.7101pt.
- [17 <./gbm-int.pdf>] <ames-ensemble-vip.pdf, id=314, 1011.78pt x 505.89pt>
+ [17 <./interaction-simulation.pdf>] [18 <./gbm-int.pdf>]
+<ames-ensemble-vip.pdf, id=330, 1011.78pt x 505.89pt>
 File: ames-ensemble-vip.pdf Graphic file (type pdf)
 
 <use ames-ensemble-vip.pdf>
-Package pdftex.def Info: ames-ensemble-vip.pdf used on input line 377.
+Package pdftex.def Info: ames-ensemble-vip.pdf used on input line 380.
 (pdftex.def)             Requested size: 462.26999pt x 231.13748pt.
- [18] (greenwell-vi-2017.bbl [19 <./ames-ensemble-vip.pdf>] [20])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 417.
- [21]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 417.
+ [19 <./ames-ensemble-vip.pdf>] [20]
+<aml_pdps.pdf, id=365, 1084.05pt x 216.81pt>
+File: aml_pdps.pdf Graphic file (type pdf)
+ <use aml_pdps.pdf>
+Package pdftex.def Info: aml_pdps.pdf used on input line 400.
+(pdftex.def)             Requested size: 462.26999pt x 92.45235pt.
+ [21 <./aml_pdps.pdf>] (greenwell-vi-2017.bbl [22] [23])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 456.
+ [24]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 456.
  (greenwell-vi-2017.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 417.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 417.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 456.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 456.
 Package rerunfilecheck Info: File `greenwell-vi-2017.out' has not changed.
-(rerunfilecheck)             Checksum: 52708E8431029C6D763A5E29AC840FE8;936.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 417.
+(rerunfilecheck)             Checksum: D70428910B1119CCF7AEFA22505AA820;996.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 456.
  ) 
 Here is how much of TeX's memory you used:
- 7481 strings out of 493323
- 112169 string characters out of 3128713
- 215407 words of memory out of 3000000
- 10851 multiletter control sequences out of 15000+200000
+ 7571 strings out of 493323
+ 113522 string characters out of 3128713
+ 215630 words of memory out of 3000000
+ 10925 multiletter control sequences out of 15000+200000
  14706 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,13n,31p,1883b,465s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 30i,13n,31p,1867b,465s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmbx10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
 pe1/public/amsfonts/cm/cmbx12.pfb><C:/Users/greenweb/AppData/Local/Programs/MiK
@@ -558,19 +583,21 @@ TeX 2.9/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><C:/Users/greenweb/AppDa
 ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users
 /greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr1
 2.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmr8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmss12.pfb><C:/Users/greenweb/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/greenweb/AppData/
-Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/gr
-eenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.p
-fb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmsy8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
-pe1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/Local/Programs/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/greenweb/AppData/Lo
-cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on greenwell-vi-2017.pdf (21 pages, 423623 bytes).
+msfonts/cm/cmr7.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmr8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Users/greenweb/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/gre
+enweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pf
+b><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmsy7.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmsy8.pfb><C:/Users/greenweb/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/Loca
+l/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/green
+web/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb
+>
+Output written on greenwell-vi-2017.pdf (24 pages, 449965 bytes).
 PDF statistics:
- 424 PDF objects out of 1000 (max. 8388607)
- 70 named destinations out of 1000 (max. 500000)
- 150 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 478 PDF objects out of 1000 (max. 8388607)
+ 81 named destinations out of 1000 (max. 500000)
+ 163 words of extra memory for PDF output out of 10000 (max. 10000000)
 
