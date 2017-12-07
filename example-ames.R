@@ -28,14 +28,6 @@ ames$SalePrice <- NULL
 
 
 ################################################################################
-# Exploratory data analysis
-################################################################################
-
-# Histogram of response
-hist(ames$LogSalePrice, 50)
-
-
-################################################################################
 # GBM
 ################################################################################
 
@@ -88,7 +80,7 @@ p
 
 
 ################################################################################
-# Stacked ensemble: super learner
+# RF, GBM, and RF + GBM (i.e., stacked ensemble/super learner)
 ################################################################################
 
 # Initialize and connect to H2O
@@ -100,9 +92,11 @@ seed <- 2101
 # Variable names
 x <- names(subset(ames, select = -LogSalePrice))
 y <- "LogSalePrice"
+
+# Convert training data to an H2OFrame
 trn <- as.h2o(ames)
 
-# # Fit a random forest model
+# # Fit an RF
 # ames_rf <- h2o.randomForest(
 #   x = x, 
 #   y = y, 
@@ -136,7 +130,7 @@ trn <- as.h2o(ames)
 #   seed = seed
 # )
 # 
-# # Train a stacked ensemble using the RF and GBMabove
+# # Train a stacked ensemble using the previously fit RF and GBM
 # ames_ensemble <- h2o.stackedEnsemble(
 #   x = x,
 #   y = y,
@@ -150,17 +144,10 @@ trn <- as.h2o(ames)
 # h2o.saveModel(object = ames_gbm, path = getwd(), force = TRUE)
 # h2o.saveModel(object = ames_ensemble, path = getwd(), force = TRUE)
 
-# Vector containing the paths to the saved models (for loading)
-model_paths <- c(
-  "C:\\Users\\greenweb\\Desktop\\devel\\vip-manuscript\\ames_rf",
-  "C:\\Users\\greenweb\\Desktop\\devel\\vip-manuscript\\ames_gbm",
-  "C:\\Users\\greenweb\\Desktop\\devel\\vip-manuscript\\ames_ensemble"
-)
-
 # Load the models
-ames_rf <- h2o.loadModel(model_paths[1L])
-ames_gbm <- h2o.loadModel(model_paths[2L])
-ames_ensemble <- h2o.loadModel(model_paths[3L])
+ames_rf <- h2o.loadModel("ames_rf")
+ames_gbm <- h2o.loadModel("ames_gbm")
+ames_ensemble <- h2o.loadModel("ames_ensemble")
 
 # Extract variable importance scores from base models
 vi_ames_rf <- as.data.frame(h2o.varimp(ames_rf))[, -(3L:4L)]
@@ -188,11 +175,3 @@ vi_ames_all <- rbind(vi_ames_all, vi_ames_ensemble)
 
 # Save the results
 write.csv(vi_ames_all, file = "vi_ames_all.csv", row.names = FALSE)
-
-# GLMd <- h2o.glm(x, y, trn, model_id = "GLM_defaults", nfolds = 10,
-#                 fold_assignment = "Modulo", 
-#                 keep_cross_validation_predictions = TRUE)
-# DLd <- h2o.deeplearning(x, y, trn, model_id = "DL_defaults", nfolds = 10,
-#                         fold_assignment = "Modulo", 
-#                         keep_cross_validation_predictions = TRUE)
-

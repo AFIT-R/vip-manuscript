@@ -31,7 +31,7 @@ set1 <- RColorBrewer::brewer.pal(9, "Set1")
 
 
 ################################################################################
-# Section 2.4: Ames housing data
+# Section 2.4: The Ames housing data set
 ################################################################################
 
 # Initialize and connect to H2O
@@ -42,6 +42,27 @@ x <- names(subset(ames, select = -LogSalePrice))
 y <- "LogSalePrice"
 trn <- as.h2o(ames)
 
+# Random seed
+seed <- 2101
+
+# # Fit a GBM
+# ames_gbm <- h2o.gbm(
+#   x = x, 
+#   y = y, 
+#   training_frame = trn, 
+#   model_id = "ames_gbm", 
+#   nfolds = 10,
+#   fold_assignment = "Modulo", 
+#   keep_cross_validation_predictions = TRUE,
+#   ntrees = 10000,
+#   max_depth = 5,
+#   learn_rate = 0.01,
+#   stopping_rounds = 5,
+#   stopping_metric = "RMSE",
+#   stopping_tolerance = 0.001,
+#   seed = seed
+# )
+
 # Load the fitted GBM model
 ames_gbm <- h2o.loadModel("ames_gbm")
 
@@ -51,6 +72,11 @@ vi_ames_gbm <- vi_ames_gbm[vi_ames_gbm$relative_importance > 0, ]
 
 # Figure 1
 ames_gbm_top_15 <- vi_ames_gbm$variable[1L:15L]
+# ames_gbm_bottom_15 <- rev(vi_ames_gbm$variable)[1L:15L]
+# p1 <- vip(ames_gbm, pred.var = ames_gbm_top_15, horizontal = TRUE) +
+#   theme_light()
+# p2 <- vip(ames_gbm, pred.var = ames_gbm_bottom_15, horizontal = TRUE) +
+#   theme_light()
 pdf(file = "ames-gbm-vip.pdf", width = 7, height = 5)
 vip(ames_gbm, pred.var = ames_gbm_top_15, horizontal = TRUE) +
   theme_light()
@@ -88,17 +114,10 @@ dev.off()
 # Section 3: A partial dependence-based variable importance measure
 ################################################################################
 
-# # Partial dependence-based variable importance scores
-# boston.rf.vi <- vi(boston.rf, pred.var = names(subset(boston, select = -cmedv)))
-# p <- vip(ames.gbm, partial = TRUE, n.trees = best.iter)
-
-# Figure 3
-# pdf(file = "ames-gbm-vip-pd.pdf", width = 7, height = 4)
-p
-# dev.off()
-
 # Compute partial dependence variable importance scores
-imp <- vi(ames_gbm, partial = TRUE, data = trn, nbins = 25)
+# imp <- vi(ames_gbm, partial = TRUE, data = trn, nbins = 25)
+# save(imp, file = "ames-gbm-vi.RData")
+load("ames-gbm-vi.RData")
 imp15 <- imp[1L:15L, ]
 
 # Variable importance plot
@@ -112,6 +131,35 @@ p <- ggplot(imp15, aes(x = reorder(Variable, Importance), y = Importance)) +
 # Figure 3
 pdf(file = "ames-gbm-vip-pd.pdf", width = 7, height = 5)
 p
+dev.off()
+
+imp2 <- vi(ames_gbm, pred.var = x)
+p1 <- ggplot(imp2, aes(x = reorder(Variable, Importance), y = Importance)) +
+  geom_point(size = 1, col = "grey35") +
+  geom_segment(aes(x = reorder(Variable, Importance), 
+                   xend = reorder(Variable, Importance), 
+                   y = 0, yend = Importance), 
+               col = "grey35", size = 0.1) +
+  xlab("") +
+  ylab("Importance") +
+  coord_flip() +
+  theme_light() + 
+  theme(axis.text = element_text(size = 6))
+p2 <- ggplot(imp, aes(x = reorder(Variable, Importance), y = Importance)) +
+  geom_point(size = 1, col = "grey35") +
+  geom_segment(aes(x = reorder(Variable, Importance), 
+                   xend = reorder(Variable, Importance), 
+                   y = 0, yend = Importance), 
+               col = "grey35", size = 0.1) +
+  xlab("") +
+  ylab("Importance") +
+  coord_flip() +
+  theme_light() + 
+  theme(axis.text = element_text(size = 6))
+
+# Figure ?
+pdf(file = "ames-gbm-vi-both.pdf", width = 7, height = 7)
+grid.arrange(p1, p2, ncol = 2)
 dev.off()
 
 

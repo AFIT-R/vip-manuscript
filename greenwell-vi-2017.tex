@@ -100,6 +100,13 @@ In the era of ``big data'', it is becoming more of a challenge to not only build
 \label{sec:introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\textbf{TODO:}
+\begin{itemize}
+  \item Discuss PDPs for variables not included in the model. For these variables, the partial dependence function in a constant; hence, the standard deviation of the partial dependence values is exactly zero. For the Ames housing example, the predictors \code{Street}, \code{Utilities}, \code{PoolArea}, and \code{PoolQC} were not used as splitters in the GBM ensemble; hence, there PDPs would be flat and there variable importance score should be zero.
+  \item Display all variable importance scores for the Ames housing example?
+\end{itemize}
+
+
 Complex supervised learning algorithms, such as neural networks (NNs) and support vector machines (SVMs), are more common than ever in predictive analytics, especially when dealing with large observational databases that don't adhere to the strict assumptions imposed by traditional statistical techniques (e.g., multiple linear regression which typically assumes linearity, homoscedasticity, and normality). However, it can be challenging to understand the results of such complex models and explain them to management. Graphical displays such as variable importance plots (when available) and partial dependence plots (PDPs) \citep{friedman-2001-greedy} offer a simple solution (see, for example, \citep[pp. 367--380]{hastie-elements-2009}). PDPs are low-dimensional graphical renderings of the prediction function $\widehat{f}\left(\boldsymbol{x}\right)$ that allow analysts to more easily understand the estimated relationship between the outcome and predictors of interest. These plots are especially useful in interpreting the output from ``black box'' models. While PDPs can be constructed for any predictor in a fitted model, variable importance scores are more difficult to define, and when available, their interpretation often depends on the model fitting algorithm used. 
 
 % What does it mean for a feature to be important? Its influence on the predicted outcome? It's statistical significance in a traditional regression model?
@@ -200,13 +207,13 @@ While PDPs are an invaluable tool in understanding the relationships uncovered b
 \label{sec:ames}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-For illustration, we will use the Ames housing data set---a modernized and expanded version of the often cited Boston Housing data set. These data are available from Kaggle: \url{https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data}. Using the R package \pkg{h2o} \citep{h2o-pkg}, we trained and tuned a GBM using 10-fold cross-validation. The model fit is reasonable, with a cross-validated (pseudo) $R^2$ of 90.06\%. Like other tree-based ensembles, GBMs have a natural way of defining variable importance which was described in Section~\ref{sec:model-based-vi}. The top 15 GBM-based variable importance scores for these data are displayed in Figure~\ref{fig:ames-gbm-vip}. This plot indicates that the overall quality of the material and finish of the house (\code{OverallQual}), physical location within the Ames city limits (\code{Neighborhood}), and the above grade (ground) living area (\code{GrLivArea}) are highly associated with the logarithm of the sales price (\code{LogSalePrice}). The variable importance scores also indicated that the slope of the property (\code{LandSlope}), the dollar value of miscellaneous features (\code{MiscVal}), and the presence of miscellaneous features (\code{MiscFeature})  have little association with \code{LogSalePrice}.
+For illustration, we will use the Ames housing data set---a modernized and expanded version of the often cited Boston Housing data set. These data are available from Kaggle: \url{https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data}. Using the R package \pkg{h2o} \citep{h2o-pkg}, we trained and tuned a GBM using 10-fold cross-validation. The model fit is reasonable, with a cross-validated (pseudo) $R^2$ of 90.06\%. Like other tree-based ensembles, GBMs have a natural way of defining variable importance which was described in Section~\ref{sec:model-based-vi}. The variable importance scores for these data are displayed in the left side of Figure~\ref{fig:ames-gbm-vi-both}. This plot indicates that the overall quality of the material and finish of the house (\code{OverallQual}), physical location within the Ames city limits (\code{Neighborhood}), and the above grade (ground) living area (\code{GrLivArea}) are highly associated with the logarithm of the sales price (\code{LogSalePrice}). The variable importance scores also indicate that the slope of the property (\code{LandSlope}), the dollar value of miscellaneous features (\code{MiscVal}), and the presence of miscellaneous features (\code{MiscFeature}) have little association with \code{LogSalePrice}. Note that the bottom four features in Figure~\ref{fig:ames-gbm-vi-both}---\code{Street}, \code{Utilities}, \code{PoolArea}, and \code{PoolQC}---have a variable importance score of zero (i.e., they were never used to partion the data at any point in the GBM ensemble).
 
-\begin{figure}[!htb]
-  \centering
-  \includegraphics[width=1.0\textwidth]{ames-gbm-vip}
-  \caption{Top 15 GBM-based variable importance scores for the Ames housing data. \label{fig:ames-gbm-vip}}
-\end{figure}
+% \begin{figure}[!htb]
+%   \centering
+%   \includegraphics[width=1.0\textwidth]{ames-gbm-vip}
+%   \caption{Top 15 GBM-based variable importance scores for the Ames housing data. \label{fig:ames-gbm-vip}}
+% \end{figure}
 
 The PDPs for these six variables are displayed in Figure~\ref{fig:ames-gbm-pdps}. These plots indicate that \code{OverallQual}, \code{Neighborhood}, and \code{GrLivArea} have a strong nonlinear relationship with the predicted outcome. For instance, it seems that \code{GrLivArea} has a monotonically increasing relationship with \code{LogSalePrice} until about 12 sq ft, after which the relationship flattens out. Notice how the PDPs for \code{LandSlope}, \code{MiscVal}, and \code{MiscFeature} are relatively flat in comparison. It is this notion of ``flatness'' which we will use as a basis to define our variable importance measure.
 
@@ -239,12 +246,18 @@ where $\flatness$ is any measure of ``flatness'' of the curve. A simple and effe
 \end{equation}
 Note that our variable importance metric relies on the fitted model; hence, it is crucial to properly tune and train the model to attain the best performance possible.
 
-To illustrate, we applied Algorithm~\ref{alg:pdp} to all of the predictors in the Ames GBM model and computed \eqref{eqn:vi}. The results are displayed in Figure~\ref{fig:ames-gbm-vip-pd}. In this case, our partial dependence-based algorithm matches closely with the results from the GBM. In particular, Figure~\ref{fig:ames-gbm-vip-pd} indicates that \code{OverallQual}, \code{Neighborhood}, and \code{GrLivArea} are still the most important variables in predicting \code{LogSalePrice}; though, \code{Neighborhood} and \code{GrLivArea} have swapped places. The overall condition of the house (\code{OverallCond}) also appears to be relatively important according to Equation~\eqref{eqn:vi}.
+To illustrate, we applied Algorithm~\ref{alg:pdp} to all of the predictors in the Ames GBM model and computed \eqref{eqn:vi}. The results are displayed in right side of Figure~\ref{fig:ames-gbm-vi-both}. In this case, our partial dependence-based algorithm matches closely with the results from the GBM. In particular, Figure~\ref{fig:ames-gbm-vip-pd} indicates that \code{OverallQual}, \code{Neighborhood}, and \code{GrLivArea} are still the most important variables in predicting \code{LogSalePrice}; though, \code{Neighborhood} and \code{GrLivArea} have swapped places. The overall condition of the house (\code{OverallCond}) also appears to be relatively important according to Equation~\eqref{eqn:vi}.
+
+% \begin{figure}[!htb]
+%   \centering
+%   \includegraphics[width=1.0\textwidth]{ames-gbm-vip-pd}
+%   \caption{Partial-dependence-based variable importance scores from a GBM fit to the Ames housing data. \label{fig:ames-gbm-vip-pd}}
+% \end{figure}
 
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=1.0\textwidth]{ames-gbm-vip-pd}
-  \caption{Partial-dependence-based variable importance scores from a GBM fit to the Ames housing data. \label{fig:ames-gbm-vip-pd}}
+  \includegraphics[width=1.0\textwidth]{ames-gbm-vi-both}
+  \caption{Variable importance scores from a GBM fit to the Ames housing data. \textit{Left}: Standard GBM method. \textit{Right}: partial dependence-based method. \label{fig:ames-gbm-vi-both}}
 \end{figure}
 
 
