@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  7 DEC 2017 11:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.27)  11 DEC 2017 14:10
 entering extended mode
 **./greenwell-vi-2017.tex
 (greenwell-vi-2017.tex
@@ -487,38 +487,32 @@ Overfull \hbox (15.30562pt too wide) in paragraph at lines 228--228
 []\OT1/cmr/bx/n/17.28 A par-tial dependence-based vari-able im-por-tance mea-
  []
 
-[9 <./ames-gbm-pdps.pdf>]
-
-LaTeX Warning: Reference `fig:ames-gbm-vip-pd' on page 10 undefined on input li
-ne 249.
-
-<ames-gbm-vi-both.pdf, id=202, 505.89pt x 505.89pt>
+[9 <./ames-gbm-pdps.pdf>] <ames-gbm-vi-both.pdf, id=203, 505.89pt x 505.89pt>
 File: ames-gbm-vi-both.pdf Graphic file (type pdf)
- <use ames-gbm-vi-both.pdf>
+
+<use ames-gbm-vi-both.pdf>
 Package pdftex.def Info: ames-gbm-vi-both.pdf used on input line 259.
 (pdftex.def)             Requested size: 462.26999pt x 462.27498pt.
-
-[10] [11 <./ames-gbm-vi-both.pdf>] <lm-pdps.pdf, id=224, 578.16pt x 289.08pt>
+ [10] [11 <./ames-gbm-vi-both.pdf>]
+<lm-pdps.pdf, id=225, 578.16pt x 289.08pt>
 File: lm-pdps.pdf Graphic file (type pdf)
-
-<use lm-pdps.pdf>
+ <use lm-pdps.pdf>
 Package pdftex.def Info: lm-pdps.pdf used on input line 301.
 (pdftex.def)             Requested size: 462.26999pt x 231.13197pt.
- [12] [13 <./lm-pdps.pdf>]
-<network-vip.pdf, id=252, 867.24pt x 433.62pt>
+ [12] [13 <./lm-pdps.pdf>] <network-vip.pdf, id=253, 867.24pt x 433.62pt>
 File: network-vip.pdf Graphic file (type pdf)
  <use network-vip.pdf>
 Package pdftex.def Info: network-vip.pdf used on input line 338.
 (pdftex.def)             Requested size: 462.26999pt x 231.13419pt.
 
-<network-int.pdf, id=255, 578.16pt x 289.08pt>
+<network-int.pdf, id=256, 578.16pt x 289.08pt>
 File: network-int.pdf Graphic file (type pdf)
  <use network-int.pdf>
 Package pdftex.def Info: network-int.pdf used on input line 346.
 (pdftex.def)             Requested size: 346.70248pt x 173.34787pt.
  [14]
 [15 <./network-vip.pdf> <./network-int.pdf>]
-<interaction-simulation.pdf, id=281, 867.24pt x 578.16pt>
+<interaction-simulation.pdf, id=282, 867.24pt x 578.16pt>
 File: interaction-simulation.pdf Graphic file (type pdf)
 
 <use interaction-simulation.pdf>
@@ -533,21 +527,21 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 368.
 
-[16 <./interaction-simulation.pdf>] <gbm-int.pdf, id=298, 505.89pt x 505.89pt>
+[16 <./interaction-simulation.pdf>] <gbm-int.pdf, id=299, 505.89pt x 505.89pt>
 File: gbm-int.pdf Graphic file (type pdf)
 
 <use gbm-int.pdf>
 Package pdftex.def Info: gbm-int.pdf used on input line 377.
 (pdftex.def)             Requested size: 346.70248pt x 346.7101pt.
  [17] [18 <./gbm-int.pdf>]
-<ames-ensemble-vip.pdf, id=325, 1011.78pt x 505.89pt>
+<ames-ensemble-vip.pdf, id=326, 1011.78pt x 505.89pt>
 File: ames-ensemble-vip.pdf Graphic file (type pdf)
 
 <use ames-ensemble-vip.pdf>
 Package pdftex.def Info: ames-ensemble-vip.pdf used on input line 395.
 (pdftex.def)             Requested size: 462.26999pt x 231.13748pt.
  [19 <./ames-ensemble-vip.pdf>]
-<aml_pdps.pdf, id=352, 1084.05pt x 216.81pt>
+<aml_pdps.pdf, id=353, 1084.05pt x 216.81pt>
 File: aml_pdps.pdf Graphic file (type pdf)
  <use aml_pdps.pdf>
 Package pdftex.def Info: aml_pdps.pdf used on input line 415.
@@ -561,17 +555,13 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 471.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 471.
 Package rerunfilecheck Info: File `greenwell-vi-2017.out' has not changed.
 (rerunfilecheck)             Checksum: 24756A6E2C897390091EA08629700025;996.
-
-
-LaTeX Warning: There were undefined references.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 471.
  ) 
 Here is how much of TeX's memory you used:
- 7591 strings out of 493323
- 113937 string characters out of 3128713
+ 7590 strings out of 493323
+ 113916 string characters out of 3128713
  216792 words of memory out of 3000000
- 10941 multiletter control sequences out of 15000+200000
+ 10940 multiletter control sequences out of 15000+200000
  14706 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,13n,31p,1869b,465s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -600,9 +590,9 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/greenweb/AppData/Loca
 l/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/green
 web/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb
 >
-Output written on greenwell-vi-2017.pdf (24 pages, 455280 bytes).
+Output written on greenwell-vi-2017.pdf (24 pages, 455780 bytes).
 PDF statistics:
- 486 PDF objects out of 1000 (max. 8388607)
+ 487 PDF objects out of 1000 (max. 8388607)
  86 named destinations out of 1000 (max. 500000)
  158 words of extra memory for PDF output out of 10000 (max. 10000000)
 
